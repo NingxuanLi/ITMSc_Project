@@ -12,16 +12,16 @@ public class Department {
 		this.depId = depId;
 		this.depName = depName;
 	}
-	public int getdepId() {
+	public int getDepId() {
 		return depId;
 	}
-	public void setdepId(int depId) {
+	public void setDepId(int depId) {
 		this.depId = depId;
 	}
-	public String getdepName() {
+	public String getDepName() {
 		return depName;
 	}
-	public void setdepName(String depName) {
+	public void setDepName(String depName) {
 		this.depName = depName;
 	}
 	public String getColor() {
