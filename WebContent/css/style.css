@@ -1,0 +1,51 @@
+@charset "UTF-8";
+.STYLE12 {font-size: 18px; color: #0066FF; }
+.STYLE13 {
+	font-size: 24px;
+	color: #000000;
+	font-weight: bold;
+}
+.STYLE14 {color: #F0F0F0}
+.STYLE16 {color: #000000; }
+.STYLE30 {font-size: 24px; font-weight: bold; }
+.STYLE32 {font-size: 18px; font-weight: bold; color: #FF00FF; }
+.STYLE38 {color: #000000; font-size: 18px;}
+.STYLE39 {font-size: 18px}
+.STYLE40 {color: #000000; font-size: 18px; }
+.STYLE41 {color: #FF0000}
+.STYLE42 {color: #FF00FF; font-weight: bold;}
+.STYLE43 {font-weight: bold; color: #FF0000;}
+
+.login-text02 {
+	font-family: "锟斤拷锟斤拷";
+	font-size: 18px;
+	color: #7F9DB9;
+	text-decoration: none;
+	text-align: right;
+	padding-top: 4px;
+}
+
+.right-button01 {
+	font-family: "锟斤拷锟斤拷";
+	font-size: 12px;
+	color: #174B73;
+	height: 20px;
+	width: 63px;
+	background-image: url(../images/button03.gif);
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+}
+.right-button02 {
+	font-family: "锟斤拷锟斤拷";
+	font-size: 12px;
+	color: #174B73;
+	height: 20px;
+	width: 45px;
+	background-image: url(../images/button04.gif);
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+}
