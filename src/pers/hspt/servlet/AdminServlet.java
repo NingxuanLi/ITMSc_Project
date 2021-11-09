@@ -40,7 +40,7 @@ public class AdminServlet extends HttpServlet{
 
 		if (method.equals("adminLogin")) {
 
-			// 管理员登录
+			// administrator login
 			adminLogin(request, response);
 		} 
 
@@ -50,53 +50,53 @@ public class AdminServlet extends HttpServlet{
 			HttpServletResponse response) throws ServletException, IOException {
 		String adminName = request.getParameter("adminName");
 		String password = request.getParameter("password");
-		String imgTxt = request.getParameter("code");// 匹配验证码
+		String imgTxt = request.getParameter("code");// get the captcha code string
 		if (adminName == null || adminName.trim().equals("")) {
-			request.setAttribute("error", "请您输入姓名");
+			request.setAttribute("error", "please enter your name");
 			request.getRequestDispatcher("/admin_login.jsp").forward(request,
 					response);
 			return;
 		}
 		if (password == null || password.equals("")) {
-			request.setAttribute("error", "请您输入密码");
+			request.setAttribute("error", "please enter your password");
 			request.getRequestDispatcher("/admin_login.jsp").forward(request,
 					response);
 			return;
 		}
 		if (imgTxt == null || imgTxt.trim().equals("")) {
-			request.setAttribute("error", "验证码不能空");
+			request.setAttribute("error", "please enter the captcha code");
 			request.getRequestDispatcher("/admin_login.jsp").forward(request,
 					response);
 			return;
 		}
-		// 查找数据库,匹配管理员
+		// database searching
 		Admin admin = adminService.getAdmin(adminName);
 		if (admin != null) {
-			// 查找到有该管理员
+			// find the admin
 			if (!password.trim().equals(admin.getAdminPassword())) {
-				request.setAttribute("error", "密码错误");
+				request.setAttribute("error", "wrong password!");
 				request.getRequestDispatcher("/admin_login.jsp").forward(
 						request, response);
 			} else {
-				// 匹配验证码
+				// check if captcha code is correct
 				String str = (String) request.getSession().getAttribute("str");
 			
 				if (imgTxt.equals(str)) {
-					// 登录成功，跳到后台管理页面
-					// 将管理员保存到到session中
+					// successfully login, jump to index page of admin
+					// save the admin in session
 					request.getSession().setAttribute("admin", admin);
 					request.getRequestDispatcher("/admin/index.jsp").forward(
 							request, response);
 				} else {
 					
-					request.setAttribute("error", "验证码错误");
+					request.setAttribute("error", "wrong captcha");
 					request.getRequestDispatcher("/admin_login.jsp").forward(
 							request, response);
 				}
 			}
 		} else {
-			// 没有此管理员
-			request.setAttribute("error", "没有此管理员");
+			// don't have this admin in the database, don't jump
+			request.setAttribute("error", "don't have this admin!");
 			request.getRequestDispatcher("/admin_login.jsp").forward(request,
 					response);
 		}

@@ -8,7 +8,7 @@ import pers.hspt.util.PageData;
 
 public interface AdminService {
 	
-	//登录时，根据管理员名字得到管理员
+	//get the admin by the name string
 	public Admin getAdmin(String adminName);
 
 }
