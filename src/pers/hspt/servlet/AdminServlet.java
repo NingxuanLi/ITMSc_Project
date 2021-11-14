@@ -42,7 +42,9 @@ public class AdminServlet extends HttpServlet{
 
 			// administrator login
 			adminLogin(request, response);
-		} 
+		} else if(method.equals("logout")) {
+			logout(request, response);
+		}
 
 	}
 	
@@ -100,6 +102,16 @@ public class AdminServlet extends HttpServlet{
 			request.getRequestDispatcher("/admin_login.jsp").forward(request,
 					response);
 		}
+	}
+	
+	public void logout(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// log out and destory session
+
+		request.getSession().invalidate();
+		request.getRequestDispatcher("/admin_login.jsp").forward(request,
+				response);
+
 	}
 
 	

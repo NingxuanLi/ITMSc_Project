@@ -49,3 +49,110 @@
 	border-bottom-width: 0px;
 	border-left-width: 0px;
 }
+.left-font01 {
+	font-family: "锟斤拷锟斤拷";
+	font-size: 12px;
+	color: #448CCB;
+	text-decoration: none;
+	filter: DropShadow(Color=#FFFFFF, OffX=1, OffY=1);
+}
+a.left-font01:hover {
+	font-family: "锟斤拷锟斤拷";
+	font-size: 12px;
+	color: #FF0000;
+	text-decoration: underline;
+	filter: DropShadow(Color=#FFFFFF, OffX=1, OffY=11,);
+}
+.left-font02 {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #448CCB;
+	text-decoration: none;
+	filter: DropShadow(Color=#FFFFFF, OffX=1, OffY=1);
+}
+.left-font03 {
+	font-family: "锟斤拷锟斤拷";
+	font-size: 12px;
+	color: #555555;
+	text-decoration: none;
+}
+a.left-font03:hover {
+	font-family: "锟斤拷锟斤拷";
+	font-size: 12px;
+	color: #FF0000;
+	text-decoration: underline;
+}
+.left-table01 {
+	border-top-width: 2px;
+	border-top-style: solid;
+	border-top-color: #B8C9D6;
+	margin-left: 14px;
+}
+.left-table02 {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	font-family: "锟斤拷锟斤拷";
+	font-size: 12px;
+	color: #555555;
+	text-decoration: none;
+}
+.left-table03 {
+	margin-top: 6px;
+	font-family: "锟斤拷锟斤拷";
+	font-size: 12px;
+	color: #555555;
+	text-decoration: none;
+	background-image: url(../images/nav02.gif);
+}
+a.left-table03:hover {
+	background-image: url(../images/nav03.gif);
+}
+.ContentBody{
+ background:#F6F6F6 url(../images/mainbg.gif); 
+ /*url(../images/mainback.jpg) repeat-x fixed; */
+ margin:15px;
+
+}
+.CContent{
+	border-top: 1px solid #5F8FB0;
+	border-right: 1px solid #5F8FB0;
+	border-bottom: 1px solid #5F8FB0;
+	border-left: 1px solid #5F8FB0;
+	background-color: #FFFFFF;
+
+}
+.tablestyle_title{
+	/*height: 20px; font-style: normal; font-variant: normal; font-weight: bold; font-size: 16px;letter-spacing: 2px; text-align: middle; border-top: 2px solid #ff7300; padding-left: 10px; background-color: #f0f0f0;text-align:center;*/
+	background:#6795B4;
+	padding:5px;
+	text-align:left;
+	color:#FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	height: 20px;
+	font-style: normal; font-variant: normal; font-weight: bold; font-size: 16px;letter-spacing: 2px; padding-left: 10px; 
+}
+.CPanel{
+ padding:5px;
+ font-size:12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.TablePanel{
+/* border:1px solid #999;*/
+ background-color:  #DBE0E6;
+}
+legend{
+	color: #014E82;
+	font-weight:bold;
+	padding:5px;
+}
+button{background:#fff;border:1px solid #C28F27;padding:2px 2px 0px 2px;margin:4px;border-width:1px 3px 1px 3px;font-size: 12px;color: #A74300;}
+
+input.button{
+ background:#fff;border:1px solid #C28F27;padding:2px 2px 0px 2px;margin:4px;border-width:1px 3px 1px 3px;font-size: 12px;color: #A74300;
+}
+
+
+
+
+
