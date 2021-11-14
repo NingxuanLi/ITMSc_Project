@@ -4,6 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import pers.hspt.util.PageData;
+
+import pers.hspt.util.DateUtil;
+
 import pers.hspt.dao.DoctorDao;
 import pers.hspt.entity.Doctor;
 import pers.hspt.util.DBConnection;
@@ -26,13 +30,13 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 					doc.setDocId(rs.getInt(1));
 					doc.setDocName(rs.getString(2));
 					doc.setDocPassword(rs.getString(3));
-					doc.setDocImg(rs.getString(4));
-					doc.setMoney(rs.getInt(5));
-					doc.setDocTime(rs.getDate(6));
-					doc.setSumCount(rs.getInt(7));
-					doc.setRemainCount(rs.getInt(8));
-					doc.setDocStatus(rs.getString(9));
-					doc.setDepId(rs.getInt(10));
+//					doc.setDocImg(rs.getString(4));
+					doc.setMoney(rs.getInt(4));
+					doc.setDocTime(rs.getDate(5));
+//					doc.setSumCount(rs.getInt(7));
+//					doc.setRemainCount(rs.getInt(8));
+					doc.setDocStatus(rs.getString(6));
+					doc.setDepId(rs.getInt(7));
 				
 					list.add(doc);
 				}
@@ -46,5 +50,188 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			}
 			return list;
 		}
+		
+		public boolean add(Doctor doctor) {
+			
+			boolean b=true;
+			conn=DBConnection.getConnection();
+			try {
+				String sql="insert into doctor values(default,?,default,?,?,?,?)";
+				
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1,doctor.getDocName());
+				pstmt.setInt(2, doctor.getMoney());
+				pstmt.setDate(3, DateUtil.toSqlDate(doctor.getDocTime()));
+				pstmt.setString(4, doctor.getDocStatus());
+				pstmt.setInt(5, doctor.getDepId());
+				
+				pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				b=false;
+			}finally{		
+				DBConnection.close(rs, stmt, pstmt);
+			}
+			return b;
+		}
+		
+		//分页是需要查询总行数
+		public int getRowsCount(String name){
+			int rowsCount=0;
+			try {
+				conn=DBConnection.getConnection();
+				stmt=conn.createStatement();
+				String sql="";
+				if(name==null){
+					sql="select count(*) from doctor ";
+				}else{
+					sql="select count(*) from doctor where doc_name like '%"+name+"%' ";
+				}
+				
+				rs=stmt.executeQuery(sql);
+				
+				if(rs.next()){
+					
+					rowsCount=rs.getInt(1);
+				}
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}finally{
+				DBConnection.close(rs, stmt, pstmt);
+			}
+			
+			return rowsCount;
+			
+		}
+		
+		//查询
+		public List<Doctor> getList(String docName,PageData pageData){
+			// 显示列表时查询所有的，修改初始化时查询单条记录
+
+			List<Doctor> list=new ArrayList<Doctor>();
+			
+			conn=DBConnection.getConnection();
+	        try {
+				stmt=conn.createStatement();
+				String sql="";
+				if(docName==null||docName.equals("")){				
+					//查询所有的
+					if(pageData==null){
+						sql="select * from doctor order by doc_id";
+					}else{
+						sql="select * from doctor limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
+					}
+				}else{
+					//模糊查询
+					sql="select * from doctor where doc_name like '%"+docName+"%' limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
+				}
+				
+				rs=stmt.executeQuery(sql);
+				Doctor doc=null;
+				while(rs.next()){
+					doc=new Doctor();
+					doc.setDocId(rs.getInt(1));
+					doc.setDocName(rs.getString(2));
+					doc.setDocPassword(rs.getString(3));
+					doc.setMoney(rs.getInt(4));
+					doc.setDocTime(rs.getDate(5));
+					doc.setDocStatus(rs.getString(6));
+					doc.setDepId(rs.getInt(7));
+				
+					list.add(doc);
+				}
+
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				
+			}finally{
+				DBConnection.close(rs, stmt, pstmt);
+			}
+			
+			return list;
+		}
+		
+		//根据id得到单个医生信息。
+		public Doctor get(int docId){
+			
+			Doctor doc=null;
+			conn=DBConnection.getConnection();
+	        try {
+				stmt=conn.createStatement();
+
+				String	sql="select * from doctor  where doc_id ="+docId;
+				
+				rs=stmt.executeQuery(sql);
+				
+				if(rs.next()){
+					doc=new Doctor();
+					doc.setDocId(rs.getInt(1));
+					doc.setDocName(rs.getString(2));
+					doc.setDocPassword(rs.getString(3));
+					doc.setMoney(rs.getInt(4));
+					doc.setDocTime(rs.getDate(5));
+					doc.setDocStatus(rs.getString(6));
+					doc.setDepId(rs.getInt(7));
+								
+				}
+
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				
+			}finally{
+				DBConnection.close(rs, stmt, pstmt);
+			}
+			
+			return doc;
+		}
+		
+		public boolean delete(int docId) {
+			boolean b = true;
+			conn=DBConnection.getConnection();
+			try {
+				String sql="delete from doctor where doc_id="+docId;
+				pstmt=conn.prepareStatement(sql);
+				pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				b=false;
+			}finally{
+				DBConnection.close(rs, stmt, pstmt);
+			}
+			
+			return b;
+		}
+		
+		
+		public boolean modify(Doctor doctor) {
+			boolean b=true;
+			conn=DBConnection.getConnection();
+			try {
+				String sql="update doctor set doc_name=?,doc_money=?,doc_time=?,dep_id=? where doc_id="+doctor.getDocId();
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1,doctor.getDocName());
+				pstmt.setInt(2, doctor.getMoney());
+				pstmt.setDate(3, DateUtil.toSqlDate(doctor.getDocTime()));
+				pstmt.setInt(4, doctor.getDepId());
+				pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				b=false;
+			}finally{
+				DBConnection.close(rs, stmt, pstmt);
+			}
+			
+			return b;
+
+		}
+		
 
 }

@@ -1,43 +1,29 @@
-package pers.hspt.entity;
+package pers.hspt.dto;
 
 import java.util.Date;
 
-public class Doctor {
+public class DoctorDto {
 	
 	private int docId;
 	private String docName;
-	private String docPassword;
 	private int money;
 	private Date docTime;
 	private String docStatus;
-	private int depId;
+	private String depName;  //ÐèÒªÃû×Ö
 	
-
-	//color
 	private String color;
-	
-	
-	public Doctor(){}
-	
-	
-	public Doctor(String docName, int money, Date docTime, String docStatus, int depId) {
-		super();
-		this.docName = docName;
-		this.money = money;
-		this.docTime = docTime;
-		this.docStatus = docStatus;
-		this.depId = depId;
+	public Date getDocTime() {
+		return docTime;
 	}
-
-
-	
+	public void setDocTime(Date docTime) {
+		this.docTime = docTime;
+	}
 	public int getDocId() {
 		return docId;
 	}
 	public void setDocId(int docId) {
 		this.docId = docId;
 	}
-	
 	public String getDocName() {
 		return docName;
 	}
@@ -45,50 +31,25 @@ public class Doctor {
 		this.docName = docName;
 	}
 	
-	public String getDocPassword() {
-		return docPassword;
+	public String getDepName() {
+		return depName;
 	}
-	public void setDocPassword(String docPassword) {
-		this.docPassword = docPassword;
+	public void setDepName(String offName) {
+		this.depName = offName;
 	}
 
-
-	
-
-	
 	public int getMoney() {
 		return money;
 	}
 	public void setMoney(int money) {
 		this.money = money;
 	}
-	
-	public Date getDocTime() {
-		return docTime;
-	}
-	public void setDocTime(Date docTime) {
-		this.docTime = docTime;
-	}
-	
-
-	
-
-	
 	public String getDocStatus() {
 		return docStatus;
 	}
 	public void setDocStatus(String docStatus) {
 		this.docStatus = docStatus;
 	}
-	
-	public int getDepId() {
-		return depId;
-	}
-	public void setDepId(int depId) {
-		this.depId = depId;
-	}
-
-
 	public String getColor() {
 		return color;
 	}
