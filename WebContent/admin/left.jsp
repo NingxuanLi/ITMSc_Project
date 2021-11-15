@@ -102,7 +102,7 @@ function list(idstr){
 	  <table id="subtree5" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" cellspacing="0" class="left-table02">
         <tr>
           <td width="9%" height="20"><img id="xiaotu13" src="images/ico06.gif" width="8" height="12" /></td>
-          <td width="91%"><a href="admin/admin_add.jsp" target="mainFrame" class="left-font03" onClick="tupian('13');">add admin</a></td>
+          <td width="91%"><a href="admin/addAdmin.jsp" target="mainFrame" class="left-font03" onClick="tupian('13');">add admin</a></td>
         </tr>
         <tr>
           <td height="20"><img id="xiaotu14" src="images/ico06.gif" width="8" height="12" /></td>

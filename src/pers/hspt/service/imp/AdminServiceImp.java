@@ -15,5 +15,28 @@ public class AdminServiceImp implements AdminService{
 	public Admin getAdmin(String adminName){
 		return adminDao.getAdmin(adminName);
 	}
-
+	
+	public List<Admin> getAdminList(String adminName, PageData pageData){
+		return adminDao.getAdminList(adminName, pageData);
+	}
+	
+	public boolean addAdmin(Admin admin) {
+		return adminDao.addAdmin(admin);
+	}
+	
+	public int getRowsCount(String name) {
+		return adminDao.getRowsCount(name);
+	}
+	
+	public boolean delete(int adminId) {
+		return adminDao.delete(adminId);
+	}
+	
+	public boolean modify(Admin admin) {
+		return adminDao.modify(admin);
+	}
+	
+	public Admin getAdmin(int adminId) {
+		return adminDao.getAdmin(adminId);
+	}
 }

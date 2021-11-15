@@ -44,10 +44,159 @@ public class AdminServlet extends HttpServlet{
 			adminLogin(request, response);
 		} else if(method.equals("logout")) {
 			logout(request, response);
+		} else if(method.equals("add")) {
+			add(request, response);
+		} else if(method.equals("showList")) {
+			showList(request, response);
+		} else if(method.equals("delete")) {
+			delete(request, response);
+		} else if(method.equals("gotoModify")) {
+			gotoModify(request, response);
+		} else if(method.equals("modify")) {
+			modify(request, response);
 		}
 
 	}
 	
+    private void modify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String adminId = request.getParameter("adminId");
+		String adminName = request.getParameter("adminName");
+		String adminPassword = request.getParameter("adminPassword");
+		
+		Admin admin = new Admin(adminName, adminPassword);
+		admin.setAdminId(Integer.valueOf(adminId));
+		boolean b = adminService.modify(admin);
+		if(b) {
+			showList(request, response);
+		}else {
+			request.setAttribute("error", "edit failed");
+			request.getRequestDispatcher("/admin/updateAdmin.jsp").forward(request, response);			
+		}
+	}
+
+	private void gotoModify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String adminId = request.getParameter("adminId");
+		Admin admin = adminService.getAdmin(Integer.valueOf(adminId));
+		request.setAttribute("admin", admin);
+		request.getRequestDispatcher("/admin/updateAdmin.jsp").forward(request, response);
+	}
+
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		//删除单个
+    	String adminId = request.getParameter("adminId");
+		//删除多个
+    	String str = request.getParameter("adminIdArr");
+    	
+    	boolean b = false;
+    	if(str != null && !str.trim().equals("")) {
+    		String[] arrId = str.split(",");
+    		for (int i = 0;  i < arrId.length; i++) {
+				System.out.println(arrId[i]);
+				b = adminService.delete(Integer.valueOf(arrId[i]));
+			}
+    	}else {
+    		if(adminId != null) {
+    			b = adminService.delete(Integer.valueOf(adminId));
+    		}else {
+    			//都为空
+    			JOptionPane.showMessageDialog(null, "haven't select an admin to delete");// 跳出去
+				showList(request, response);
+				return;
+    		}
+    	}
+    	if(!b) {
+    		request.setAttribute("error", "delete failed");
+    	}
+    	showList(request, response);
+	}
+
+	private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    	String checkName = request.getParameter("checkName"); // 得到名字，根据姓名查找时用
+		// 分页
+		PageData pageData = new PageData();
+		// 得到当前页
+		String currentPage = request.getParameter("currentPage");
+		if (currentPage != null) {
+			pageData.setCurrentPage(Integer.valueOf(currentPage));
+		}
+		// 得到每页行数
+		String pageRows = request.getParameter("pageRows");
+		if (pageRows != null) {
+			pageData.setPageRows(Integer.valueOf(pageRows));
+		}
+		// 得到总行数
+		int rowsCount = adminService.getRowsCount(checkName);
+		pageData.setRowsCount(rowsCount);
+		// 计算总页数
+		int pageCount = 0;
+		if (rowsCount % pageData.getPageRows() == 0) {
+			pageCount = rowsCount / pageData.getPageRows();
+		} else {
+			pageCount = rowsCount / pageData.getPageRows() + 1;
+		}
+		pageData.setPageCount(pageCount);
+		
+		List<Admin> adminList = adminService.getAdminList(checkName, pageData);
+		//保存
+		request.setAttribute("adminList", adminList);
+		request.setAttribute("page", pageData);
+		request.setAttribute("checkName", checkName);
+		request.getRequestDispatcher("/admin/adminList.jsp").forward(request, response);
+	}
+
+	private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String adminName = request.getParameter("adminName");
+		String password = request.getParameter("adminPassword");
+		//判断这两个变量是否为空
+		if(adminName == null || adminName.trim().equals("")) {
+			request.setAttribute("error", "Admin name can't be null");
+			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
+		}
+		if(password == null || password.trim().equals("")) {
+			request.setAttribute("error", "password can't be null");
+			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
+		}
+		//向数据库中添加管理员
+		//检查数据库中是否有重名的，如果有，则不能添加
+		boolean isNameRepeated = isNameRepeated(adminName, request, response);
+		Admin admin= new Admin(adminName, password);
+		boolean b = false;
+		if(!isNameRepeated) {
+			b = adminService.addAdmin(admin);
+		}else {
+			request.setAttribute("error", "there exists a admin with same name");
+			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
+			return;
+		}
+		
+		if(b) {  //添加成功
+			System.out.println("successfully added");
+			showList(request, response);
+		}else {  //添加失败
+			request.setAttribute("error", "add failed");
+			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
+		}
+		
+	}
+    
+    //判断数据库中是否有重名的管理员
+	public boolean isNameRepeated(String adminName, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		boolean isRepeated = false;
+		// 判断不能重名
+		List<Admin> list = adminService.getAdminList(null, null); // 得到列表,查询所有的
+		if (list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).getAdminName().equals(adminName)) {
+					isRepeated = true;
+					break;
+				}
+			}
+		}
+
+		return isRepeated;
+	}
+
 	public void adminLogin(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String adminName = request.getParameter("adminName");
