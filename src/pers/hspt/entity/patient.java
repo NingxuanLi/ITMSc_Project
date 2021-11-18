@@ -6,7 +6,7 @@ public class Patient {
 	private String name;
 	private String password;
 	private String realName;
-	private String sex;
+	private String gender;
 	private String tel;
 	private String brp;
 	
@@ -14,13 +14,13 @@ public class Patient {
 	private String color;
 	
 	public Patient(){}
-	public Patient(String name, String password, String realname, String sex,
+	public Patient(String name, String password, String realname, String gender,
 			String tel, String brp) {
 		super();
 		this.name = name;
 		this.password = password;
 		this.realName = realname;
-		this.sex = sex;
+		this.gender = gender;
 		this.tel = tel;
 		this.brp = brp;
 	}
@@ -48,11 +48,11 @@ public class Patient {
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
-	public String getSex() {
-		return sex;
+	public String getGender() {
+		return gender;
 	}
-	public void setSex(String sex) {
-		this.sex = sex;
+	public void setSex(String gender) {
+		this.gender = gender;
 	}
 	public String getTel() {
 		return tel;

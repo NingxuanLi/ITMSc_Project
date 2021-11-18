@@ -11,7 +11,7 @@
         <td align="center"><span class="STYLE12"><a href="patient_registration.jsp">Patient registration</a></span></td>
       </tr>
       <tr>
-        <td align="center"><span class="STYLE12"><a href="">Make an appointment</a></span></td>
+        <td align="center"><span class="STYLE12"><a href="department?method=frontShowList">Make an appointment</a></span></td>
       </tr>
       <tr>
         <td align="center"><span class="STYLE12"><a href="appointment_query.jsp">Appointment query</a></span></td>

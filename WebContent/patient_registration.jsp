@@ -8,19 +8,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Administrator login</title>
+<title>Patient registration</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
-
-<script language="javascript" >
-
-	
-	function changeCode(img){
-	debugger;
-		var d = new Date();
-		img.src = "image?t="+d.getTime();
-		
-	}
-</script>
 </head>
 <body>
 <table width="100%" height="734" border="0">
@@ -42,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</td>
 						<td width="300" rowspan="2" align="center" valign="bottom">
 							<span class="STYLE14 STYLE13">
-								<span class="STYLE16">Administrator login</span>
+								<span class="STYLE16">Patient Registration</span>
 							</span>
 						</td>
 						<td width="548">
@@ -69,40 +58,71 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</td>
 					</tr>
 				</table>
-				<form action="admin?method=adminLogin" method="post">
+				<form action="patient?method=add" method="post">
 
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td width="20%" height="35" class="login-text02">
-								Name：
+								Name:
 								<br />
 							</td>
 							<td width="80%">
-								<input name="adminName" type="text" size="30" />
+								<input name="name" type="text" size="30" />
 							</td>
 						</tr>
 						<tr>
 							<td height="35" class="login-text02">
-								Password：
+								Password:
 								<br />
 							</td>
 							<td>
-								<input name="password" type="password" size="33" />
+								<input name="password" type="password" size="30" />
 							</td>
 						</tr>
 						<tr>
 							<td height="35" class="login-text02">
-								Captcha picture：
+								Confirm password:
 								<br />
 							</td>
 							<td>
-								<img src="image" alt="no picture" onclick="changeCode(this)" />
+								<input name="confirmPassword" type="password" size="30" />
 							</td>
 						</tr>
 						<tr>
-							<td height="35" class="login-text02">Captcha：</td>
-							<td>
-								<input name="code" type="text" size="30" />
+							<td width="20%" height="35" class="login-text02">
+								Real name:
+								<br />
+							</td>
+							<td width="80%">
+								<input name="realName" type="text" size="30" />
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" height="35" class="login-text02">
+								Gender:
+								<br />
+							</td>
+							<td width="80%">
+								<input type="radio" name="gender" value="male" /><span class = "login-text02">male</span> &nbsp;
+								<input type="radio" name="gender" value="female" /><span class = "login-text02">female</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" height="35" class="login-text02">
+								Tel number:
+								<br />
+							</td>
+							<td width="80%">
+								<input name="telNumber" type="text" size="30" />
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" height="35" class="login-text02">
+								BRP number:
+								<br />
+							</td>
+							<td width="80%">
+								<input name="brpNumber" type="text" size="30" />
 							</td>
 						</tr>
 						<tr>
@@ -116,7 +136,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								&nbsp;
 							</td>
 							<td>
-								<input name="button" type="submit" class="right-button01" value="login" />
+								<input name="button" type="submit" class="right-button01" value="submit" />
 								<input name="reset" type="reset" class="right-button02" value="reset" />
 								<font color="red" size="5">${msg}</font>
 							</td>
@@ -134,6 +154,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</td>
 		</tr>
 	</table>
-	
 </body>
 </html>

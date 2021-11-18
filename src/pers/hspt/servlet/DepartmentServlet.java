@@ -46,7 +46,7 @@ public class DepartmentServlet extends HttpServlet{
 		String method = request.getParameter("method");
 		if (method.equals("frontShowList")) {
 			// 显示诊室列表
-//			frontShowList(request, response);
+			frontShowList(request, response);
 
 		} else if (method.equals("showList")) {
 			// 显示诊室列表
@@ -71,6 +71,54 @@ public class DepartmentServlet extends HttpServlet{
 
 	}
 	
+	private void frontShowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		// TODO Auto-generated method stub
+		// 分页
+		PageData pageData = new PageData();
+		// 得到当前页
+		String currentPage = request.getParameter("currentPage");
+		if (currentPage != null) {
+			pageData.setCurrentPage(Integer.valueOf(currentPage));
+		}
+		// 得到每页行数
+		String pageRows = request.getParameter("pageRows");
+		if (pageRows != null) {
+			pageData.setPageRows(Integer.valueOf(pageRows));
+		}
+
+		// 得到总行数
+		int rowsCount = departmentService.getRowsCount(null);
+
+		pageData.setRowsCount(rowsCount);
+
+		// 计算总页数
+		int pageCount = 0;
+
+		if (rowsCount % pageData.getPageRows() == 0) {
+			pageCount = rowsCount / pageData.getPageRows();
+		} else {
+			pageCount = rowsCount / pageData.getPageRows() + 1;
+		}
+		pageData.setPageCount(pageCount);
+		
+		List<Department> depList = departmentService.getList(null, pageData);
+		for (Department dep : depList) {
+			boolean isDoc = isHasDoc(dep.getDepId(), request, response);
+			if (isDoc) {
+				dep.setColor("red");
+			} else {
+				dep.setColor("black");
+			}
+		}
+		request.setAttribute("depList", depList);
+		request.setAttribute("page", pageData);
+		
+		request.getRequestDispatcher("/frontDepList.jsp").forward(request, response);
+		
+		
+		
+	}
+
 	// 添加
 	public void add(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
