@@ -232,6 +232,32 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			return b;
 
 		}
+
+		@Override
+		public int getRowsCountForOneDep(int depId) {
+			int rowsCount=0;
+			try {
+				conn=DBConnection.getConnection();
+				stmt=conn.createStatement();
+				String sql="";
+				
+				sql="select count(*) from doctor where dep_id like '%"+depId+"%' ";
+				
+				rs=stmt.executeQuery(sql);
+				
+				if(rs.next()){
+					
+					rowsCount=rs.getInt(1);
+				}
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}finally{
+				DBConnection.close(rs, stmt, pstmt);
+			}
+			
+			return rowsCount;
+		}
 		
 
 }

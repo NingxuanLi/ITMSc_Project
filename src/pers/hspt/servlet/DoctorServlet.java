@@ -59,11 +59,11 @@ public class DoctorServlet extends HttpServlet{
 		String method = request.getParameter("method");
 		if (method.equals("frontShowList")) {
 			// 前台挂号时需要
-//			frontShowList(request, response);
+			frontShowList(request, response);
 
-		} else if (method.equals("selectDocList")) {
+		} else if (method.equals("docListInOneDep")) {
 			// 前台查询医生列表
-//			selectDocList(request, response);
+			docListInOneDep(request, response);
 
 		} else if (method.equals("showList")) {
 			// 显示诊室列表
@@ -92,8 +92,130 @@ public class DoctorServlet extends HttpServlet{
 //			doctorLogin(request,response);
 		}else if("logout".equals(method)) {
 //			loginOut(request,response);
+		}else if(method.equals("appointmentMake")) {
+			appointmentMake(request,response);
 		}
 
+	}
+
+
+	private void appointmentMake(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String docId = request.getParameter("docId");
+		Doctor doc = doctorService.get(Integer.valueOf(docId));
+		DoctorDto dto = new DoctorDto();
+		Department department = departmentService.get(doc.getDepId());
+		dto.setDocId(doc.getDocId());
+		dto.setDocName(doc.getDocName());
+		dto.setDepName(department.getDepName());
+		dto.setDocStatus(doc.getDocStatus());
+		dto.setMoney(doc.getMoney());
+		dto.setDocTime(doc.getDocTime());
+		
+		request.setAttribute("dto", dto);
+		request.getRequestDispatcher("/appointmentMake.jsp").forward(request, response);
+		
+	}
+
+
+	private void docListInOneDep(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String depId = request.getParameter("depId");
+		// 分页
+		PageData pageData = new PageData();
+		// 得到当前页
+		String currentPage = request.getParameter("currentPage");
+		if (currentPage != null) {
+			pageData.setCurrentPage(Integer.valueOf(currentPage));
+		}
+		// 得到每页行数
+		String pageRows = request.getParameter("pageRows");
+		if (pageRows != null) {
+			pageData.setPageRows(Integer.valueOf(pageRows));
+		}
+
+		// 得到总行数
+		int rowsCount = doctorService.getRowsCountForOneDep(Integer.valueOf(depId));
+
+		pageData.setRowsCount(rowsCount);
+
+		// 计算总页数
+		int pageCount = 0;
+
+		if (rowsCount % pageData.getPageRows() == 0) {
+			pageCount = rowsCount / pageData.getPageRows();
+		} else {
+			pageCount = rowsCount / pageData.getPageRows() + 1;
+		}
+		pageData.setPageCount(pageCount);
+		
+		
+		List<Doctor> docList = doctorService.getByDepId(Integer.valueOf(depId));
+		List<DoctorDto> docDtoList = new ArrayList<>();
+		DoctorDto dto = null;
+		for(Doctor doc : docList) {
+			dto = new DoctorDto();
+			Department department = departmentService.get(doc.getDepId());
+			dto.setDocId(doc.getDocId());
+			dto.setDocName(doc.getDocName());
+			dto.setDepName(department.getDepName());
+			dto.setDocStatus(doc.getDocStatus());
+			dto.setMoney(doc.getMoney());
+			dto.setDocTime(doc.getDocTime());
+			docDtoList.add(dto);
+		}
+		request.setAttribute("docDtoList", docDtoList);
+		request.setAttribute("page", pageData);
+		request.getRequestDispatcher("/docListOneDep.jsp").forward(request, response);
+		
+		
+	}
+
+
+	private void frontShowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		// 分页
+		PageData pageData = new PageData();
+		// 得到当前页
+		String currentPage = request.getParameter("currentPage");
+		if (currentPage != null) {
+			pageData.setCurrentPage(Integer.valueOf(currentPage));
+		}
+		// 得到每页行数
+		String pageRows = request.getParameter("pageRows");
+		if (pageRows != null) {
+			pageData.setPageRows(Integer.valueOf(pageRows));
+		}
+
+		// 得到总行数
+		int rowsCount = doctorService.getRowsCount(null);
+
+		pageData.setRowsCount(rowsCount);
+
+		// 计算总页数
+		int pageCount = 0;
+
+		if (rowsCount % pageData.getPageRows() == 0) {
+			pageCount = rowsCount / pageData.getPageRows();
+		} else {
+			pageCount = rowsCount / pageData.getPageRows() + 1;
+		}
+		pageData.setPageCount(pageCount);
+		
+		List<Doctor> doctorList = doctorService.getList(null, pageData);
+		List<DoctorDto> docDtoList = new ArrayList<>();
+		DoctorDto dto = null;
+		for(Doctor doc : doctorList) {
+			dto = new DoctorDto();
+			Department department = departmentService.get(doc.getDepId());
+			dto.setDocId(doc.getDocId());
+			dto.setDocName(doc.getDocName());
+			dto.setDepName(department.getDepName());
+			dto.setDocStatus(doc.getDocStatus());
+			dto.setMoney(doc.getMoney());
+			dto.setDocTime(doc.getDocTime());
+			docDtoList.add(dto);
+		}
+		request.setAttribute("docDtoList", docDtoList);
+		request.setAttribute("page", pageData);
+		request.getRequestDispatcher("/frontDocList.jsp").forward(request, response);				
 	}
 
 

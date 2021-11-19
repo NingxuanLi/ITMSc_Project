@@ -17,7 +17,7 @@
         <td align="center"><span class="STYLE12"><a href="appointment_query.jsp">Appointment query</a></span></td>
       </tr>
       <tr>
-        <td align="center"><span class="STYLE12"><a href="">Doctor list</a></span></td>
+        <td align="center"><span class="STYLE12"><a href="doctor?method=frontShowList">Doctor list</a></span></td>
       </tr>
       <tr>
         <td align="center"><span class="STYLE12"><a href="doctor_login.jsp">Doctor login</a></span></td>

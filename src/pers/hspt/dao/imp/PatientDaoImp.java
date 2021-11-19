@@ -9,7 +9,7 @@ import pers.hspt.dao.PatientDao;
 
 public class PatientDaoImp extends BaseDao implements PatientDao{
 	
-public boolean add(Patient patient) {
+	public boolean add(Patient patient) {
 		
 		boolean b=true;
 		conn=DBConnection.getConnection();
@@ -36,6 +36,37 @@ public boolean add(Patient patient) {
 		return b;
 
 	}
+
+
+	public Patient get(String name) {
+
+		Patient p=null;
+		conn=DBConnection.getConnection();
+		try {
+			stmt=conn.createStatement();
+			String sql="select * from patient where p_name='"+name+"'";
+			rs=stmt.executeQuery(sql);
+			if(rs.next()){
+				p=new Patient();
+				p.setId(rs.getInt(1));
+				p.setName(rs.getString(2));
+				p.setPassword(rs.getString(3));
+				p.setRealName(rs.getString(4));
+				p.setSex(rs.getString(5));
+				p.setTel(rs.getString(6));
+				p.setBrp(rs.getString(7));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return p;
+	}
+	
+	
 
 	
 	

@@ -20,5 +20,7 @@ public interface DoctorDao {
 	public boolean delete(int docId);
 	
 	public boolean modify(Doctor doctor);
+	
+	public int getRowsCountForOneDep(int depId);
 
 }

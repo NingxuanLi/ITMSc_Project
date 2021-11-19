@@ -72,7 +72,6 @@ public class DepartmentServlet extends HttpServlet{
 	}
 	
 	private void frontShowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		// TODO Auto-generated method stub
 		// 分页
 		PageData pageData = new PageData();
 		// 得到当前页
@@ -105,7 +104,7 @@ public class DepartmentServlet extends HttpServlet{
 		for (Department dep : depList) {
 			boolean isDoc = isHasDoc(dep.getDepId(), request, response);
 			if (isDoc) {
-				dep.setColor("red");
+				dep.setColor("black");
 			} else {
 				dep.setColor("black");
 			}

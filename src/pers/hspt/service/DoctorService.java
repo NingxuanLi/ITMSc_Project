@@ -13,6 +13,8 @@ public interface DoctorService {
 	
 	public int getRowsCount(String name);
 	
+	public int getRowsCountForOneDep(int depId);
+	
 	public List<Doctor> getList(String docName, PageData pagedata);
 	
 	public Doctor get(int docId);

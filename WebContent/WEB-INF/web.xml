@@ -41,6 +41,12 @@
     <servlet-name>PatientServlet</servlet-name>
     <servlet-class>pers.hspt.servlet.PatientServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>AppointmentServlet</servlet-name>
+    <servlet-class>pers.hspt.servlet.AppointmentServlet</servlet-class>
+  </servlet>
   
   
   
@@ -65,6 +71,10 @@
   <servlet-mapping>
     <servlet-name>DoctorServlet</servlet-name>
     <url-pattern>/doctor</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AppointmentServlet</servlet-name>
+    <url-pattern>/appointment</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ImageServlet</servlet-name>

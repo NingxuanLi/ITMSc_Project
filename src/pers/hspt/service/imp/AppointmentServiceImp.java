@@ -13,5 +13,9 @@ public class AppointmentServiceImp implements AppointmentService{
 	public Appointment getByDocId(int docId) {
 		return appointmentDao.getByDocId(docId);
 	}
-
+	
+	public boolean add(Appointment appointment) {
+		return appointmentDao.add(appointment);
+	}
+ 
 }

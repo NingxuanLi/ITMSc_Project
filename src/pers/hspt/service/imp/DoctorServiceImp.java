@@ -42,5 +42,9 @@ public class DoctorServiceImp implements DoctorService{
 	public boolean modify(Doctor doctor) {
 		return doctorDao.modify(doctor);
 	}
+	
+	public int getRowsCountForOneDep(int depId) {
+		return doctorDao.getRowsCountForOneDep(depId);
+	}
 
 }

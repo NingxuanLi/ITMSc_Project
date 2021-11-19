@@ -2,7 +2,7 @@ package pers.hspt.entity;
 
 public class Patient {
 	
-	private int pId;
+	private int id;
 	private String name;
 	private String password;
 	private String realName;
@@ -24,11 +24,11 @@ public class Patient {
 		this.tel = tel;
 		this.brp = brp;
 	}
-	public int getpId() {
-		return pId;
+	public int getId() {
+		return id;
 	}
-	public void setpId(int pId) {
-		this.pId = pId;
+	public void setId(int pId) {
+		this.id = pId;
 	}
 	public String getName() {
 		return name;

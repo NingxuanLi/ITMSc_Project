@@ -12,5 +12,9 @@ public class PatientServiceImp implements PatientService{
 	public boolean add(Patient patient) {
 		return patientDao.add(patient);
 	}
+	
+	public Patient get(String name) {
+		return patientDao.get(name);
+	}
 
 }

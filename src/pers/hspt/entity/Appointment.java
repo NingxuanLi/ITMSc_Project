@@ -8,18 +8,15 @@ public class Appointment {
 	private String appNum;
 	private int pId;
 	private int docId;
-	private Date createTime;
 	private Date appTime;
 	private String appState;
 	
 	public Appointment(){}
-	public Appointment(String appNum, int pId, int docId, Date createTime,
-			Date appTime) {
+	public Appointment(String appNum, int pId, int docId, Date appTime) {
 		super();
 		this.appNum = appNum;
 		this.pId = pId;
 		this.docId = docId;
-		this.createTime = createTime;
 		this.appTime = appTime;
 	}
 	
@@ -50,14 +47,6 @@ public class Appointment {
 	public void setDocId(int docId) {
 		this.docId = docId;
 	}
-	
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	
 	public Date getAppTime() {
 		return appTime;
 	}

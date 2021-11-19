@@ -30,7 +30,7 @@ function changeRows(currentPage){
 	var pageRows=document.getElementById("pageRows").value;  //得到改变的值 
 	if(pageRows>0){
 				
-		location = "department?method=frontShowList&currentPage="+currentPage+"&pageRows="+pageRows;
+		location = "doctor?method=frontShowList&currentPage="+currentPage+"&pageRows="+pageRows;
 		return true;
 	}else if(pageRows==""){
 				
@@ -49,7 +49,7 @@ function changeRows(currentPage){
  </script>
 </head>
 <body>
-		<table width="100%" height="734" border="0">
+<table width="100%" height="734" border="0">
 			<tr>
 			<td colspan="2">
 				<img src="img/top_01.jpg" width="1079" height="235" />
@@ -68,10 +68,10 @@ function changeRows(currentPage){
 						</td>
 						<td width="400" rowspan="2" align="center" valign="bottom">
 							<span class="STYLE14 STYLE13">
-								<span class="STYLE16">Please select a department</span>
+								<span class="STYLE16">Please select a doctor</span>
 							</span>
 						</td>
-						<td width="400">
+						<td width=400">
 							&nbsp;
 						</td>
 					</tr>
@@ -102,42 +102,49 @@ function changeRows(currentPage){
 					<tr>
 						<th height="20" colspan="14" align="center"
 							bgcolor="#EEEEEE" class="tablestyle_title">
-							Department list
+							Doctor list
 						</th>
 					</tr>
 					<tr>
-						<td width="12%" height="20" align="center"
+						<td width="7%" height="20" align="center"
 							bgcolor="#EEEEEE">
-							Department id
+							Name
 						</td>
 						<td width="7%" align="center" bgcolor="#EEEEEE">
-							Department name
+							Department 
+						</td>
+						<td width="15%" height="20" align="center"
+							bgcolor="#EEEEEE">
+							Available Appointment time
+						</td>
+						<td width="11%" align="center" bgcolor="#EEEEEE">
+							Appointment fee
 						</td>
 						<td width="11%" align="center" bgcolor="#EEEEEE">
 							operation
 						</td>
 					</tr>
-						<c:forEach items="${depList}" var="dep">
+						<c:forEach items="${docDtoList}" var="doc">
 							<tr align="center">
 								<td bgcolor="#FFFFFF">
-									${dep.depId}
+									${doc.docName}
 								</td>
 								<td height="20" bgcolor="#FFFFFF">
-									<c:if test="${dep.color eq 'red'}">
-									<span style="color:red">${dep.depName }</span>
-								</c:if>
-								<c:if test="${dep.color eq 'black'}">
-									${dep.depName }
-								</c:if>
+									${doc.depName}
 								</td>
-										
+								<td height="20" bgcolor="#FFFFFF">
+									${doc.docTime}
+								</td>
+								<td height="20" bgcolor="#FFFFFF">
+									${doc.money}
+								</td>
 								<td bgcolor="#FFFFFF">
-									<a href="doctor?method=docListInOneDep&depId=${dep.depId}">select</a>
+									<a href="doctor?method=appointmentMake&docId=${doc.docId}">select</a>
 								</td>
 							</tr>
 						</c:forEach>
 					<tr align="center">
-						<td colspan="4" bgcolor="#FFFFFF">
+						<td colspan="5" bgcolor="#FFFFFF">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.rowsCount}</font>departments in total&nbsp;&nbsp;&nbsp;&nbsp;
 							&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
 							<c:if test="${page.currentPage==1}">
@@ -182,6 +189,5 @@ function changeRows(currentPage){
 				</td>
 			</tr>
 		</table>
-
 </body>
 </html>
