@@ -153,6 +153,35 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 		}
 		return b;
 	}
+
+
+	@Override
+	public Patient get(int id) {
+		Patient p=null;
+		conn=DBConnection.getConnection();
+		try {
+			stmt=conn.createStatement();
+			String sql="select * from patient where p_id='"+id+"'";
+			rs=stmt.executeQuery(sql);
+			if(rs.next()){
+				p=new Patient();
+				p.setId(rs.getInt(1));
+				p.setName(rs.getString(2));
+				p.setPassword(rs.getString(3));
+				p.setRealName(rs.getString(4));
+				p.setGender(rs.getString(5));
+				p.setTel(rs.getString(6));
+				p.setBrp(rs.getString(7));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return p;
+	}
 	
 	
 

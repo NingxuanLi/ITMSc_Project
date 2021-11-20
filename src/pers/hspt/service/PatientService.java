@@ -11,6 +11,8 @@ public interface PatientService {
 	
 	public Patient get(String name);
 	
+	public Patient get(int id);
+	
 	public int getRowsCount(String checkName);
 	
 	public List<Patient> getList(String checkName, PageData pageData);

@@ -187,7 +187,7 @@ function list(idstr){
 				cellspacing="0" class="left-table02">
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu1" src="images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%"><a href="register?method=showList" target="mainFrame" class="left-font03" onClick="tupian('1');">App list</a></td>
+				  <td width="91%"><a href="appointment?method=showList" target="mainFrame" class="left-font03" onClick="tupian('1');">App list</a></td>
 				</tr>
       </table>
 		<!--  预约管理结束    -->

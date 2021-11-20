@@ -11,6 +11,8 @@ public interface PatientDao {
 	
 	public Patient get(String name);
 	
+	public Patient get(int id);
+	
 	public int getRowsCount(String name);
 	
 	public List<Patient> getList(String checkName, PageData pageData);

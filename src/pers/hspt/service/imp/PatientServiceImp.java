@@ -20,6 +20,10 @@ public class PatientServiceImp implements PatientService{
 		return patientDao.get(name);
 	}
 	
+	public Patient get(int id) {
+		return patientDao.get(id);
+	}
+	
 	public int getRowsCount(String checkName) {
 		return patientDao.getRowsCount(checkName);
 	}

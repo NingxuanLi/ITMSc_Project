@@ -3,7 +3,7 @@ package pers.hspt.util;
 public class PageData {
 	
 	private int currentPage=1; //当前页面
-	private int pageRows=3; //每页行数
+	private int pageRows=5; //每页行数
 	private int pageCount; //总页数
 	private int rowsCount;  //总行数
 	
