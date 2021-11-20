@@ -1,18 +1,25 @@
 package pers.hspt.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
+import pers.hspt.util.PageData;
+import pers.hspt.entity.Appointment;
 import pers.hspt.entity.Patient;
+import pers.hspt.service.AppointmentService;
 import pers.hspt.service.PatientService;
+import pers.hspt.service.imp.AppointmentServiceImp;
 import pers.hspt.service.imp.PatientServiceImp;
 
 public class PatientServlet extends HttpServlet{
 	private PatientService patientService = new PatientServiceImp();
+	private AppointmentService appointmentService = new AppointmentServiceImp();
 	
 	public PatientServlet() {
 		super();
@@ -35,10 +42,98 @@ public class PatientServlet extends HttpServlet{
 		// 得到值
 		String method = request.getParameter("method");
 		if (method.equals("add")) {
-			
 			add(request, response);
+		}else if(method.equals("showList")) {
+			showList(request, response);
+		}else if(method.equals("delete")) {
+			delete(request, response);
+		}
+		
+	}
 
-		} 
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		//删除单个
+		String pId = request.getParameter("pId");
+		//删除多个
+		String strId = request.getParameter("strId");
+		
+		boolean b = false;
+		boolean hasApp = false; //判断这个patient有没有预约在数据库
+		if(strId != null && !strId.trim().equals("")) { //多个一起删除
+			String[] arrId = strId.split(",");
+			for(String id : arrId) {
+				hasApp = hasApp(Integer.valueOf(id), request, response);
+				if(!hasApp) { //没有预约，可以删除
+					b = patientService.delete(Integer.valueOf(id));
+				}
+			}
+			showList(request, response);
+			return;
+		}
+		if(pId != null) {
+			hasApp = hasApp(Integer.valueOf(pId), request, response);
+			System.out.println(hasApp);
+			if(!hasApp) {
+				patientService.delete(Integer.valueOf(pId));
+				request.setAttribute("message", "delete success");
+				showList(request, response);
+				return;
+			}else{
+				//TODO 显示不了这个message
+				JOptionPane.showMessageDialog(null, "不能删除有预约的病人信息");
+				request.setAttribute("message", "can't delete a patient already making an appointment");
+				showList(request, response);
+				return;
+			}
+		}
+		request.setAttribute("message", "please choose a patient");
+		showList(request, response);
+	}
+
+	private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		// 得到名字，根据姓名查找时用
+		String checkName = request.getParameter("checkName");
+		// 分页
+		PageData pageData = new PageData();
+		// 得到当前页
+		String currentPage = request.getParameter("currentPage");
+		if (currentPage != null) {
+			pageData.setCurrentPage(Integer.valueOf(currentPage));
+		}
+		// 得到每页行数
+		String pageRows = request.getParameter("pageRows");
+		if (pageRows != null) {
+			pageData.setPageRows(Integer.valueOf(pageRows));
+		}
+		// 得到总行数
+		int rowsCount = patientService.getRowsCount(checkName);	
+		pageData.setRowsCount(rowsCount);	
+		// 计算总页数
+		int pageCount = 0;
+
+		if (rowsCount % pageData.getPageRows() == 0) {
+			pageCount = rowsCount / pageData.getPageRows();
+		} else {
+			pageCount = rowsCount / pageData.getPageRows() + 1;
+		}
+		pageData.setPageCount(pageCount);
+		
+		List<Patient> patientList = patientService.getList(checkName, pageData);
+		//查看每个病人是否有预约，如果有就显示红色，没有就显示黑色
+		for(Patient p : patientList) {
+			boolean hasApp = hasApp(p.getId(), request, response);
+			if(hasApp) {  //有预约显示红色
+				p.setColor("red");
+			}else {  //没有预约显示黑色
+				p.setColor("black");
+			}
+		}
+		//跳转
+		request.setAttribute("patientList", patientList);
+		request.setAttribute("page", pageData);
+		request.setAttribute("checkName", checkName);
+		
+		request.getRequestDispatcher("/admin/patientList.jsp").forward(request, response);
 	}
 
 	private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -97,13 +192,26 @@ public class PatientServlet extends HttpServlet{
 		
 		if(b) {
 			//TODO 在jsp页面用alert说明注册成功
-			request.setAttribute("error", "registration successful");
-			request.getRequestDispatcher("/patient_registration.jsp").forward(request, response);
+			request.setAttribute("message", "registration successful");
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}else {
 			request.setAttribute("error", "registration failed");
 			request.getRequestDispatcher("/patient_registration.jsp").forward(request, response);
 		}
 		
+	}
+	
+	//判断一个病人有没有预约过
+	public boolean hasApp(int id, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		boolean b = false;
+		Appointment appointment = appointmentService.getByPatientId(id);
+		if(appointment == null) {   //只要查到有一条记录，说明这个病人已经预约过了
+			b = false;
+		}else {  //没有查到app记录，说明病人还没有预约过
+			b = true;
+		}
+		return b;
 	}
 	
 

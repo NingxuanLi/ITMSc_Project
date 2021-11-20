@@ -51,7 +51,7 @@ public class Patient {
 	public String getGender() {
 		return gender;
 	}
-	public void setSex(String gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public String getTel() {

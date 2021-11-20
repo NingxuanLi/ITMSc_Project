@@ -1,6 +1,10 @@
 package pers.hspt.dao.imp;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import pers.hspt.util.PageData;
 
 import pers.hspt.entity.Patient;
 import pers.hspt.util.DBConnection;
@@ -52,7 +56,7 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 				p.setName(rs.getString(2));
 				p.setPassword(rs.getString(3));
 				p.setRealName(rs.getString(4));
-				p.setSex(rs.getString(5));
+				p.setGender(rs.getString(5));
 				p.setTel(rs.getString(6));
 				p.setBrp(rs.getString(7));
 			}
@@ -64,6 +68,90 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 		}
 		
 		return p;
+	}
+	
+	public int getRowsCount(String name){
+		int rowsCount=0;
+		try {
+			conn=DBConnection.getConnection();
+			stmt=conn.createStatement();
+			String sql="";
+			if(name==null||name.equals("")){
+				sql="select count(*) from patient ";
+			}else{
+				System.out.println(name);
+				sql="select count(*) from patient where p_name like '"+name+"%' ";
+			}
+			
+			rs=stmt.executeQuery(sql);
+			
+			if(rs.next()){
+				
+				rowsCount=rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally{
+			DBConnection.close(rs, stmt, pstmt);
+		}
+		
+		return rowsCount;
+		
+		
+	}
+	
+	public List<Patient> getList(String name,PageData pageData) {
+		// 显示列表时查询所有的，修改初始化时查询单条记录
+		List<Patient> list=new ArrayList<Patient>();	
+		conn=DBConnection.getConnection();
+        try {
+			stmt=conn.createStatement();
+			String sql="";
+			if(name==null||name.equals("")){				
+				//查询所有的
+				sql="select * from  patient limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
+				
+			}else{
+				//查询单条			
+				sql="select * from  patient where p_name like '%"+name+"%' limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
+			}		
+			rs=stmt.executeQuery(sql);
+			Patient p=null;
+			while(rs.next()){
+				p=new Patient();
+				p.setId(rs.getInt(1));
+				p.setName(rs.getString(2));
+				p.setPassword(rs.getString(3));
+				p.setRealName(rs.getString(4));
+				p.setGender(rs.getString(5));
+				p.setTel(rs.getString(6));
+				p.setBrp(rs.getString(7));
+				list.add(p);
+			}
+		} catch (SQLException e) {			
+			e.printStackTrace();		
+		}finally{
+			DBConnection.close(rs, stmt, pstmt);
+		}		
+		return list;
+	}
+	
+	public boolean delete(int id) {
+		boolean b=true;
+		conn=DBConnection.getConnection();
+		try {
+			//删除时，还要注意该病人如果处于挂号状态，就不能删除,
+			String sql="delete from patient where p_id="+id;
+			pstmt=conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			b=false;
+		}finally{
+			DBConnection.close(rs, stmt, pstmt);
+		}
+		return b;
 	}
 	
 	

@@ -17,5 +17,9 @@ public class AppointmentServiceImp implements AppointmentService{
 	public boolean add(Appointment appointment) {
 		return appointmentDao.add(appointment);
 	}
+	
+	public Appointment getByPatientId(int id) {
+		return appointmentDao.getByPatientId(id);
+	}
  
 }
