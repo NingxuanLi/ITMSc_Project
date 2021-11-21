@@ -26,7 +26,6 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			b=false;
 		}finally{		
@@ -135,6 +134,33 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 	        try {
 				stmt=conn.createStatement();
 				String sql="select * from Department where dep_id="+depId;
+				
+				rs=stmt.executeQuery(sql);
+			
+				if(rs.next()){
+					department=new Department();
+					department.setDepId(rs.getInt(1));
+					department.setDepName(rs.getString(2));
+				}
+
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}finally{
+				DBConnection.close(rs, stmt, pstmt);
+			}
+			
+			return department;
+		}
+		
+        public Department get(String name) {
+			
+			Department department=null;
+			
+			conn=DBConnection.getConnection();
+	        try {
+				stmt=conn.createStatement();
+				String sql="select * from Department where dep_name='"+ name + "'";
 				
 				rs=stmt.executeQuery(sql);
 			

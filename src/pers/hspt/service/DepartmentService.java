@@ -20,6 +20,8 @@ public interface DepartmentService {
 	
 	public Department get(int depId);
 	
+	public Department get(String name);
+	
 	public boolean modify(Department Department, int depId);
 
 }

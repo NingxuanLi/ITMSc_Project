@@ -35,6 +35,10 @@ public class DoctorServiceImp implements DoctorService{
 		return doctorDao.get(docId);
 	}
 	
+	public Doctor get(String name) {
+		return doctorDao.get(name);
+	}
+	
 	public boolean delete(int docId) {
 		return doctorDao.delete(docId);
 	}

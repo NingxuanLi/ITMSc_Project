@@ -2,10 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String message = (String)request.getAttribute("message");
+if(!"null".equals(message)&&!"".equals(message)&&message!=null){
+	out.print("<script>alert('"+message+"');</script>");
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -169,7 +171,7 @@ function disapproveAll(){
 													<td width="8%" align="center" bgcolor="#EEEEEE">
 														Date
 													</td>
-													<td width="11%" align="center" bgcolor="#EEEEEE">
+													<td colspan="2" width="11%" align="center" bgcolor="#EEEEEE">
 														operation
 													</td>
 												</tr>
@@ -192,13 +194,16 @@ function disapproveAll(){
 																${app.appTime}
 															</td>
 															<td bgcolor="#FFFFFF">
-																<a href="javascript:;" onclick="approve(${app.appId})">approve</a>&nbsp;|&nbsp;
+																<a href="javascript:;" onclick="approve(${app.appId})">approve</a>
+															</td>
+															<td bgcolor="#FFFFFF">
 																<a href="javascript:;" onclick="disapprove(${app.appId})">disapprove</a>
 															</td>
+															
 														</tr>
 													</c:forEach>
 												<tr align="center">
-													<td colspan="6" bgcolor="#FFFFFF">
+													<td colspan="7" bgcolor="#FFFFFF">
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.rowsCount}</font>appointments in total&nbsp;&nbsp;&nbsp;&nbsp;
 														&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${page.currentPage==1}">

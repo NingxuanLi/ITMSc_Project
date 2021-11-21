@@ -56,14 +56,15 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			boolean b=true;
 			conn=DBConnection.getConnection();
 			try {
-				String sql="insert into doctor values(default,?,default,?,?,?,?)";
+				String sql="insert into doctor values(default,?,?,?,?,?,?)";
 				
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setString(1,doctor.getDocName());
-				pstmt.setInt(2, doctor.getMoney());
-				pstmt.setDate(3, DateUtil.toSqlDate(doctor.getDocTime()));
-				pstmt.setString(4, doctor.getDocStatus());
-				pstmt.setInt(5, doctor.getDepId());
+				pstmt.setString(2,doctor.getDocPassword());
+				pstmt.setInt(3, doctor.getMoney());
+				pstmt.setDate(4, DateUtil.toSqlDate(doctor.getDocTime()));
+				pstmt.setString(5, doctor.getDocStatus());
+				pstmt.setInt(6, doctor.getDepId());
 				
 				pstmt.executeUpdate();
 				
@@ -164,6 +165,40 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 				stmt=conn.createStatement();
 
 				String	sql="select * from doctor  where doc_id ="+docId;
+				
+				rs=stmt.executeQuery(sql);
+				
+				if(rs.next()){
+					doc=new Doctor();
+					doc.setDocId(rs.getInt(1));
+					doc.setDocName(rs.getString(2));
+					doc.setDocPassword(rs.getString(3));
+					doc.setMoney(rs.getInt(4));
+					doc.setDocTime(rs.getDate(5));
+					doc.setDocStatus(rs.getString(6));
+					doc.setDepId(rs.getInt(7));
+								
+				}
+
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				
+			}finally{
+				DBConnection.close(rs, stmt, pstmt);
+			}
+			
+			return doc;
+		}
+		
+		public Doctor get(String name){
+			
+			Doctor doc=null;
+			conn=DBConnection.getConnection();
+	        try {
+				stmt=conn.createStatement();
+
+				String	sql="select * from doctor  where doc_name = '"+ name + "'";
 				
 				rs=stmt.executeQuery(sql);
 				

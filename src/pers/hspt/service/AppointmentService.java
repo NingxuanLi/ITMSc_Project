@@ -20,5 +20,6 @@ public interface AppointmentService {
 	public void approve(int appId);
 	
 	public void disapprove(int appId);
-
+	
+	public List<Appointment> getPersonalList(int id);
 }

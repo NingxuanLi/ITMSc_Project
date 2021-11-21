@@ -121,15 +121,9 @@ public class DepartmentServlet extends HttpServlet{
 	// 添加
 	public void add(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		String depId = request.getParameter("depId");
 		String depName = request.getParameter("depName");
 		// 得到值
-
-		System.out.println(depId);
-		System.out.println(depName);
-		// 判断在前台页面判断
-
 		if (depId == null || depId.trim().equals("")) {
 			request.setAttribute("error", "id can't be null");
 			request.getRequestDispatcher("/admin/addDep.jsp").forward(
@@ -142,8 +136,21 @@ public class DepartmentServlet extends HttpServlet{
 					request, response);
 			return;
 		}
+		
+		Department idRepeated = departmentService.get(Integer.valueOf(depId));
+		if(idRepeated != null) {
+			request.setAttribute("error", "there exists a dep with same id, please use another id");
+			request.getRequestDispatcher("/admin/addDep.jsp").forward(request, response);
+			return;
+		}
+		Department nameRepeated = departmentService.get(depName);
+		if(nameRepeated != null) {
+			request.setAttribute("error", "there exists a dep with same name, please use another name");
+			request.getRequestDispatcher("/admin/addDep.jsp").forward(request, response);
+			return;
+		}
 		// 插入数据库
-		Department department = new Department(Integer.valueOf(depId), depName);
+		Department department = new Department(Integer.valueOf(depId), depName);	
 		boolean b = departmentService.add(department);
 		if (b) {
 			// 成功
@@ -154,8 +161,7 @@ public class DepartmentServlet extends HttpServlet{
 			request.setAttribute("error", "add failed");
 			request.getRequestDispatcher("admin/addDep.jsp").forward(
 					request, response);
-		}
-
+		}	
 	}	
 	
 	// 显示科室列表
@@ -287,9 +293,21 @@ public class DepartmentServlet extends HttpServlet{
 			int oldDepId = Integer.valueOf(request.getParameter("oldDepId"));// 旧的id
 			int newDepId = Integer.valueOf(request.getParameter("depId"));
 			String depName = request.getParameter("depName");
-
+			
+            Department department = departmentService.get(Integer.valueOf(newDepId));
+            if(department != null) {
+            	request.setAttribute("error", "there exists a department with the same id, please use another id");
+            	request.getRequestDispatcher("/admin/departmentList.jsp").forward(request, response);
+            	return;
+            }
+            department = departmentService.get(depName);
+            if(department != null) {
+            	request.setAttribute("error", "there exists a department with the same name, please use another name");
+            	request.getRequestDispatcher("/admin/departmentList.jsp").forward(request, response);
+            	return;
+            }
 			// 数据库修改
-			Department department = new Department(newDepId, depName);
+			department = new Department(newDepId, depName);
 			boolean b = departmentService.modify(department, oldDepId);
 			if (b) {
 				// 成功

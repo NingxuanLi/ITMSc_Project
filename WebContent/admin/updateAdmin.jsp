@@ -68,10 +68,11 @@
 													</td>
 												
 												</tr>
-												
-												
-												
-												
+												<tr>
+													<td style="color: red; font-size: 20;" colspan="2" width="15%" align="left" >
+														${error }
+													</td>													
+												</tr>	
 											</table>
 											<br />
 										</fieldset>

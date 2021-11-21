@@ -63,15 +63,22 @@ public class AdminServlet extends HttpServlet{
 		String adminName = request.getParameter("adminName");
 		String adminPassword = request.getParameter("adminPassword");
 		
-		Admin admin = new Admin(adminName, adminPassword);
-		admin.setAdminId(Integer.valueOf(adminId));
-		boolean b = adminService.modify(admin);
-		if(b) {
-			showList(request, response);
+		boolean isNameRepeated = isNameRepeated(adminName, request, response);
+		if(isNameRepeated) {
+			request.setAttribute("error", "name repeated");
+			request.getRequestDispatcher("/admin/updateAdmin.jsp").forward(request, response);
+			return;
 		}else {
-			request.setAttribute("error", "edit failed");
-			request.getRequestDispatcher("/admin/updateAdmin.jsp").forward(request, response);			
-		}
+			Admin admin = new Admin(adminName, adminPassword);
+			admin.setAdminId(Integer.valueOf(adminId));
+			boolean b = adminService.modify(admin);
+			if(b) {
+				showList(request, response);
+			}else {
+				request.setAttribute("error", "edit failed");
+				request.getRequestDispatcher("/admin/updateAdmin.jsp").forward(request, response);			
+			}
+		}		
 	}
 
 	private void gotoModify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{

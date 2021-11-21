@@ -73,6 +73,15 @@
 															style="width: 154px;"  />
 													</td>
 												</tr>
+												<tr align="left">
+													<td align="right">
+														Doctor password:
+													</td>
+													<td>
+														<input class="text" name="docPassword"
+															style="width: 154px;"  />
+													</td>
+												</tr>
 												<tr>
 													<td width="15%" align="right">
 														Doctor department
@@ -107,6 +116,12 @@
 														<input class="text" id="docTime" name="docTime" type="text" value="xxxx-xx-xx"
 															style="width: 154px;" />
 													</td>
+												</tr>
+												<tr>
+													<td colspan="2"  style="color: red; font-size: 20;" width="15%" align="right" >
+														${error }
+													</td>
+													
 												</tr>
 												
 												

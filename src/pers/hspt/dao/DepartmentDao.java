@@ -17,6 +17,8 @@ public interface DepartmentDao {
 	
 	public Department get(int depId);
 	
+	public Department get(String name);
+	
 	public boolean modify(Department department, int depId);
 
 }

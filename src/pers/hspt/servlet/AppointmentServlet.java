@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import pers.hspt.util.PageData;
 import pers.hspt.dto.AppointmentDto;
+import pers.hspt.dto.PersonalAppDto;
 import pers.hspt.entity.Appointment;
 import pers.hspt.entity.Department;
 import pers.hspt.entity.Doctor;
@@ -57,13 +58,86 @@ public class AppointmentServlet extends HttpServlet{
 			approve(request, response);
 		}else if(method.equals("disapprove")) {
 			disapprove(request, response);
+		}else if(method.equals("query")) {
+			query(request, response);
 		}
+	}
+
+	private void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		String imgTxt = request.getParameter("code");
+		//非空判断
+		if(name == null || name.trim().equals("")) {
+			request.setAttribute("error", "name can't be null");
+			request.getRequestDispatcher("/appointment_query.jsp").forward(request, response);
+			return;
+		}
+		if(password == null || password.trim().equals("")) {
+			request.setAttribute("error", "password can't be null");
+			request.getRequestDispatcher("/appointment_query.jsp").forward(request, response);
+			return;
+		}
+		if(imgTxt == null || imgTxt.trim().equals("")) {
+			request.setAttribute("error", "captcha can't be null");
+			request.getRequestDispatcher("/appointment_query.jsp").forward(request, response);
+			return;
+		}
+		//不是空的，数据库有没有这个病人，没有就返回
+		Patient patient = patientService.get(name);
+		if(patient != null) {
+			//密码是否正确
+			if(!password.trim().equals(patient.getPassword())) {
+				request.setAttribute("error", "wrong password");
+				request.getRequestDispatcher("/appointment_query.jsp").forward(request, response);
+				return;
+			}else {
+				String str = (String) request.getSession().getAttribute("str");
+				if(imgTxt.equals(str)) {				
+					List<Appointment> list = appointmentService.getPersonalList(patient.getId());
+					List<PersonalAppDto> personalAppList = new ArrayList<>();
+					for(Appointment app : list) {
+						
+						Doctor doctor = doctorService.get(app.getDocId());
+						Department department = departmentService.get(doctor.getDepId());
+						PersonalAppDto dto = new PersonalAppDto();
+						dto.setRealName(patient.getRealName());
+						dto.setDepName(department.getDepName());
+						dto.setDocName(doctor.getDocName());
+						dto.setMoney(doctor.getMoney());
+						dto.setTelNum(patient.getTel());
+						dto.setBrpNum(patient.getBrp());
+						dto.setAppTime(app.getAppTime());
+						if(app.getAppState().equals("0")) {
+							dto.setAppState("haven't been processed yet");
+						}else if(app.getAppState().equals("1")) {
+							dto.setAppState("approved");
+						}else {
+							dto.setAppState("disapproved");
+						}
+						personalAppList.add(dto);
+					}
+					request.setAttribute("perosonalAppList", personalAppList);
+					request.getRequestDispatcher("/personalAppList.jsp").forward(request, response);
+					return;					
+				}else {
+					request.setAttribute("error", "wrong captcha");
+					request.getRequestDispatcher("/appointment_query.jsp").forward(request, response);
+					return;
+				}
+			}
+		}else {
+			request.setAttribute("error", "don't have this patient");
+			request.getRequestDispatcher("/appointment_query.jsp").forward(request, response);
+		}
+		
+		
 	}
 
 	private void disapprove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String appId = request.getParameter("appId");
 		String strId = request.getParameter("strId");
-		
+		System.out.println(appId);
 		if(strId != null && !strId.trim().equals("")) {
 			String[] arrId = strId.split(",");
 			for(String id : arrId) {

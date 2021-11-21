@@ -35,6 +35,10 @@ public class DepartmentServiceImp implements DepartmentService{
 		return departmentDao.get(depId);
 	}
 	
+	public Department get(String name) {
+		return departmentDao.get(name);
+	}
+	
 	
 	public boolean modify(Department department, int depId) {
 		return departmentDao.modify(department, depId);

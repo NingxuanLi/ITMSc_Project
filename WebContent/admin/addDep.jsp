@@ -55,16 +55,16 @@ function change(){
 												style="width: 100%">
 
 												
-												<tr align="left">
-													<td align="right">
+												<tr>
+													<td width="15%" align="right">
 														department id:
 													</td>
-													<td>
+													<td width="35%">
 														<input class="text" name="depId" id="depId"
-															style="width: 154px;"  />
+															style="width: 154px;" />
 													</td>
-												</tr>
 												
+												</tr>
 												<tr>
 													<td width="15%" align="right">
 														department name:
@@ -76,7 +76,7 @@ function change(){
 												
 												</tr>
 												<tr>
-													<td width="15%" align="center" colspan="2" style="color: red">
+													<td width="15%" align="left" colspan="2" style="color: red">
 														${error}
 													</td>
 													

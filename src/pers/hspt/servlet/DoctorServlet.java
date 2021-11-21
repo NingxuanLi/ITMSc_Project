@@ -230,22 +230,28 @@ public class DoctorServlet extends HttpServlet{
 		int depId = Integer.valueOf(request.getParameter("depId"));
 		Date timeDate = DateUtil.getBirthDate(docTime);
 		
-		doctor.setDocName(docName);
-		doctor.setMoney(money);
-		doctor.setDepId(depId);
-		doctor.setDocTime(timeDate);
-		
-		boolean b = doctorService.modify(doctor);
-		if(b) {
-			//修改成功，跳转到showList
-			System.out.println("modification succeeded");
-			showList(request, response);
+		Doctor docRepeated = doctorService.get(docName);
+		if(docRepeated != null) {
+			request.setAttribute("error", "repeated doctor name, please use another name");
+			request.getRequestDispatcher("/admin/updateDoctor.jsp").forward(request, response);
+			return;
 		}else {
-			//修改失败
-			System.out.println("modification failed");
-			request.setAttribute("error", "modification failed");
-			request.getRequestDispatcher("/admin/doctorList.jsp").forward(request, response);
-		}
+			doctor.setDocName(docName);
+			doctor.setMoney(money);
+			doctor.setDepId(depId);
+			doctor.setDocTime(timeDate);			
+			boolean b = doctorService.modify(doctor);
+			if(b) {
+				//修改成功，跳转到showList
+				System.out.println("modification succeeded");
+				showList(request, response);
+			}else {
+				//修改失败
+				System.out.println("modification failed");
+				request.setAttribute("error", "modification failed");
+				request.getRequestDispatcher("/admin/doctorList.jsp").forward(request, response);
+			}
+		}	
 	}
 
 
@@ -392,17 +398,34 @@ public class DoctorServlet extends HttpServlet{
 	private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try{
 			String docName = request.getParameter("docName");
+			String docPassword = request.getParameter("docPassword");
 			int money = Integer.valueOf(request.getParameter("money"));
 			int depId = Integer.valueOf(request.getParameter("depId"));
 			String docTime = request.getParameter("docTime");
 			Date timeDate = DateUtil.getBirthDate(docTime);
-			
-			Doctor doctor = new Doctor(docName, money, timeDate, "normal", depId);
-			
+						
+			Doctor doctor = doctorService.get(docName);
+			if(doctor != null) {
+				request.setAttribute("error", "there exist a doctor with the same name, please enter a different name");
+				request.getRequestDispatcher("/admin/addDoctor.jsp").forward(request, response);
+				return;
+			}else {
+				doctor = new Doctor(docName, docPassword,money, timeDate, "normal", depId);
+				boolean b = doctorService.add(doctor);
+				//添加成功
+				if(b) {
+					request.setAttribute("message", "successfully added");
+					showList(request, response);
+				//添加失败	
+				}else {
+					request.setAttribute("error", "add failed");
+					request.getRequestDispatcher("/admin/addDoctor.jsp").forward(request, response);
+				}
+			}
 			boolean b = doctorService.add(doctor);
 			//添加成功
 			if(b) {
-				request.setAttribute("message", "successfully added, the default password is 123");
+				request.setAttribute("message", "successfully added");
 				showList(request, response);
 			//添加失败	
 			}else {

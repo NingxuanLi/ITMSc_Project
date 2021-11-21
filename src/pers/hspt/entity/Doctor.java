@@ -20,9 +20,10 @@ public class Doctor {
 	public Doctor(){}
 	
 	
-	public Doctor(String docName, int money, Date docTime, String docStatus, int depId) {
+	public Doctor(String docName, String password,int money, Date docTime, String docStatus, int depId) {
 		super();
 		this.docName = docName;
+		this.docPassword = password;
 		this.money = money;
 		this.docTime = docTime;
 		this.docStatus = docStatus;

@@ -186,10 +186,16 @@ public class PatientServlet extends HttpServlet{
 			return;
 		}
 		
+		Patient patient = patientService.get(name); //不能添加相同名字的用户
+		if(patient != null) {
+			request.setAttribute("error", "The name is already in use, please enter a different name");
+			request.getRequestDispatcher("/patient_registration.jsp").forward(request, response);
+			return;
+		}else {
+			patient = new Patient(name, password, realName, gender, telNumber, brpNumber);					
+		}
 		//Database insertion
-		Patient patient = new Patient(name, password, realName, gender, telNumber, brpNumber);
 		boolean b = patientService.add(patient);
-		
 		if(b) {
 			//TODO 在jsp页面用alert说明注册成功
 			request.setAttribute("message", "registration successful");

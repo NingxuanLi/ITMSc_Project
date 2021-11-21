@@ -98,15 +98,17 @@
 													</td>
 												</tr>
 												
-												
+												<tr>
+													<td colspan="2" style="color: red; font-size: 20;" width="15%" width="15%" align="right">
+														${error }
+													</td>												
+												</tr>											
 											</table>
 											<br />
 										</fieldset>
 									</TD>
 								</TR>
 							</TABLE>
-
-
 						</td>
 					</tr>
 

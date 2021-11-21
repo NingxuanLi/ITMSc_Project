@@ -19,6 +19,8 @@ public interface DoctorService {
 	
 	public Doctor get(int docId);
 	
+	public Doctor get(String name);
+	
 	public boolean delete(int docId);
 	
 	public boolean modify(Doctor doctor);
