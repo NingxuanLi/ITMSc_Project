@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import pers.hspt.util.PageData;
 import pers.hspt.dto.AppointmentDto;
+import pers.hspt.dto.DoctorAppDto;
 import pers.hspt.dto.PersonalAppDto;
 import pers.hspt.entity.Appointment;
 import pers.hspt.entity.Department;
@@ -60,7 +61,28 @@ public class AppointmentServlet extends HttpServlet{
 			disapprove(request, response);
 		}else if(method.equals("query")) {
 			query(request, response);
+		}else if(method.equals("showListDoctor")) {
+			showListDoctor(request, response);
 		}
+	}
+
+	private void showListDoctor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		Doctor doctor = (Doctor) request.getSession().getAttribute("doctor");
+		List<Appointment> list = appointmentService.getDoctorList(doctor.getDocId());
+		List<DoctorAppDto> docAppList = new ArrayList<>();
+		for(Appointment app : list) {
+			Patient patient = patientService.get(app.getpId());
+			DoctorAppDto dto = new DoctorAppDto();
+			dto.setpName(patient.getName());
+			dto.setpRealName(patient.getRealName());
+			dto.setpGender(patient.getGender());
+			dto.setpTelNum(patient.getTel());
+			dto.setpBrpNum(patient.getBrp());
+			dto.setAppTime(app.getAppTime());
+			docAppList.add(dto);
+		}
+		request.setAttribute("docAppList", docAppList);
+		request.getRequestDispatcher("/doctor/docAppList.jsp").forward(request, response);		
 	}
 
 	private void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -94,7 +116,7 @@ public class AppointmentServlet extends HttpServlet{
 			}else {
 				String str = (String) request.getSession().getAttribute("str");
 				if(imgTxt.equals(str)) {				
-					List<Appointment> list = appointmentService.getPersonalList(patient.getId());
+					List<Appointment> list = appointmentService.getPatientList(patient.getId());
 					List<PersonalAppDto> personalAppList = new ArrayList<>();
 					for(Appointment app : list) {
 						

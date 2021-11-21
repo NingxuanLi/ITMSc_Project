@@ -18,10 +18,10 @@
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td height="60">
+    <td height="60" >
 	    <table width="99%" border="0" cellspacing="0" cellpadding="0">
 	      <tr>
-	        <td width="50%"><img src="img/admin_top.jpg" width="400" height="59" border="0" /></td>
+	        <td width="50%"><img src="img/doctor_top.jpg" width="400" height="60" border="0" /></td>
 	        <td width="50%" align="right" style="font-size:12px;vertical-align:top;">&copy;Email:2528986L@student.gla.ac.uk</td>
 	      </tr>
 	    </table>

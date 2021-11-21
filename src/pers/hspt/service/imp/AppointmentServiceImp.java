@@ -41,8 +41,12 @@ public class AppointmentServiceImp implements AppointmentService{
 		appointmentDao.disapprove(appId);
 	}
 	
-	public List<Appointment> getPersonalList(int id){
-		return appointmentDao.getPersonalList(id);
+	public List<Appointment> getPatientList(int id){
+		return appointmentDao.getPatientList(id);
+	}
+	
+	public List<Appointment> getDoctorList(int id){
+		return appointmentDao.getDoctorList(id);
 	}
  
 }

@@ -179,13 +179,44 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 	}
 
 	@Override
-	public List<Appointment> getPersonalList(int id) {
+	public List<Appointment> getPatientList(int id) {
 		List<Appointment> list = new ArrayList<>();
 		conn=DBConnection.getConnection();
         try {
 			stmt=conn.createStatement();
 			String sql="";
 			sql="select * from appointment where p_id = " + id;
+			rs=stmt.executeQuery(sql);
+			Appointment app=null;
+			while(rs.next()){
+				app=new Appointment();
+				app.setAppId(rs.getInt(1));
+				app.setAppNum(rs.getString(2));
+				app.setpId(rs.getInt(3));
+				app.setDocId(rs.getInt(4));
+				app.setAppTime(rs.getDate(5));
+				app.setAppState(rs.getString(6));
+				list.add(app);
+			}
+
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		}finally{
+			DBConnection.close(rs, stmt, pstmt);
+		}
+		
+		return list;
+	}
+	
+	public List<Appointment> getDoctorList(int id) {
+		List<Appointment> list = new ArrayList<>();
+		conn=DBConnection.getConnection();
+        try {
+			stmt=conn.createStatement();
+			String sql="";
+			sql="select * from appointment where app_state = 1 and doc_id=" + id;
 			rs=stmt.executeQuery(sql);
 			Appointment app=null;
 			while(rs.next()){

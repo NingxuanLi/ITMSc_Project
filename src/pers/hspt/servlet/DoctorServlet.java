@@ -90,12 +90,19 @@ public class DoctorServlet extends HttpServlet{
 			delete(request, response);
 		}else if (method.equals("login")) {
 			login(request,response);
-		}else if("logout".equals(method)) {
-//			loginOut(request,response);
+		}else if(method.equals("logout")) {
+			logout(request,response);
 		}else if(method.equals("appointmentMake")) {
 			appointmentMake(request,response);
 		}
 
+	}
+
+
+	private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.getSession().invalidate();
+		request.getRequestDispatcher("/doctor_login.jsp").forward(request, response);
+		
 	}
 
 
@@ -131,7 +138,7 @@ public class DoctorServlet extends HttpServlet{
 					request.getRequestDispatcher("/doctor/index.jsp").forward(request, response);
 					return;
 				}else {
-					request.setAttribute("eror", "wrong captcha");
+					request.setAttribute("error", "wrong captcha");
 					request.getRequestDispatcher("/doctor_login.jsp").forward(request, response);
 					return;
 				} 				

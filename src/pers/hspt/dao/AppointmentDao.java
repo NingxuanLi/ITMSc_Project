@@ -20,6 +20,8 @@ public interface AppointmentDao {
 	
 	public void disapprove(int appId);
 	
-	public List<Appointment> getPersonalList(int id);
+	public List<Appointment> getPatientList(int id);
+	
+	public List<Appointment> getDoctorList(int id);
 
 }
