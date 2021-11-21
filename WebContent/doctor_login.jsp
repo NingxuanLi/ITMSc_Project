@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<br />
 							</td>
 							<td width="80%">
-								<input name="adminName" type="text" size="30" />
+								<input name="name" type="text" size="30" />
 							</td>
 						</tr>
 						<tr>

@@ -88,14 +88,60 @@ public class DoctorServlet extends HttpServlet{
 		} else if (method.equals("delete")) {
 
 			delete(request, response);
-		}else if ("doctorLogin".equals(method)) {
-//			doctorLogin(request,response);
+		}else if (method.equals("login")) {
+			login(request,response);
 		}else if("logout".equals(method)) {
 //			loginOut(request,response);
 		}else if(method.equals("appointmentMake")) {
 			appointmentMake(request,response);
 		}
 
+	}
+
+
+	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		String imgTxt = request.getParameter("code");// get the captcha code string
+		if (name == null || name.trim().equals("")) {
+			request.setAttribute("error", "please enter your name");
+			request.getRequestDispatcher("/doctor_login.jsp").forward(request, response);
+			return;
+		}
+		if (password == null || password.equals("")) {
+			request.setAttribute("error", "please enter your password");
+			request.getRequestDispatcher("/doctor_login.jsp").forward(request, response);
+			return;
+		}
+		if (imgTxt == null || imgTxt.trim().equals("")) {
+			request.setAttribute("error", "please enter the captcha code");
+			request.getRequestDispatcher("/doctor_login.jsp").forward(request, response);
+			return;
+		}
+		Doctor doctor = doctorService.get(name);
+		if(doctor != null) {
+			if(!password.trim().equals(doctor.getDocPassword())) {
+				request.setAttribute("error", "wrong password");
+				request.getRequestDispatcher("/doctor_login.jsp").forward(request, response);
+				return;
+			}else {
+				String str = (String) request.getSession().getAttribute("str");
+				if (imgTxt.equals(str)) {
+					request.getSession().setAttribute("doctor", doctor); //session
+					request.getRequestDispatcher("/doctor/index.jsp").forward(request, response);
+					return;
+				}else {
+					request.setAttribute("eror", "wrong captcha");
+					request.getRequestDispatcher("/doctor_login.jsp").forward(request, response);
+					return;
+				} 				
+			}
+		}else {
+			request.setAttribute("error", "don't have this doctor");
+			request.getRequestDispatcher("/doctor_login.jsp").forward(request, response);
+			return;
+		}
+		
 	}
 
 
