@@ -137,8 +137,8 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 		return list;
 	}
 	
-	public boolean delete(int id) {
-		boolean b=true;
+	public void delete(int id) {
+
 		conn=DBConnection.getConnection();
 		try {
 			//删除时，还要注意该病人如果处于挂号状态，就不能删除,
@@ -147,11 +147,10 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			b=false;
+			e.printStackTrace();
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
 		}
-		return b;
 	}
 
 

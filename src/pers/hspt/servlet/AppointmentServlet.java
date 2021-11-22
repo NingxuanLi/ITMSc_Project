@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 import pers.hspt.util.PageData;
 import pers.hspt.dto.AppointmentDto;
@@ -61,14 +62,131 @@ public class AppointmentServlet extends HttpServlet{
 			disapprove(request, response);
 		}else if(method.equals("query")) {
 			query(request, response);
-		}else if(method.equals("showListDoctor")) {
-			showListDoctor(request, response);
+		}else if(method.equals("showDoctorList")) {
+			showDoctorList(request, response);
+		}else if(method.equals("showArchiveList")) {
+			showArchiveList(request, response);
+		}else if(method.equals("delete")) {
+			delete(request, response);
 		}
 	}
 
-	private void showListDoctor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		// 单个删除
+		String appId = request.getParameter("appId");
+		// 多个删除
+		String strId = request.getParameter("strId");
+			
+		if (strId != null && !strId.trim().equals("")) {
+			String arrId[] = strId.split(","); 
+			for (int i = 0; i < arrId.length; i++) {
+				appointmentService.delete(Integer.valueOf(arrId[i]));				
+			}
+			request.setAttribute("message", "delete succeeds");
+			showArchiveList(request, response);
+			return;
+		} else {
+			if (appId != null) {			
+				appointmentService.delete(Integer.valueOf(appId));
+				request.setAttribute("message", "delete succeeds");
+				showArchiveList(request, response);
+				return;				
+			} else {
+				request.setAttribute("message", "please select a appointment");
+				showArchiveList(request, response);
+				return;
+			}
+		}
+		
+	}
+
+	private void showArchiveList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		PageData pageData = new PageData();// 分页
+		// 得到当前页
+		String currentPage = request.getParameter("currentPage");
+		if (currentPage != null) {
+			pageData.setCurrentPage(Integer.valueOf(currentPage));
+		}
+		// 得到每页行数
+		String pageRows = request.getParameter("pageRows");
+		if (pageRows != null) {
+			pageData.setPageRows(Integer.valueOf(pageRows));
+		}
+		// 得到总行数
+		int rowsCount = appointmentService.getArchiveRowsCount();
+		pageData.setRowsCount(rowsCount);
+		// 计算总页数
+		int pageCount = 0;
+		if (rowsCount % pageData.getPageRows() == 0) {
+			pageCount = rowsCount / pageData.getPageRows();
+		} else {
+			pageCount = rowsCount / pageData.getPageRows() + 1;
+		}
+		pageData.setPageCount(pageCount);
+		
+		//查询数据库
+		List<Appointment> list = appointmentService.getArchiveList(pageData);
+
+		List<AppointmentDto> appList = new ArrayList<>();
+		AppointmentDto dto = null;
+		for(Appointment app : list) {
+			//获得patient，doctor，department
+			
+			Patient patient = patientService.get(app.getpId());
+			Doctor doctor = doctorService.get(app.getDocId());
+			Department department = departmentService.get(doctor.getDepId());
+			
+			dto = new AppointmentDto();
+			dto.setAppId(app.getAppId());
+			dto.setAppNum(app.getAppNum());
+			dto.setpId(patient.getId());
+			dto.setpName(patient.getName());
+			dto.setDepName(department.getDepName());
+			dto.setDocId(doctor.getDocId());
+			dto.setDocName(doctor.getDocName());
+			dto.setAppTime(app.getAppTime());
+			
+			appList.add(dto);
+		}
+		//跳转
+		request.setAttribute("appList", appList);
+		request.setAttribute("page", pageData);
+		request.getRequestDispatcher("/admin/appointmentArchiveList.jsp").forward(request, response);	
+	}
+
+	private void showDoctorList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Doctor doctor = (Doctor) request.getSession().getAttribute("doctor");
-		List<Appointment> list = appointmentService.getDoctorList(doctor.getDocId());
+		// 分页
+		PageData pageData = new PageData();
+		// 得到当前页
+		String currentPage = request.getParameter("currentPage");
+		if (currentPage != null) {
+			pageData.setCurrentPage(Integer.valueOf(currentPage));
+		}
+		// 得到每页行数
+		String pageRows = request.getParameter("pageRows");
+		if (pageRows != null) {
+			pageData.setPageRows(Integer.valueOf(pageRows));
+		}
+
+		// 得到总行数
+		int rowsCount = appointmentService.getDoctorRowsCount(doctor.getDocId());
+		
+		pageData.setRowsCount(rowsCount);
+
+		// 计算总页数
+		int pageCount = 0;
+
+		if (rowsCount % pageData.getPageRows() == 0) {
+			pageCount = rowsCount / pageData.getPageRows();
+		} else {
+			pageCount = rowsCount / pageData.getPageRows() + 1;
+		}
+		pageData.setPageCount(pageCount);
+				
+		List<Appointment> list = appointmentService.getDoctorList(doctor.getDocId(), pageData);
+		System.out.println(list.size());
 		List<DoctorAppDto> docAppList = new ArrayList<>();
 		for(Appointment app : list) {
 			Patient patient = patientService.get(app.getpId());
@@ -81,6 +199,7 @@ public class AppointmentServlet extends HttpServlet{
 			dto.setAppTime(app.getAppTime());
 			docAppList.add(dto);
 		}
+		request.setAttribute("page", pageData);
 		request.setAttribute("docAppList", docAppList);
 		request.getRequestDispatcher("/doctor/docAppList.jsp").forward(request, response);		
 	}
@@ -106,7 +225,7 @@ public class AppointmentServlet extends HttpServlet{
 			return;
 		}
 		//不是空的，数据库有没有这个病人，没有就返回
-		Patient patient = patientService.get(name);
+		Patient patient  = patientService.get(name);
 		if(patient != null) {
 			//密码是否正确
 			if(!password.trim().equals(patient.getPassword())) {
@@ -115,7 +234,7 @@ public class AppointmentServlet extends HttpServlet{
 				return;
 			}else {
 				String str = (String) request.getSession().getAttribute("str");
-				if(imgTxt.equals(str)) {				
+				if(imgTxt.equals(str)) {									
 					List<Appointment> list = appointmentService.getPatientList(patient.getId());
 					List<PersonalAppDto> personalAppList = new ArrayList<>();
 					for(Appointment app : list) {
@@ -139,7 +258,7 @@ public class AppointmentServlet extends HttpServlet{
 						}
 						personalAppList.add(dto);
 					}
-					request.setAttribute("perosonalAppList", personalAppList);
+					request.setAttribute("personalAppList", personalAppList);
 					request.getRequestDispatcher("/personalAppList.jsp").forward(request, response);
 					return;					
 				}else {
@@ -183,7 +302,7 @@ public class AppointmentServlet extends HttpServlet{
 	private void approve(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String appId = request.getParameter("appId");
 		String strId = request.getParameter("strId");
-		
+		System.out.println(appId);
 		if(strId != null && !strId.trim().equals("")) {
 			String[] arrId = strId.split(",");
 			for(String id : arrId) {
@@ -199,7 +318,7 @@ public class AppointmentServlet extends HttpServlet{
 		}
 		
 		//都是空的，还没有选中
-		request.setAttribute("message", "please select");
+		request.setAttribute("message", "please select a appointment");
 		showList(request,response);
 		
 		

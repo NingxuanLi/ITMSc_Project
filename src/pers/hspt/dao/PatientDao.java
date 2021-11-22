@@ -17,6 +17,6 @@ public interface PatientDao {
 	
 	public List<Patient> getList(String checkName, PageData pageData);
 	
-	public boolean delete(int id);
+	public void delete(int id);
 
 }

@@ -29,8 +29,24 @@ public class AppointmentServiceImp implements AppointmentService{
 		return appointmentDao.getRowsCount();
 	}
 	
+	public int getPatientRowsCount(int id) {
+		return appointmentDao.getPatientRowsCount(id);
+	}
+	
+	public int getDoctorRowsCount(int id) {
+		return appointmentDao.getDoctorRowsCount(id);
+	}
+	
+	public int getArchiveRowsCount() {
+		return appointmentDao.getArchiveRowsCount();
+	}
+	
 	public List<Appointment> getList(PageData pageData){
 		return appointmentDao.getList(pageData);
+	}
+	
+	public List<Appointment> getArchiveList(PageData pageData){
+		return appointmentDao.getArchiveList(pageData);
 	}
 	
 	public void approve(int appId) {
@@ -45,8 +61,12 @@ public class AppointmentServiceImp implements AppointmentService{
 		return appointmentDao.getPatientList(id);
 	}
 	
-	public List<Appointment> getDoctorList(int id){
-		return appointmentDao.getDoctorList(id);
+	public List<Appointment> getDoctorList(int id, PageData pageData){
+		return appointmentDao.getDoctorList(id, pageData);
+	}
+	
+	public void delete(int appId) {
+		appointmentDao.delete(appId);
 	}
  
 }

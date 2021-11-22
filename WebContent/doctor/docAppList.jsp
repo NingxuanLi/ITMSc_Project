@@ -11,6 +11,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript">
+		
+//改变文本框中的每页显示几行 的值 
+var pages;
+		
+function init(){ 
+	pages = document.getElementById("pageRows").value; //记录初始值 
+}
+
+//改变每页显示多少行  --并且把当前页面传过去  
+function changeRows(currentPage){
+	var pageRows=document.getElementById("pageRows").value;  //得到改变的值 
+
+	if(pageRows>0){	
+		
+		location = "appointment?method=showDoctorList&currentPage="+currentPage+"&pageRows="+pageRows;
+		return true;
+	}else if(pageRows==""){
+				
+		alert("can't be null ");
+		document.getElementById("pageRows").value=pages;
+		return false;
+				
+	}else{
+		alert("must >0");
+		document.getElementById("pageRows").value=pages;
+	    return false;
+
+	}
+}
+ </script>
 </head>
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -82,7 +113,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 															
 														</tr>
 													</c:forEach>
-												
+												<tr align="center">
+													<td colspan="7" bgcolor="#FFFFFF">
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.rowsCount}</font>appointments to be processed&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
+														<c:if test="${page.currentPage==1}">
+															first page&nbsp;&nbsp;&nbsp;&nbsp;
+															last page&nbsp;&nbsp;&nbsp;&nbsp;
+														</c:if>
+														<c:if test="${page.currentPage!=1}">
+															<a href="javascript:changeRows(1)">first page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(${page.currentPage-1})">last page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+														</c:if>
+														<c:if test="${page.currentPage eq page.pageCount}">
+															next page&nbsp;&nbsp;&nbsp;&nbsp;
+															end page&nbsp;&nbsp;&nbsp;&nbsp;															
+														</c:if>
+														<c:if test="${page.currentPage ne page.pageCount}">
+															<a href="javascript:changeRows(${page.currentPage+1})">next page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(${page.pageCount})">end page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+														</c:if>
+														numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="font-family:隶书;font-size:x-small;color:red;"/>
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														
+														<select name="select" onchange="changeRows(this.value)">
+															<option value="${page.currentPage}">page${page.currentPage}</option>
+																<c:forEach begin="1" var="i" step="1" end="${page.pageCount}" >
+																	<c:if test="${page.currentPage!=i}">
+																		<option  value="${i}">page${i }</option>
+																	</c:if>
+																</c:forEach>
+														</select>
+													</td>
+												</tr>
 											</table>
 										</td>
 									</tr>

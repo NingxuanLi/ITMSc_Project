@@ -16,7 +16,6 @@ if(!"null".equals(message)&&!"".equals(message)&&message!=null){
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
-
 <script type="text/javascript">
 
 
@@ -51,8 +50,10 @@ function init(){
 //改变每页显示多少行  --并且把当前页面传过去  
 function changeRows(currentPage){
 	var pageRows=document.getElementById("pageRows").value;  //得到改变的值 
+
 	if(pageRows>0){	
-		location = "appointment?method=showList&currentPage="+currentPage+"&pageRows="+pageRows;
+		
+		location = "appointment?method=showArchiveList&currentPage="+currentPage+"&pageRows="+pageRows;
 		return true;
 	}else if(pageRows==""){
 				
@@ -68,49 +69,26 @@ function changeRows(currentPage){
 	}
 }
 
-function approve(id){
-	if(confirm("Approve this appointment?")){
-		location.href = "appointment?method=approve&appId="+id;
-	}else{
-		return false;
-	}
-}
-
-function disapprove(id){
-	if(confirm("Disapprove this appointment?")){
-		location.href = "appointment?method=disapprove&appId="+id;
-	}else{
-		return false;
-	}
-}
-
-function approveAll(){	
+function del(){
+	
 	var strId="";
 	var arr=document.getElementsByName("delid"); //复选框名字 
+	for(var i=0;i<arr.length;i++){
+		if(arr[i].checked){
+			strId+=arr[i].value+","; //传过去 解析 	
+		}	
+	}
 	
-		for(var i=0;i<arr.length;i++){
-			if(arr[i].checked){	
-				strId+=arr[i].value+","; //传过去 解析 	
-			}
-		}
-	location="appointment?method=approve&strId="+strId;
-	
+	location="appointment?method=delete&strId="+strId;
 }
 
-function disapproveAll(){
-	var strId="";
-	var arr=document.getElementsByName("delid"); //复选框名字 	
-		for(var i=0;i<arr.length;i++){
-			if(arr[i].checked){	
-				strId+=arr[i].value+","; //传过去 解析 	
-			}
-		}
-	location="appointment?method=disapprove&strId="+strId;
-}
+
+
+
 		
  </script>
 </head>
-<body onload="init{}">
+<body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td height="30">
@@ -132,9 +110,7 @@ function disapproveAll(){
 												<a href="javascript:unselectAll();" class="right-font08" >invert select</a>
 											</span>
 											<input name="Submit" type="button" class="right-button08"
-												value="approve" onclick="approveAll()"/>
-												<input name="Submit" type="button" class="right-button08"
-												value="disapprove" onclick="disapproveAll()"/>
+												value="delete" onclick="del()"/>												
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										</td>
 									</tr>
@@ -146,7 +122,7 @@ function disapproveAll(){
 												<tr>
 													<th height="20" colspan="14" align="center"
 														bgcolor="#EEEEEE" class="tablestyle_title">
-														Appointments to be processed
+														Archive Appointments
 													</th>
 												</tr>
 												<tr>
@@ -165,7 +141,7 @@ function disapproveAll(){
 													<td width="8%" align="center" bgcolor="#EEEEEE">
 														Date
 													</td>
-													<td colspan="2" width="11%" align="center" bgcolor="#EEEEEE">
+													<td width="11%" align="center" bgcolor="#EEEEEE">
 														operation
 													</td>
 												</tr>
@@ -188,11 +164,9 @@ function disapproveAll(){
 																${app.appTime}
 															</td>
 															<td bgcolor="#FFFFFF">
-																<a href="javascript:;" onclick="approve(${app.appId})">approve</a>
+																<a href="appointment?method=delete&appId=${app.appId}">delete</a>																
 															</td>
-															<td bgcolor="#FFFFFF">
-																<a href="javascript:;" onclick="disapprove(${app.appId})">disapprove</a>
-															</td>
+															
 															
 														</tr>
 													</c:forEach>
@@ -251,6 +225,5 @@ function disapproveAll(){
 				</td>
 			</tr>
 		</table>
-
 </body>
 </html>

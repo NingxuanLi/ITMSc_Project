@@ -75,7 +75,7 @@ function list(idstr){
 				<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
 				  <tr>
 					<!-- <td width="25%" rowspan="2"><img src="images/ico02.gif" width="35" height="35" /></td> -->
-					<td width="75%" height="22" class="left-font01">Hello，<span class="left-font02">${sessionScope.admin.adminName}</span></td>
+					<td width="75%" height="22" class="left-font01">Hello, <span class="left-font02">${sessionScope.admin.adminName}</span></td>
 				  </tr>
 				  <tr>
 					<td height="22" class="left-font01">
@@ -187,9 +187,14 @@ function list(idstr){
 				cellspacing="0" class="left-table02">
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu1" src="images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%"><a href="appointment?method=showList" target="mainFrame" class="left-font03" onClick="tupian('1');">App list</a></td>
+				  <td width="91%"><a href="appointment?method=showList" target="mainFrame" class="left-font03" onClick="tupian('1');">Pending appointments</a></td>
+				</tr>
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu1" src="images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%"><a href="appointment?method=showArchiveList" target="mainFrame" class="left-font03" onClick="tupian('1');">Archive appointments</a></td>
 				</tr>
       </table>
+      
 		<!--  预约管理结束    -->
 
 	  

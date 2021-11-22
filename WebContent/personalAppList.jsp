@@ -4,19 +4,25 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String message = (String)request.getAttribute("message");
+if(!"null".equals(message)&&!"".equals(message)&&message!=null){
+	out.print("<script>alert('"+message+"');</script>");
+}
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+
 </head>
-<body>
+<body >
 <table width="100%" height="734" border="0">
 			<tr>
 			<td colspan="2">
-				<img src="img/top_01.jpg" width="1079" height="235" />
+				<img src="img/top_01.jpg" width="1079" height="180" />
 			</td>
 		</tr>
 		<tr>
@@ -89,7 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							Status
 						</td>
 					</tr>
-						<c:forEach items="${perosonalAppList}" var="pApp">
+						<c:forEach items="${personalAppList}" var="pApp">
 							<tr align="center">
 								
 								<td height="20" bgcolor="#FFFFFF">
@@ -109,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									${pApp.appState}
 								</td>								
 							</tr>
-						</c:forEach>					
+						</c:forEach>						
 				</table>
 
 				</td>

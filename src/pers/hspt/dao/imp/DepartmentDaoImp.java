@@ -118,8 +118,6 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 				DBConnection.close(rs, stmt, pstmt);
 			}
 			
-
-
 		}
 		
 		public Department get(int depId) {

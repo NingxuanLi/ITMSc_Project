@@ -15,7 +15,15 @@ public interface AppointmentService {
 	
 	public int getRowsCount();
 	
+	public int getArchiveRowsCount();
+	
+	public int getPatientRowsCount(int id);
+	
+	public int getDoctorRowsCount(int id);
+	
 	public List<Appointment> getList(PageData pageData);
+	
+	public List<Appointment> getArchiveList(PageData pageData);
 	
 	public void approve(int appId);
 	
@@ -23,5 +31,7 @@ public interface AppointmentService {
 	
 	public List<Appointment> getPatientList(int id);
 	
-	public List<Appointment> getDoctorList(int id);
+	public List<Appointment> getDoctorList(int id, PageData pageData);
+	
+	public void delete(int appId);
 }

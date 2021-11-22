@@ -32,8 +32,8 @@ public class PatientServiceImp implements PatientService{
 		return patientDao.getList(checkName, pageData);
 	}
 	
-	public boolean delete(int id) {
-		return patientDao.delete(id);
+	public void delete(int id) {
+		patientDao.delete(id);
 	}
 
 }

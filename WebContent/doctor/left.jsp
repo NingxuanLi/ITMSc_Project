@@ -42,7 +42,7 @@
             <td height="29"><table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
                 <tr>
                   <td width="10%"><img name="img5" id="img5" src="images/ico04.gif" width="8" height="11" /></td>
-                  <td width="90%"><a href="appointment?method=showListDoctor" target="mainFrame" class="left-font03">Appointment list</a></td>
+                  <td width="90%"><a href="appointment?method=showDoctorList" target="mainFrame" class="left-font03">Appointment list</a></td>
                 </tr>
             </table></td>
           </tr>
