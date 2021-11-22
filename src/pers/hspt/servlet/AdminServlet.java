@@ -60,25 +60,32 @@ public class AdminServlet extends HttpServlet{
 	
     private void modify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String adminId = request.getParameter("adminId");
+		Admin oldAdmin = adminService.getAdmin(Integer.valueOf(adminId));
+//		System.out.println("1:" + oldAdmin.getAdminName());
 		String adminName = request.getParameter("adminName");
+//		System.out.println("2:" + adminName);
 		String adminPassword = request.getParameter("adminPassword");
 		
-		boolean isNameRepeated = isNameRepeated(adminName, request, response);
-		if(isNameRepeated) {
-			request.setAttribute("error", "name repeated");
-			request.getRequestDispatcher("/admin/updateAdmin.jsp").forward(request, response);
+		Admin admin = new Admin(adminName, adminPassword);
+		admin.setAdminId(Integer.valueOf(adminId));
+		if(oldAdmin.getAdminName().equals(adminName)) {
+			adminService.modify(admin);
+			showList(request, response);
 			return;
 		}else {
-			Admin admin = new Admin(adminName, adminPassword);
-			admin.setAdminId(Integer.valueOf(adminId));
-			boolean b = adminService.modify(admin);
-			if(b) {
-				showList(request, response);
+			boolean isNameRepeated = isNameRepeated(adminName, request, response);
+			if(isNameRepeated) {
+				request.setAttribute("error", "name repeated");
+				request.setAttribute("admin", oldAdmin);
+				request.getRequestDispatcher("/admin/updateAdmin.jsp").forward(request, response);
+				return;
 			}else {
-				request.setAttribute("error", "edit failed");
-				request.getRequestDispatcher("/admin/updateAdmin.jsp").forward(request, response);			
+				adminService.modify(admin);
+				showList(request, response);
+				return;
 			}
-		}		
+		}
+			
 	}
 
 	private void gotoModify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -98,7 +105,7 @@ public class AdminServlet extends HttpServlet{
     	if(str != null && !str.trim().equals("")) {
     		String[] arrId = str.split(",");
     		for (int i = 0;  i < arrId.length; i++) {
-				System.out.println(arrId[i]);
+//				System.out.println(arrId[i]);
 				b = adminService.delete(Integer.valueOf(arrId[i]));
 			}
     	}else {
@@ -174,13 +181,12 @@ public class AdminServlet extends HttpServlet{
 			request.setAttribute("error", "there exists a admin with same name");
 			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
 			return;
-		}
-		
+		}		
 		if(b) {  //添加成功
-			System.out.println("successfully added");
 			showList(request, response);
 		}else {  //添加失败
 			request.setAttribute("error", "add failed");
+			
 			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
 		}
 		

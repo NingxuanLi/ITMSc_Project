@@ -153,8 +153,8 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 			return false;
 		}
 		
-		public boolean modify(Admin admin) {
-			boolean b=true;
+		public void modify(Admin admin) {
+			
 			try {
 				conn=DBConnection.getConnection();
 				String sql="update  admin set admin_name=?,admin_password=? where admin_id="+admin.getAdminId();
@@ -168,12 +168,12 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				b=false;
+				
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
 			
-			return b;
+			
 
 		}
 		

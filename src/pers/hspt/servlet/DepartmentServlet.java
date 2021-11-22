@@ -167,6 +167,8 @@ public class DepartmentServlet extends HttpServlet{
 	// 显示科室列表
 	public void showList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String message = (String) request.getAttribute("message");
+//		System.out.println(message);
 		// 模糊查询
 		String checkName = request.getParameter("checkName"); // 得到名字，根据姓名查找时用
 		// 分页
@@ -204,6 +206,7 @@ public class DepartmentServlet extends HttpServlet{
 			}
 		}
 		// 跳到页面，并将值传过去
+		request.setAttribute("message", "123123");
 		request.setAttribute("depList", depList);
 		request.setAttribute("page", pageData); // 将page传过去
 		request.setAttribute("checkName", checkName);// 不让名字清空
@@ -280,6 +283,12 @@ public class DepartmentServlet extends HttpServlet{
 
 			// System.out.println(list.size());
 			Department department = departmentService.get(Integer.valueOf(depId));
+			List<Doctor> list = doctorService.getByDepId(Integer.valueOf(depId));
+			if(list.size() > 0) {
+				request.setAttribute("message", "can't update a department which already has doctors");
+				showList(request, response);
+				return;
+			}
 			// 保存值，传到页面
 			request.setAttribute("department", department);
 			request.getRequestDispatcher("admin/updateDep.jsp").forward(request,

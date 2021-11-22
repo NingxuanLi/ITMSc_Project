@@ -32,8 +32,8 @@ public class AdminServiceImp implements AdminService{
 		return adminDao.delete(adminId);
 	}
 	
-	public boolean modify(Admin admin) {
-		return adminDao.modify(admin);
+	public void modify(Admin admin) {
+		adminDao.modify(admin);
 	}
 	
 	public Admin getAdmin(int adminId) {

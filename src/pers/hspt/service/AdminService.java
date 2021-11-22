@@ -19,7 +19,7 @@ public interface AdminService {
 	
 	public boolean delete(int adminId);
 	
-	public boolean modify(Admin admin);
+	public void modify(Admin admin);
 	
 	public Admin getAdmin(int adminId);
 
