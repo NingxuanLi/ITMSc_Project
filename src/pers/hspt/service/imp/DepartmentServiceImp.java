@@ -12,8 +12,8 @@ public class DepartmentServiceImp implements DepartmentService{
 	
 	private DepartmentDao departmentDao = new DepartmentDaoImp();
 	
-	public boolean add(Department department) {
-		return departmentDao.add(department);
+	public void add(Department department) {
+		departmentDao.add(department);
 	}
 	
 	public List<Department> getList(String depName,PageData pageData) {
@@ -27,8 +27,8 @@ public class DepartmentServiceImp implements DepartmentService{
 	}
 	
 	
-	public boolean delete(int depId) {
-		return departmentDao.delete(depId);
+	public void delete(int depId) {
+		departmentDao.delete(depId);
 	}
 	
 	public Department get(int depId) {
@@ -40,8 +40,8 @@ public class DepartmentServiceImp implements DepartmentService{
 	}
 	
 	
-	public boolean modify(Department department, int depId) {
-		return departmentDao.modify(department, depId);
+	public void modify(Department department, int depId) {
+		departmentDao.modify(department, depId);
 	}
 
 }

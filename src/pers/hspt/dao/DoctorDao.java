@@ -9,7 +9,7 @@ public interface DoctorDao {
 	
 	public List<Doctor> getByDepId(int offId);
 	
-	public boolean add(Doctor doctor);
+	public void add(Doctor doctor);
 	
 	public int getRowsCount(String name);
 	
@@ -19,9 +19,9 @@ public interface DoctorDao {
 	
 	public Doctor get(String name);
 	
-	public boolean delete(int docId);
+	public void delete(int docId);
 	
-	public boolean modify(Doctor doctor);
+	public void modify(Doctor doctor);
 	
 	public int getRowsCountForOneDep(int depId);
 

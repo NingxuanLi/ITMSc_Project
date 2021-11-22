@@ -19,8 +19,8 @@ public class DoctorServiceImp implements DoctorService{
 		return doctorDao.getByDepId(depId);
 	}
 	
-	public boolean add(Doctor doctor) {
-		return doctorDao.add(doctor);
+	public void add(Doctor doctor) {
+		doctorDao.add(doctor);
 	}
 	
 	public int getRowsCount(String name) {
@@ -39,12 +39,12 @@ public class DoctorServiceImp implements DoctorService{
 		return doctorDao.get(name);
 	}
 	
-	public boolean delete(int docId) {
-		return doctorDao.delete(docId);
+	public void delete(int docId) {
+		doctorDao.delete(docId);
 	}
 	
-	public boolean modify(Doctor doctor) {
-		return doctorDao.modify(doctor);
+	public void modify(Doctor doctor) {
+		doctorDao.modify(doctor);
 	}
 	
 	public int getRowsCountForOneDep(int depId) {

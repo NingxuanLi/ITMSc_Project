@@ -84,9 +84,7 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 			
 		}
 		
-		public boolean addAdmin(Admin admin) {
-			boolean b=true;
-			
+		public void addAdmin(Admin admin) {
 			try {
 				conn=DBConnection.getConnection();
 				String sql="insert into admin values(default,?,?)";
@@ -98,11 +96,9 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-				b=false;
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
-			return b;
 		}
 		
 		//分页时需要查询总行数
@@ -136,8 +132,7 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 		}
 		
 		//删除
-		public boolean delete(int adminId) {
-			boolean b=true;
+		public void delete(int adminId) {
 			try {
 				conn=DBConnection.getConnection();
 				stmt=conn.createStatement();
@@ -145,12 +140,10 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 				stmt.executeUpdate(sql);
 			} catch (SQLException e) {	
 				e.printStackTrace();
-				b=false;
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
 			
-			return false;
 		}
 		
 		public void modify(Admin admin) {

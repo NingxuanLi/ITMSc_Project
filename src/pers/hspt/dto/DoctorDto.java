@@ -6,6 +6,7 @@ public class DoctorDto {
 	
 	private int docId;
 	private String docName;
+	private String docPassword;
 	private int money;
 	private Date docTime;
 	private String docStatus;
@@ -55,6 +56,12 @@ public class DoctorDto {
 	}
 	public void setColor(String color) {
 		this.color = color;
+	}
+	public String getDocPassword() {
+		return docPassword;
+	}
+	public void setDocPassword(String docPassword) {
+		this.docPassword = docPassword;
 	}
 
 }

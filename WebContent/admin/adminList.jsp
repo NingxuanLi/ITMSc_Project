@@ -6,6 +6,11 @@
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
+	
+	String message = (String)request.getAttribute("message");
+	if(!"null".equals(message)&&!"".equals(message)&&message!=null){
+		out.print("<script>alert('"+message+"');</script>");
+	}
 %>
 <!DOCTYPE html>
 

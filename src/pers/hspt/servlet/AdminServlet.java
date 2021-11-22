@@ -61,11 +61,20 @@ public class AdminServlet extends HttpServlet{
     private void modify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String adminId = request.getParameter("adminId");
 		Admin oldAdmin = adminService.getAdmin(Integer.valueOf(adminId));
-//		System.out.println("1:" + oldAdmin.getAdminName());
 		String adminName = request.getParameter("adminName");
-//		System.out.println("2:" + adminName);
 		String adminPassword = request.getParameter("adminPassword");
 		
+		if(adminName == null || adminName.trim().equals("")) {
+			request.setAttribute("error", "Admin name can't be null");
+			gotoModify(request, response);
+			return;
+		}
+		
+		if(adminPassword == null || adminPassword.trim().equals("")) {
+			request.setAttribute("error", "Admin password can't be null");
+			gotoModify(request, response);
+			return;
+		}		
 		Admin admin = new Admin(adminName, adminPassword);
 		admin.setAdminId(Integer.valueOf(adminId));
 		if(oldAdmin.getAdminName().equals(adminName)) {
@@ -75,9 +84,8 @@ public class AdminServlet extends HttpServlet{
 		}else {
 			boolean isNameRepeated = isNameRepeated(adminName, request, response);
 			if(isNameRepeated) {
-				request.setAttribute("error", "name repeated");
-				request.setAttribute("admin", oldAdmin);
-				request.getRequestDispatcher("/admin/updateAdmin.jsp").forward(request, response);
+				request.setAttribute("error", "name repeats");
+				gotoModify(request, response);
 				return;
 			}else {
 				adminService.modify(admin);
@@ -101,27 +109,28 @@ public class AdminServlet extends HttpServlet{
 		//删除多个
     	String str = request.getParameter("adminIdArr");
     	
-    	boolean b = false;
     	if(str != null && !str.trim().equals("")) {
     		String[] arrId = str.split(",");
     		for (int i = 0;  i < arrId.length; i++) {
-//				System.out.println(arrId[i]);
-				b = adminService.delete(Integer.valueOf(arrId[i]));
+				adminService.delete(Integer.valueOf(arrId[i]));				
 			}
+    		request.setAttribute("message", "delete succeeds");
+    		showList(request, response);
+    		return;
     	}else {
     		if(adminId != null) {
-    			b = adminService.delete(Integer.valueOf(adminId));
+    			adminService.delete(Integer.valueOf(adminId));
+    			request.setAttribute("message", "delete succeeds");
+        		showList(request, response);
+        		return;
     		}else {
     			//都为空
-    			JOptionPane.showMessageDialog(null, "haven't select an admin to delete");// 跳出去
+    			request.setAttribute("message", "please select an admin");
 				showList(request, response);
 				return;
     		}
     	}
-    	if(!b) {
-    		request.setAttribute("error", "delete failed");
-    	}
-    	showList(request, response);
+
 	}
 
 	private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -174,22 +183,17 @@ public class AdminServlet extends HttpServlet{
 		//检查数据库中是否有重名的，如果有，则不能添加
 		boolean isNameRepeated = isNameRepeated(adminName, request, response);
 		Admin admin= new Admin(adminName, password);
-		boolean b = false;
+		
 		if(!isNameRepeated) {
-			b = adminService.addAdmin(admin);
+			adminService.addAdmin(admin);
+			request.setAttribute("message", "add succeeds");
+			showList(request, response);
 		}else {
 			request.setAttribute("error", "there exists a admin with same name");
 			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
 			return;
 		}		
-		if(b) {  //添加成功
-			showList(request, response);
-		}else {  //添加失败
-			request.setAttribute("error", "add failed");
-			
-			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
-		}
-		
+				
 	}
     
     //判断数据库中是否有重名的管理员

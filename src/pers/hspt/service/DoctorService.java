@@ -9,7 +9,7 @@ public interface DoctorService {
 	
 	public List<Doctor> getByDepId(int depid);
 	
-	public boolean add(Doctor doctor);
+	public void add(Doctor doctor);
 	
 	public int getRowsCount(String name);
 	
@@ -21,8 +21,8 @@ public interface DoctorService {
 	
 	public Doctor get(String name);
 	
-	public boolean delete(int docId);
+	public void delete(int docId);
 	
-	public boolean modify(Doctor doctor);
+	public void modify(Doctor doctor);
 
 }

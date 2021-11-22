@@ -51,9 +51,8 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			return list;
 		}
 		
-		public boolean add(Doctor doctor) {
+		public void add(Doctor doctor) {
 			
-			boolean b=true;
 			conn=DBConnection.getConnection();
 			try {
 				String sql="insert into doctor values(default,?,?,?,?,?,?)";
@@ -71,11 +70,11 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-				b=false;
+
 			}finally{		
 				DBConnection.close(rs, stmt, pstmt);
 			}
-			return b;
+
 		}
 		
 		//分页是需要查询总行数
@@ -225,8 +224,7 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			return doc;
 		}
 		
-		public boolean delete(int docId) {
-			boolean b = true;
+		public void delete(int docId) {
 			conn=DBConnection.getConnection();
 			try {
 				String sql="delete from doctor where doc_id="+docId;
@@ -236,35 +234,29 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				b=false;
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
 			
-			return b;
 		}
 		
 		
-		public boolean modify(Doctor doctor) {
-			boolean b=true;
+		public void modify(Doctor doctor) {
 			conn=DBConnection.getConnection();
 			try {
-				String sql="update doctor set doc_name=?,doc_money=?,doc_time=?,dep_id=? where doc_id="+doctor.getDocId();
+				String sql="update doctor set doc_name=?,doc_password=?,doc_money=?,doc_time=?,dep_id=? where doc_id="+doctor.getDocId();
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setString(1,doctor.getDocName());
-				pstmt.setInt(2, doctor.getMoney());
-				pstmt.setDate(3, DateUtil.toSqlDate(doctor.getDocTime()));
-				pstmt.setInt(4, doctor.getDepId());
+				pstmt.setString(2, doctor.getDocPassword());
+				pstmt.setInt(3, doctor.getMoney());
+				pstmt.setDate(4, DateUtil.toSqlDate(doctor.getDocTime()));
+				pstmt.setInt(5, doctor.getDepId());
 				pstmt.executeUpdate();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				b=false;
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
-			
-			return b;
 
 		}
 

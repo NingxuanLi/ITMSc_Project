@@ -13,11 +13,11 @@ public interface AdminService {
 	
 	public List<Admin> getAdminList(String adminName, PageData pageData);
 	
-	public boolean addAdmin(Admin admin);
+	public void addAdmin(Admin admin);
 	
 	public int getRowsCount(String name);
 	
-	public boolean delete(int adminId);
+	public void delete(int adminId);
 	
 	public void modify(Admin admin);
 	

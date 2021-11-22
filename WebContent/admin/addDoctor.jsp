@@ -118,7 +118,7 @@
 													</td>
 												</tr>
 												<tr>
-													<td colspan="2"  style="color: red; font-size: 20;" width="15%" align="right" >
+													<td colspan="2"  style="color: red; font-size: 20;" width="15%" align="left" >
 														${error }
 													</td>
 													

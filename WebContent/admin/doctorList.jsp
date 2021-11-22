@@ -177,7 +177,8 @@
 														bgcolor="#EEEEEE">
 														Doctor name
 													</td>
-												
+													
+												    
 													
 													
 													<td width="14%" align="center" bgcolor="#EEEEEE">

@@ -19,6 +19,7 @@ import pers.hspt.entity.Doctor;
 import pers.hspt.entity.Department;
 import pers.hspt.entity.Patient;
 import pers.hspt.dto.DoctorDto;
+import pers.hspt.entity.Admin;
 import pers.hspt.entity.Appointment;
 import pers.hspt.service.DoctorService;
 import pers.hspt.service.DepartmentService;
@@ -28,6 +29,7 @@ import pers.hspt.service.imp.DepartmentServiceImp;
 import pers.hspt.service.imp.AppointmentServiceImp;
 import pers.hspt.util.DateUtil;
 import pers.hspt.util.PageData;
+import pers.hspt.util.StringUtil;
 
 public class DoctorServlet extends HttpServlet{
 	
@@ -60,33 +62,22 @@ public class DoctorServlet extends HttpServlet{
 		if (method.equals("frontShowList")) {
 			// 前台挂号时需要
 			frontShowList(request, response);
-
 		} else if (method.equals("docListInOneDep")) {
 			// 前台查询医生列表
 			docListInOneDep(request, response);
-
 		} else if (method.equals("showList")) {
 			// 显示诊室列表
 			showList(request, response);
-
 		} else if (method.equals("gotoAdd")) {
 			// 添加时先初始化下拉列表框
 			gotoAdd(request, response);
-
 		} else if (method.equals("add")) {
-
 			add(request, response);
-
 		} else if (method.equals("modify")) {
-
 			modify(request, response);
-
 		} else if (method.equals("gotoModify")) {
-
 			gotoModify(request, response);
-
 		} else if (method.equals("delete")) {
-
 			delete(request, response);
 		}else if (method.equals("login")) {
 			login(request,response);
@@ -274,50 +265,91 @@ public class DoctorServlet extends HttpServlet{
 
 	private void modify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String docId = request.getParameter("docId");
+		
 		Doctor doctor = doctorService.get(Integer.valueOf(docId));
-		System.out.println(docId);
 		
 		String docName = request.getParameter("docName");
-		int money = Integer.valueOf(request.getParameter("money"));
+		String docPassword = request.getParameter("docPassword");
+		String moneyStr = request.getParameter("money");
+		if (moneyStr == null || moneyStr.trim().equals("")) {
+			request.setAttribute("error", "please enter the appointment fee");
+			gotoModify(request, response);
+			return;
+		}
+		if(!StringUtil.isInteger(moneyStr)) {
+			request.setAttribute("error", "the appointment fee must be an integer");
+			gotoModify(request, response);
+			return;
+		}
+		int money = Integer.valueOf(moneyStr);
 		String docTime = request.getParameter("docTime"); //需要转化成sql里面的日期
 		int depId = Integer.valueOf(request.getParameter("depId"));
 		Date timeDate = DateUtil.getBirthDate(docTime);
 		
-		Doctor docRepeated = doctorService.get(docName);
-		if(docRepeated != null) {
-			request.setAttribute("error", "repeated doctor name, please use another name");
-			request.getRequestDispatcher("/admin/updateDoctor.jsp").forward(request, response);
+		if(docName == null || docName.trim().equals("")) {
+			request.setAttribute("error", "doc name can't be null");
+			gotoModify(request, response);
 			return;
-		}else {
+		}
+		if(docPassword == null || docPassword.trim().equals("")) {
+			request.setAttribute("error", "doc name can't be null");
+			gotoModify(request, response);
+			return;
+		}
+		if(docTime == null || docTime.trim().equals("")) {
+			request.setAttribute("error", "appointment date can't be null");
+			gotoModify(request, response);
+			return;
+		}
+		
+		if(doctor.getDocName().equals(docName)) {
 			doctor.setDocName(docName);
+			doctor.setDocPassword(docPassword);
 			doctor.setMoney(money);
 			doctor.setDepId(depId);
 			doctor.setDocTime(timeDate);			
-			boolean b = doctorService.modify(doctor);
-			if(b) {
-				//修改成功，跳转到showList
-				System.out.println("modification succeeded");
-				showList(request, response);
+			doctorService.modify(doctor);
+			request.setAttribute("message", "update succeeds");
+			showList(request, response);
+		}else {
+			boolean isNameRepeated = isNameRepeated(docName, request, response);
+			if(isNameRepeated) {
+				request.setAttribute("error", "doctor name repeats");
+				gotoModify(request, response);
+				return;
 			}else {
-				//修改失败
-				System.out.println("modification failed");
-				request.setAttribute("error", "modification failed");
-				request.getRequestDispatcher("/admin/doctorList.jsp").forward(request, response);
+				doctor.setDocName(docName);
+				doctor.setDocPassword(docPassword);
+				doctor.setMoney(money);
+				doctor.setDepId(depId);
+				doctor.setDocTime(timeDate);			
+				doctorService.modify(doctor);
+				request.setAttribute("message", "update succeeds");
+				showList(request, response);
 			}
 		}	
 	}
 
 
 	private void gotoModify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String docId = request.getParameter("docId");
+		boolean hasApp = isHasApp(Integer.valueOf(docId), request, response);
+		if(hasApp) {
+//			TODO
+//			request.setAttribute("message", "can't update a doctor already having an appointment");
+			JOptionPane.showMessageDialog(null, "can't update a doctor already having a appointment");
+			showList(request, response);
+			return;
+		}
 		List<Department> depList = departmentService.getList(null, null);
 		request.setAttribute("depList", depList);
-		String docId = request.getParameter("docId");
 		Doctor doc = doctorService.get(Integer.valueOf(docId));
 		Department department = departmentService.get(doc.getDepId());
 		//dto封装
 		DoctorDto dto = new DoctorDto();
 		dto.setDocId(doc.getDocId());
 		dto.setDocName(doc.getDocName());
+		dto.setDocPassword(doc.getDocPassword());
 		dto.setDepName(department.getDepName());
 		dto.setDocStatus(doc.getDocStatus());
 		dto.setDocTime(doc.getDocTime());
@@ -342,26 +374,34 @@ public class DoctorServlet extends HttpServlet{
 				isApp = isHasApp(Integer.valueOf(arrId[i]), request, response);
 				//没有预约
 				if(!isApp) {
-					b = doctorService.delete(Integer.valueOf(arrId[i]));
+					doctorService.delete(Integer.valueOf(arrId[i]));
 				}
 			}
+			request.setAttribute("message", "delete succeeds");
+			showList(request, response);
+			return;
 		}else {
 			if(docId != null) {
 				isApp = isHasApp(Integer.valueOf(docId), request, response);
 				if(!isApp) {
-					b = doctorService.delete(Integer.valueOf(docId));
+					doctorService.delete(Integer.valueOf(docId));
+					request.setAttribute("message", "delete succeeds");
+					showList(request, response);
+					return;
+				}else {
+//					TODO
+//					request.setAttribute("message", "can't delete a doctor already having a appointment"); 
+					JOptionPane.showMessageDialog(null, "can't delete a doctor already having a appointment");
+					showList(request, response);
+					return;
 				}
 			}else {
-				JOptionPane.showMessageDialog(null, "You haven't select a doctor");// 跳出去
+				request.setAttribute("message", "please select a doctor");
 				showList(request, response);
 				return;
 			}
 		}
-		if(!b) {
-			JOptionPane.showMessageDialog(null, "can't delete a doctor with an appointment");
-			request.setAttribute("error", "delete failed");
-		}
-		showList(request, response);
+	
 	}
 
 
@@ -452,44 +492,46 @@ public class DoctorServlet extends HttpServlet{
 		try{
 			String docName = request.getParameter("docName");
 			String docPassword = request.getParameter("docPassword");
-			int money = Integer.valueOf(request.getParameter("money"));
+			String moneyStr = request.getParameter("money");
+			if (moneyStr == null || moneyStr.trim().equals("")) {
+				request.setAttribute("error", "please enter the appointment fee");
+				gotoAdd(request, response);
+				return;
+			}
+			if(!StringUtil.isInteger(moneyStr)) {
+				request.setAttribute("error", "the appointment fee must be an integer");
+				gotoAdd(request, response);
+				return;
+			}
+			int money = Integer.valueOf(moneyStr);
 			int depId = Integer.valueOf(request.getParameter("depId"));
 			String docTime = request.getParameter("docTime");
 			Date timeDate = DateUtil.getBirthDate(docTime);
-						
+			if (docName == null || docName.trim().equals("")) {
+				request.setAttribute("error", "please enter doctor name");
+				gotoAdd(request, response);
+				return;
+			}
+			if (docPassword == null || docPassword.trim().equals("")) {
+				request.setAttribute("error", "please enter doctor password");
+				gotoAdd(request, response);
+				return;
+			}
+								
 			Doctor doctor = doctorService.get(docName);
 			if(doctor != null) {
 				request.setAttribute("error", "there exist a doctor with the same name, please enter a different name");
-				request.getRequestDispatcher("/admin/addDoctor.jsp").forward(request, response);
+				gotoAdd(request, response);
 				return;
 			}else {
 				doctor = new Doctor(docName, docPassword,money, timeDate, "normal", depId);
-				boolean b = doctorService.add(doctor);
-				//添加成功
-				if(b) {
-					request.setAttribute("message", "successfully added");
-					showList(request, response);
-				//添加失败	
-				}else {
-					request.setAttribute("error", "add failed");
-					request.getRequestDispatcher("/admin/addDoctor.jsp").forward(request, response);
-				}
-			}
-			boolean b = doctorService.add(doctor);
-			//添加成功
-			if(b) {
-				request.setAttribute("message", "successfully added");
+				doctorService.add(doctor);
+				request.setAttribute("message", "add succeeds");
 				showList(request, response);
-			//添加失败	
-			}else {
-				request.setAttribute("error", "add failed");
-				request.getRequestDispatcher("/admin/addDoctor.jsp").forward(request, response);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
-		
-		
+		}		
 	}
 
 
@@ -499,9 +541,25 @@ public class DoctorServlet extends HttpServlet{
 		//保存depList，跳转到jsp
 		request.setAttribute("depList", depList);
 		request.getRequestDispatcher("/admin/addDoctor.jsp").forward(request, response);
-		
-		
-		
+			
 	}
+	
+	public boolean isNameRepeated(String docName, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		boolean isRepeated = false;
+		// 判断不能重名
+		List<Doctor> list = doctorService.getList(null, null); // 得到列表,查询所有的
+		if (list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).getDocName().equals(docName)) {
+					isRepeated = true;
+					break;
+				}
+			}
+		}
+		return isRepeated;
+	}
+	
+	
 
 }

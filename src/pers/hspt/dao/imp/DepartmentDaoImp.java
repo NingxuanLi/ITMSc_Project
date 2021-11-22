@@ -14,8 +14,7 @@ import pers.hspt.util.PageData;
 public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 
 	//添加
-	public boolean add(Department department) {
-		boolean b=true;
+	public void add(Department department) {
 		conn=DBConnection.getConnection();
 		try {
 			String sql="insert into department values(?,?)";
@@ -27,11 +26,9 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			b=false;
 		}finally{		
 			DBConnection.close(rs, stmt, pstmt);
 		}
-		return b;
 	}
 
 	//查询科室
@@ -106,8 +103,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 		}
 		
 		//删除
-		public boolean delete(int depId) {
-			boolean b=true;
+		public void delete(int depId) {
 			conn=DBConnection.getConnection();
 			try {
 				String sql="delete from department where dep_id="+depId;
@@ -117,12 +113,12 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				b=false;
+
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
 			
-			return b;
+
 
 		}
 		
@@ -181,8 +177,8 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 		}
 		
 		//修改
-		public boolean modify(Department department,int depId) {
-			boolean b=true;
+		public void modify(Department department,int depId) {
+
 			conn=DBConnection.getConnection();
 			try {
 				String sql="update department set dep_id=?,dep_name=? where dep_id="+depId;
@@ -193,12 +189,9 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				b=false;
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
-			
-			return b;
 		}
 
 }

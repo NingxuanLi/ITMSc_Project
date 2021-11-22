@@ -11,12 +11,14 @@ import javax.swing.JOptionPane;
 
 
 import pers.hspt.entity.Doctor;
+import pers.hspt.entity.Admin;
 import pers.hspt.entity.Department;
 import pers.hspt.service.DoctorService;
 import pers.hspt.service.DepartmentService;
 import pers.hspt.service.imp.DoctorServiceImp;
 import pers.hspt.service.imp.DepartmentServiceImp;
 import pers.hspt.util.PageData;
+import pers.hspt.util.StringUtil;
 
 
 
@@ -47,25 +49,15 @@ public class DepartmentServlet extends HttpServlet{
 		if (method.equals("frontShowList")) {
 			// 显示诊室列表
 			frontShowList(request, response);
-
 		} else if (method.equals("showList")) {
-			// 显示诊室列表
 			showList(request, response);
-
 		} else if (method.equals("add")) {
-
 			add(request, response);
-
 		} else if (method.equals("modify")) {
-
 			modify(request, response);
-
 		} else if (method.equals("gotoModify")) {
-
 			gotoModify(request, response);
-
 		} else if (method.equals("delete")) {
-
 			delete(request, response);
 		}
 
@@ -137,38 +129,26 @@ public class DepartmentServlet extends HttpServlet{
 			return;
 		}
 		
-		Department idRepeated = departmentService.get(Integer.valueOf(depId));
-		if(idRepeated != null) {
-			request.setAttribute("error", "there exists a dep with same id, please use another id");
+		if(isNameRepeated(depName, request, response)) {
+			request.setAttribute("error", "there exists a dep with same name, please use another name");
 			request.getRequestDispatcher("/admin/addDep.jsp").forward(request, response);
 			return;
 		}
-		Department nameRepeated = departmentService.get(depName);
-		if(nameRepeated != null) {
-			request.setAttribute("error", "there exists a dep with same name, please use another name");
+		if(isIdRepeated(Integer.valueOf(depId), request, response)) {
+			request.setAttribute("error", "there exists a dep with same id, please use another id");
 			request.getRequestDispatcher("/admin/addDep.jsp").forward(request, response);
 			return;
 		}
 		// 插入数据库
 		Department department = new Department(Integer.valueOf(depId), depName);	
-		boolean b = departmentService.add(department);
-		if (b) {
-			// 成功
-			// 跳转到列表，要更新
-			showList(request, response);
-		} else {
-			// 插入失败
-			request.setAttribute("error", "add failed");
-			request.getRequestDispatcher("admin/addDep.jsp").forward(
-					request, response);
-		}	
+		departmentService.add(department);
+		request.setAttribute("message", "add succeeds");
+		showList(request, response);			
 	}	
 	
 	// 显示科室列表
 	public void showList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String message = (String) request.getAttribute("message");
-//		System.out.println(message);
 		// 模糊查询
 		String checkName = request.getParameter("checkName"); // 得到名字，根据姓名查找时用
 		// 分页
@@ -206,7 +186,7 @@ public class DepartmentServlet extends HttpServlet{
 			}
 		}
 		// 跳到页面，并将值传过去
-		request.setAttribute("message", "123123");
+		
 		request.setAttribute("depList", depList);
 		request.setAttribute("page", pageData); // 将page传过去
 		request.setAttribute("checkName", checkName);// 不让名字清空
@@ -232,46 +212,45 @@ public class DepartmentServlet extends HttpServlet{
 		}
 		
 		// 删除
-		public void delete(HttpServletRequest request, HttpServletResponse response)
-				throws ServletException, IOException {
-
+		public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			// 单个删除
 			String depId = request.getParameter("depId");
 			// 多个删除
 			String strId = request.getParameter("strId");
-
-			boolean b = false;
+		
 			boolean isHasDoc = false;
 			if (strId != null && !strId.trim().equals("")) {
-				String arrId[] = strId.split(","); // 将字符串分割成数组,得到所有复选框的value，即管理员id
+				String arrId[] = strId.split(","); 
 				for (int i = 0; i < arrId.length; i++) {
-					isHasDoc = isHasDoc(Integer.valueOf(arrId[i]), request,
-							response);
+					isHasDoc = isHasDoc(Integer.valueOf(arrId[i]), request, response);
 					if (!isHasDoc) {
-						b = departmentService.delete(Integer.valueOf(arrId[i]));
+						departmentService.delete(Integer.valueOf(arrId[i]));
 					}
 				}
+				request.setAttribute("message", "delete succeeds");
+				showList(request, response);
+				return;
 			} else {
-
 				if (depId != null) {
 					isHasDoc = isHasDoc(Integer.valueOf(depId), request, response);
 					if (!isHasDoc) {
-						b = departmentService.delete(Integer.valueOf(depId));
+						departmentService.delete(Integer.valueOf(depId));
+						request.setAttribute("message", "delete succeeds");
+						showList(request, response);
+						return;
+					}else {						
+						//TODO
+//						request.setAttribute("message", "can't delete a department already having a doctor");
+						JOptionPane.showMessageDialog(null, "can't delete a department already having a appointment");
+						showList(request, response);
+						return;
 					}
 				} else {
-					// 都为空的时候
-					JOptionPane.showMessageDialog(null, "haven't selected a department");// 跳出去
+					request.setAttribute("message", "please select a department");
 					showList(request, response);
 					return;
 				}
 			}
-
-			if (!b) {
-				JOptionPane.showMessageDialog(null, "can't delete a department havig doctors");
-				request.setAttribute("error", "delete failed");
-			}
-
-			showList(request, response);
 
 		}
 		
@@ -281,11 +260,11 @@ public class DepartmentServlet extends HttpServlet{
 			// 得到页面的offId，查询数据库，得到对象，初始化页面
 			String depId = request.getParameter("depId");
 
-			// System.out.println(list.size());
 			Department department = departmentService.get(Integer.valueOf(depId));
-			List<Doctor> list = doctorService.getByDepId(Integer.valueOf(depId));
-			if(list.size() > 0) {
-				request.setAttribute("message", "can't update a department which already has doctors");
+			if(isHasDoc(Integer.valueOf(depId), request, response)) {
+//				TODO
+//				request.setAttribute("message", "can't update department already having a doctor");
+				JOptionPane.showMessageDialog(null, "can't update a department already having a appointment");
 				showList(request, response);
 				return;
 			}
@@ -300,34 +279,74 @@ public class DepartmentServlet extends HttpServlet{
 				throws ServletException, IOException {
 			// 得到页面值
 			int oldDepId = Integer.valueOf(request.getParameter("oldDepId"));// 旧的id
-			int newDepId = Integer.valueOf(request.getParameter("depId"));
+			String newDepIdStr = request.getParameter("depId");
 			String depName = request.getParameter("depName");
+			Department department = departmentService.get(oldDepId);
 			
-            Department department = departmentService.get(Integer.valueOf(newDepId));
-            if(department != null) {
-            	request.setAttribute("error", "there exists a department with the same id, please use another id");
-            	request.getRequestDispatcher("/admin/departmentList.jsp").forward(request, response);
-            	return;
-            }
-            department = departmentService.get(depName);
-            if(department != null) {
-            	request.setAttribute("error", "there exists a department with the same name, please use another name");
-            	request.getRequestDispatcher("/admin/departmentList.jsp").forward(request, response);
-            	return;
-            }
-			// 数据库修改
-			department = new Department(newDepId, depName);
-			boolean b = departmentService.modify(department, oldDepId);
-			if (b) {
-				// 成功
-				showList(request, response);
-			} else {
-				// 修改失败
-				request.setAttribute("error", "edit failed");
-				request.getRequestDispatcher("/admin/departmentList.jsp").forward(request,
-						response);
+			if (newDepIdStr == null || newDepIdStr.trim().equals("")) {
+				request.setAttribute("error", "please enter the department id");
+				request.setAttribute("department", department);
+				request.getRequestDispatcher("/admin/updateDep.jsp").forward(request, response);
+				return;
 			}
-
+			if(!StringUtil.isInteger(newDepIdStr)) {
+				request.setAttribute("error", "the department id must be an integer");
+				request.setAttribute("department", department);
+				request.getRequestDispatcher("/admin/updateDep.jsp").forward(request, response);
+				return;
+			}
+			
+			
+			
+			if(depName.equals(department.getDepName()) && Integer.valueOf(newDepIdStr) == department.getDepId()) {
+				
+			}
+			
+			boolean isIdRepeated = isIdRepeated(Integer.valueOf(newDepIdStr), request, response);
+			boolean isNameRepeated = isNameRepeated(depName, request, response);
+			
+			if(isIdRepeated && isNameRepeated) {
+				request.setAttribute("error", "department name or id repeated");
+				request.setAttribute("department", department);
+				request.getRequestDispatcher("/admin/updateDep.jsp").forward(request, response);
+				return;
+			}else {
+				department = new Department(Integer.valueOf(newDepIdStr), depName);
+				departmentService.modify(department, oldDepId);
+				request.setAttribute("message", "update succeeds");
+				showList(request, response);
+			}
+		}
+		
+		public boolean isNameRepeated(String depName, HttpServletRequest request,
+				HttpServletResponse response) throws ServletException, IOException {
+			boolean isRepeated = false;
+			// 判断不能重名
+			List<Department> list = departmentService.getList(null, null); // 得到列表,查询所有的
+			if (list != null) {
+				for (int i = 0; i < list.size(); i++) {
+					if (list.get(i).getDepName().equals(depName)) {
+						isRepeated = true;
+						break;
+					}
+				}
+			}
+			return isRepeated;
+		}		
+		public boolean isIdRepeated(int depId, HttpServletRequest request,
+				HttpServletResponse response) throws ServletException, IOException {
+			boolean isRepeated = false;
+			// 判断不能重名
+			List<Department> list = departmentService.getList(null, null); // 得到列表,查询所有的
+			if (list != null) {
+				for (int i = 0; i < list.size(); i++) {
+					if (list.get(i).getDepId() == depId) {
+						isRepeated = true;
+						break;
+					}
+				}
+			}
+			return isRepeated;
 		}
 	
 
