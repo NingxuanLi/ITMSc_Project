@@ -24,8 +24,7 @@ public class AdminServlet extends HttpServlet{
 	}
 	
 	public void destroy() {
-		super.destroy(); // Just puts "destroy" string in log
-		// Put your code here
+		super.destroy(); 
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,8 +38,6 @@ public class AdminServlet extends HttpServlet{
 		String method = request.getParameter("method");
 
 		if (method.equals("adminLogin")) {
-
-			// administrator login
 			adminLogin(request, response);
 		} else if(method.equals("logout")) {
 			logout(request, response);
@@ -104,9 +101,9 @@ public class AdminServlet extends HttpServlet{
 	}
 
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		//删除单个
+		//delete single
     	String adminId = request.getParameter("adminId");
-		//删除多个
+		//delete mutiple
     	String str = request.getParameter("adminIdArr");
     	
     	if(str != null && !str.trim().equals("")) {
@@ -124,7 +121,7 @@ public class AdminServlet extends HttpServlet{
         		showList(request, response);
         		return;
     		}else {
-    			//都为空
+    			//no select
     			request.setAttribute("message", "please select an admin");
 				showList(request, response);
 				return;
@@ -134,23 +131,23 @@ public class AdminServlet extends HttpServlet{
 	}
 
 	private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-    	String checkName = request.getParameter("checkName"); // 得到名字，根据姓名查找时用
-		// 分页
+    	String checkName = request.getParameter("checkName"); // get name for search function
+		// paging
 		PageData pageData = new PageData();
-		// 得到当前页
+		// get the current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get rows count per page
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
-		// 得到总行数
+		// get quantity of all data in the database
 		int rowsCount = adminService.getRowsCount(checkName);
 		pageData.setRowsCount(rowsCount);
-		// 计算总页数
+		// calculate the total number of pages
 		int pageCount = 0;
 		if (rowsCount % pageData.getPageRows() == 0) {
 			pageCount = rowsCount / pageData.getPageRows();
@@ -160,7 +157,7 @@ public class AdminServlet extends HttpServlet{
 		pageData.setPageCount(pageCount);
 		
 		List<Admin> adminList = adminService.getAdminList(checkName, pageData);
-		//保存
+		
 		request.setAttribute("adminList", adminList);
 		request.setAttribute("page", pageData);
 		request.setAttribute("checkName", checkName);
@@ -170,7 +167,7 @@ public class AdminServlet extends HttpServlet{
 	private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String adminName = request.getParameter("adminName");
 		String password = request.getParameter("adminPassword");
-		//判断这两个变量是否为空
+		//is null judgement
 		if(adminName == null || adminName.trim().equals("")) {
 			request.setAttribute("error", "Admin name can't be null");
 			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
@@ -179,8 +176,8 @@ public class AdminServlet extends HttpServlet{
 			request.setAttribute("error", "password can't be null");
 			request.getRequestDispatcher("/admin/addAdmin.jsp").forward(request, response);
 		}
-		//向数据库中添加管理员
-		//检查数据库中是否有重名的，如果有，则不能添加
+		
+		//can't add a new Admin with name which is the same of another admin in the databse
 		boolean isNameRepeated = isNameRepeated(adminName, request, response);
 		Admin admin= new Admin(adminName, password);
 		
@@ -196,12 +193,12 @@ public class AdminServlet extends HttpServlet{
 				
 	}
     
-    //判断数据库中是否有重名的管理员
+    //judge if there is a admin with the same name
 	public boolean isNameRepeated(String adminName, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		boolean isRepeated = false;
-		// 判断不能重名
-		List<Admin> list = adminService.getAdminList(null, null); // 得到列表,查询所有的
+
+		List<Admin> list = adminService.getAdminList(null, null); // get all admins
 		if (list != null) {
 			for (int i = 0; i < list.size(); i++) {
 				if (list.get(i).getAdminName().equals(adminName)) {

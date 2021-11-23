@@ -39,7 +39,7 @@ public class PatientServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		// 得到值
+
 		String method = request.getParameter("method");
 		if (method.equals("add")) {
 			add(request, response);
@@ -52,17 +52,17 @@ public class PatientServlet extends HttpServlet{
 	}
 
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		//删除单个
+		//single delete
 		String pId = request.getParameter("pId");
-		//删除多个
+		//mutiple delete
 		String strId = request.getParameter("strId");
 		
-		boolean hasApp = false; //判断这个patient有没有预约在数据库
-		if(strId != null && !strId.trim().equals("")) { //多个一起删除
+		boolean hasApp = false; 
+		if(strId != null && !strId.trim().equals("")) {
 			String[] arrId = strId.split(",");
 			for(String id : arrId) {
 				hasApp = hasApp(Integer.valueOf(id), request, response);
-				if(!hasApp) { //没有预约，可以删除
+				if(!hasApp) { 
 					patientService.delete(Integer.valueOf(id));
 				}
 			}
@@ -78,7 +78,7 @@ public class PatientServlet extends HttpServlet{
 				return;
 			}
 			if(hasApp){
-				//TODO 显示不了这个message
+				//TODO 
 //				JOptionPane.showMessageDialog(null, "can't delete a patient already making an appointment");
 				request.setAttribute("message", "can't delete a patient already making an appointment");
 				showList(request, response);
@@ -90,24 +90,24 @@ public class PatientServlet extends HttpServlet{
 	}
 
 	private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		// 得到名字，根据姓名查找时用
+		// get name for search function
 		String checkName = request.getParameter("checkName");
-		// 分页
+		// paging
 		PageData pageData = new PageData();
-		// 得到当前页
+		// get current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get number of rows per page
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
-		// 得到总行数
+		// get total number of rows
 		int rowsCount = patientService.getRowsCount(checkName);	
 		pageData.setRowsCount(rowsCount);	
-		// 计算总页数
+		// calculate toal number of pages
 		int pageCount = 0;
 
 		if (rowsCount % pageData.getPageRows() == 0) {
@@ -118,16 +118,16 @@ public class PatientServlet extends HttpServlet{
 		pageData.setPageCount(pageCount);
 		
 		List<Patient> patientList = patientService.getList(checkName, pageData);
-		//查看每个病人是否有预约，如果有就显示红色，没有就显示黑色
+		//if a patient has appointments, set his color to red(can't be deleted)
 		for(Patient p : patientList) {
 			boolean hasApp = hasApp(p.getId(), request, response);
-			if(hasApp) {  //有预约显示红色
+			if(hasApp) {  
 				p.setColor("red");
-			}else {  //没有预约显示黑色
+			}else {  
 				p.setColor("black");
 			}
 		}
-		//跳转
+		//jump
 		request.setAttribute("patientList", patientList);
 		request.setAttribute("page", pageData);
 		request.setAttribute("checkName", checkName);
@@ -185,7 +185,7 @@ public class PatientServlet extends HttpServlet{
 			return;
 		}
 		
-		Patient patient = patientService.get(name); //不能添加相同名字的用户
+		Patient patient = patientService.get(name); //patient name must be unique
 		if(patient != null) {
 			request.setAttribute("error", "The name is already in use, please enter a different name");
 			request.getRequestDispatcher("/patient_registration.jsp").forward(request, response);
@@ -205,14 +205,14 @@ public class PatientServlet extends HttpServlet{
 		
 	}
 	
-	//判断一个病人有没有预约过
+	//judge whether a patient already has appointments
 	public boolean hasApp(int id, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		boolean b = false;
 		Appointment appointment = appointmentService.getByPatientId(id);
-		if(appointment == null) {   //只要查到有一条记录，说明这个病人已经预约过了
+		if(appointment == null) {   
 			b = false;
-		}else {  //没有查到app记录，说明病人还没有预约过
+		}else { 
 			b = true;
 		}
 		return b;

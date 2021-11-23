@@ -23,7 +23,7 @@
 			<td width="207" height="55" background="images/nav01.gif">
 				<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
 				  <tr>
-					<!-- <td width="25%" rowspan="2"><img src="images/ico02.gif" width="35" height="35" /></td> -->
+					
 					<td width="75%" height="22" class="left-font01">Hello, doctor <span class="left-font02">${sessionScope.doctor.docName}</span></td>
 				  </tr>
 				  <tr>
@@ -36,7 +36,7 @@
 			</td>
 		  </tr>
 		</table>
-			  <!-- 管理系统开始 -->
+
       <table width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
           <tr>
             <td height="29"><table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -49,7 +49,7 @@
       </table>
 
 	  
-	  <!-- 管理系统结束-->
+
 		
 
 	  </TD>

@@ -39,7 +39,7 @@ public class AppointmentServlet extends HttpServlet{
 	}
 
 	public void destroy() {
-		super.destroy(); // Just puts "destroy" string in log
+		super.destroy(); 
 
 	}
 
@@ -73,9 +73,9 @@ public class AppointmentServlet extends HttpServlet{
 
 
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		// 单个删除
+		// single delete
 		String appId = request.getParameter("appId");
-		// 多个删除
+		// mutiple delete
 		String strId = request.getParameter("strId");
 			
 		if (strId != null && !strId.trim().equals("")) {
@@ -102,21 +102,21 @@ public class AppointmentServlet extends HttpServlet{
 	}
 
 	private void showArchiveList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		PageData pageData = new PageData();// 分页
-		// 得到当前页
+		PageData pageData = new PageData();// paging
+		// get current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get number of rows per page
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
-		// 得到总行数
+		// get total number of rows
 		int rowsCount = appointmentService.getArchiveRowsCount();
 		pageData.setRowsCount(rowsCount);
-		// 计算总页数
+		// calculate total number of pages
 		int pageCount = 0;
 		if (rowsCount % pageData.getPageRows() == 0) {
 			pageCount = rowsCount / pageData.getPageRows();
@@ -125,14 +125,13 @@ public class AppointmentServlet extends HttpServlet{
 		}
 		pageData.setPageCount(pageCount);
 		
-		//查询数据库
+		//database search
 		List<Appointment> list = appointmentService.getArchiveList(pageData);
-
+		//use DTO to encapsulate the data needed to be transmitted
 		List<AppointmentDto> appList = new ArrayList<>();
 		AppointmentDto dto = null;
 		for(Appointment app : list) {
-			//获得patient，doctor，department
-			
+			//get patient，doctor，department		
 			Patient patient = patientService.get(app.getpId());
 			Doctor doctor = doctorService.get(app.getDocId());
 			Department department = departmentService.get(doctor.getDepId());
@@ -149,7 +148,7 @@ public class AppointmentServlet extends HttpServlet{
 			
 			appList.add(dto);
 		}
-		//跳转
+		//jump
 		request.setAttribute("appList", appList);
 		request.setAttribute("page", pageData);
 		request.getRequestDispatcher("/admin/appointmentArchiveList.jsp").forward(request, response);	
@@ -157,25 +156,25 @@ public class AppointmentServlet extends HttpServlet{
 
 	private void showDoctorList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Doctor doctor = (Doctor) request.getSession().getAttribute("doctor");
-		// 分页
+		// paging
 		PageData pageData = new PageData();
-		// 得到当前页
+		// get the current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get the number of rows per page
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
 
-		// 得到总行数
+		// get total numbers of rows
 		int rowsCount = appointmentService.getDoctorRowsCount(doctor.getDocId());
 		
 		pageData.setRowsCount(rowsCount);
 
-		// 计算总页数
+		// calculate total number of pages
 		int pageCount = 0;
 
 		if (rowsCount % pageData.getPageRows() == 0) {
@@ -187,6 +186,7 @@ public class AppointmentServlet extends HttpServlet{
 				
 		List<Appointment> list = appointmentService.getDoctorList(doctor.getDocId(), pageData);
 		System.out.println(list.size());
+		//use DTO to encapsulate the data needed to be transmitted
 		List<DoctorAppDto> docAppList = new ArrayList<>();
 		for(Appointment app : list) {
 			Patient patient = patientService.get(app.getpId());
@@ -199,6 +199,7 @@ public class AppointmentServlet extends HttpServlet{
 			dto.setAppTime(app.getAppTime());
 			docAppList.add(dto);
 		}
+		//jump
 		request.setAttribute("page", pageData);
 		request.setAttribute("docAppList", docAppList);
 		request.getRequestDispatcher("/doctor/docAppList.jsp").forward(request, response);		
@@ -224,10 +225,10 @@ public class AppointmentServlet extends HttpServlet{
 			request.getRequestDispatcher("/appointment_query.jsp").forward(request, response);
 			return;
 		}
-		//不是空的，数据库有没有这个病人，没有就返回
+		//judge whether database has this patient
 		Patient patient  = patientService.get(name);
 		if(patient != null) {
-			//密码是否正确
+			//is password correct
 			if(!password.trim().equals(patient.getPassword())) {
 				request.setAttribute("error", "wrong password");
 				request.getRequestDispatcher("/appointment_query.jsp").forward(request, response);
@@ -236,9 +237,9 @@ public class AppointmentServlet extends HttpServlet{
 				String str = (String) request.getSession().getAttribute("str");
 				if(imgTxt.equals(str)) {									
 					List<Appointment> list = appointmentService.getPatientList(patient.getId());
-					List<PersonalAppDto> personalAppList = new ArrayList<>();
-					for(Appointment app : list) {
-						
+					//use DTO to encapsulate data needed to be transmitted
+					List<PersonalAppDto> personalAppList = new ArrayList<>();  
+					for(Appointment app : list) {						
 						Doctor doctor = doctorService.get(app.getDocId());
 						Department department = departmentService.get(doctor.getDepId());
 						PersonalAppDto dto = new PersonalAppDto();
@@ -293,7 +294,7 @@ public class AppointmentServlet extends HttpServlet{
 			return;
 		}
 		
-		//都是空的，还没有选中
+		//no appointment select
 		request.setAttribute("message", "please select");
 		showList(request,response);
 		
@@ -317,7 +318,7 @@ public class AppointmentServlet extends HttpServlet{
 			return;
 		}
 		
-		//都是空的，还没有选中
+		//no appointment select
 		request.setAttribute("message", "please select a appointment");
 		showList(request,response);
 		
@@ -326,21 +327,21 @@ public class AppointmentServlet extends HttpServlet{
 
 	private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		PageData pageData = new PageData();// 分页
-		// 得到当前页
+		PageData pageData = new PageData();// paging
+		// get the current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get page rows per count
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
-		// 得到总行数
+		// get total number of rows
 		int rowsCount = appointmentService.getRowsCount();
 		pageData.setRowsCount(rowsCount);
-		// 计算总页数
+		// calculate total number of pages
 		int pageCount = 0;
 		if (rowsCount % pageData.getPageRows() == 0) {
 			pageCount = rowsCount / pageData.getPageRows();
@@ -349,13 +350,13 @@ public class AppointmentServlet extends HttpServlet{
 		}
 		pageData.setPageCount(pageCount);
 		
-		//查询数据库
+		//database search
 		List<Appointment> list = appointmentService.getList(pageData);
 
 		List<AppointmentDto> appList = new ArrayList<>();
 		AppointmentDto dto = null;
 		for(Appointment app : list) {
-			//获得patient，doctor，department
+			//get patient, doctor, department
 			
 			Patient patient = patientService.get(app.getpId());
 			Doctor doctor = doctorService.get(app.getDocId());
@@ -373,7 +374,7 @@ public class AppointmentServlet extends HttpServlet{
 			
 			appList.add(dto);
 		}
-		//跳转
+		//jump
 		request.setAttribute("appList", appList);
 		request.setAttribute("page", pageData);
 		request.getRequestDispatcher("/admin/appointmentList.jsp").forward(request, response);
@@ -381,10 +382,9 @@ public class AppointmentServlet extends HttpServlet{
 	}
 
 	private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		// TODO Auto-generated method stub
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
-		//判断是不是空
+		//is null judgement
 		if(name == null || name.trim().equals("")) {
 			request.setAttribute("error", "patient name can't be null");
 			request.getRequestDispatcher("/appointmentMake.jsp").forward(request, response);
@@ -395,34 +395,34 @@ public class AppointmentServlet extends HttpServlet{
 			request.getRequestDispatcher("/appointmentMake.jsp").forward(request, response);
 			return;
 		}
-		//都不为空，判断有没有这个病人
+		
 		Patient patient = patientService.get(name);
 		if(patient != null) {
-			//有这个病人，判断密码是否正确
+			//is password corrcet
 			if(patient.getPassword().equals(password)) {
-				//密码正确，把docId传过来
+				
 				String docId = request.getParameter("docId");
 				Doctor doctor = doctorService.get(Integer.valueOf(docId));
 				String appNum = DateUtil.getDateSampleString(doctor.getDocTime()) + "-" + String.valueOf(doctor.getDocId());
 				Appointment app = new Appointment(appNum, patient.getId(), doctor.getDocId(), doctor.getDocTime());
-				//添加进数据库
+				//add into databse
 				boolean b = appointmentService.add(app);
 				if(b) {
-					//添加成功
+					//add succeeds
 					request.setAttribute("message", "successfully made a appointment");
 					request.getRequestDispatcher("/index.jsp").forward(request, response);
 				}else {
-					//添加失败
+					//add fails
 					request.setAttribute("error", "failed");
 					request.getRequestDispatcher("/appointmentMake.jsp").forward(request, response);
 				}
 			}else {
-				//密码错误
+				//wrong password
 				request.setAttribute("error", "wrong password, please re-enter");
 				request.getRequestDispatcher("/appointmentMake.jsp").forward(request, response);
 			}
 		}else {
-			//没有这个病人
+			//no this patient in database
 			request.setAttribute("error", "patient not found");
 			request.getRequestDispatcher("/appointmentMake.jsp").forward(request, response);
 		}	

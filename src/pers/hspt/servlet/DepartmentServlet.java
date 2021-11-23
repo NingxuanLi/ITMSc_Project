@@ -44,10 +44,8 @@ public class DepartmentServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		// 得到值
 		String method = request.getParameter("method");
 		if (method.equals("frontShowList")) {
-			// 显示诊室列表
 			frontShowList(request, response);
 		} else if (method.equals("showList")) {
 			showList(request, response);
@@ -64,25 +62,25 @@ public class DepartmentServlet extends HttpServlet{
 	}
 	
 	private void frontShowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		// 分页
+		// paging
 		PageData pageData = new PageData();
-		// 得到当前页
+		// get current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get number of rows per page
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
 
-		// 得到总行数
+		// get total number of rows
 		int rowsCount = departmentService.getRowsCount(null);
 
 		pageData.setRowsCount(rowsCount);
 
-		// 计算总页数
+		// calculate total number of pages
 		int pageCount = 0;
 
 		if (rowsCount % pageData.getPageRows() == 0) {
@@ -94,6 +92,7 @@ public class DepartmentServlet extends HttpServlet{
 		
 		List<Department> depList = departmentService.getList(null, pageData);
 		for (Department dep : depList) {
+			//if a department already has a doctor, set its color to red(can't be updated or deleted)
 			boolean isDoc = isHasDoc(dep.getDepId(), request, response);
 			if (isDoc) {
 				dep.setColor("black");
@@ -102,20 +101,16 @@ public class DepartmentServlet extends HttpServlet{
 			}
 		}
 		request.setAttribute("depList", depList);
-		request.setAttribute("page", pageData);
-		
-		request.getRequestDispatcher("/frontDepList.jsp").forward(request, response);
-		
-		
-		
+		request.setAttribute("page", pageData);	
+		request.getRequestDispatcher("/frontDepList.jsp").forward(request, response);	
 	}
 
-	// 添加
+
 	public void add(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String depId = request.getParameter("depId");
 		String depName = request.getParameter("depName");
-		// 得到值
+
 		if (depId == null || depId.trim().equals("")) {
 			request.setAttribute("error", "id can't be null");
 			request.getRequestDispatcher("/admin/addDep.jsp").forward(
@@ -139,34 +134,33 @@ public class DepartmentServlet extends HttpServlet{
 			request.getRequestDispatcher("/admin/addDep.jsp").forward(request, response);
 			return;
 		}
-		// 插入数据库
+
 		Department department = new Department(Integer.valueOf(depId), depName);	
 		departmentService.add(department);
 		request.setAttribute("message", "add succeeds");
 		showList(request, response);			
 	}	
 	
-	// 显示科室列表
 	public void showList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// 模糊查询
-		String checkName = request.getParameter("checkName"); // 得到名字，根据姓名查找时用
-		// 分页
+		// get name of search function 
+		String checkName = request.getParameter("checkName"); 
+		// paging 
 		PageData pageData = new PageData();
-		// 得到当前页
+		// get current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get number of rows per page
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
-		// 得到总行数
+		// get total number of rows
 		int rowsCount = departmentService.getRowsCount(checkName);
 		pageData.setRowsCount(rowsCount);
-		// 计算总页数
+		// calculate total number of pages
 		int pageCount = 0;
 		if (rowsCount % pageData.getPageRows() == 0) {
 			pageCount = rowsCount / pageData.getPageRows();
@@ -174,48 +168,43 @@ public class DepartmentServlet extends HttpServlet{
 			pageCount = rowsCount / pageData.getPageRows() + 1;
 		}
 		pageData.setPageCount(pageCount);
-		// 先查询数据库
-		List<Department> depList = departmentService.getList(checkName, pageData); // 得到所有的
+		// database search
+		List<Department> depList = departmentService.getList(checkName, pageData); 
 		// 查看是否有医生,有医生显示红色，
 		for (Department dep : depList) {
 			boolean isDoc = isHasDoc(dep.getDepId(), request, response);
+			//if there is already a doctor in a department, set its color to red(can't be modified or deleted)
 			if (isDoc) {
 				dep.setColor("red");
 			} else {
 				dep.setColor("black");
 			}
 		}
-		// 跳到页面，并将值传过去
-		
+		//jump
 		request.setAttribute("depList", depList);
-		request.setAttribute("page", pageData); // 将page传过去
-		request.setAttribute("checkName", checkName);// 不让名字清空
-		// 跳到后台
-		request.getRequestDispatcher("/admin/departmentList.jsp").forward(request,
-				response);
+		request.setAttribute("page", pageData); 
+		request.setAttribute("checkName", checkName);
+		request.getRequestDispatcher("/admin/departmentList.jsp").forward(request, response);
 	}
 	
-	// 显示科室列表时，查询看下面是否有医生，有医生的显示为红色
-		public boolean isHasDoc(int depId, HttpServletRequest request,
-				HttpServletResponse response) throws ServletException, IOException {
-			boolean b = false; // 默认没有预约
+	// judge whether there is already a doctor in a department
+		public boolean isHasDoc(int depId, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			boolean b = false; // default no
 
 			List<Doctor> rList = doctorService.getByDepId(depId);
-
 			if (rList.size() > 0) {
-				b = true;// 有预约
+				b = true;
 			} else {
-				b = false;// 没有预约
+				b = false;
 			}
 			return b;
-
 		}
 		
-		// 删除
+		
 		public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			// 单个删除
+			// single delete
 			String depId = request.getParameter("depId");
-			// 多个删除
+			// mutiple delete
 			String strId = request.getParameter("strId");
 		
 			boolean isHasDoc = false;
@@ -254,10 +243,10 @@ public class DepartmentServlet extends HttpServlet{
 
 		}
 		
-		// 进入修改页面
+		
 		public void gotoModify(HttpServletRequest request,
 				HttpServletResponse response) throws ServletException, IOException {
-			// 得到页面的offId，查询数据库，得到对象，初始化页面
+			// get department Id
 			String depId = request.getParameter("depId");
 
 			Department department = departmentService.get(Integer.valueOf(depId));
@@ -268,7 +257,7 @@ public class DepartmentServlet extends HttpServlet{
 				showList(request, response);
 				return;
 			}
-			// 保存值，传到页面
+			// jump
 			request.setAttribute("department", department);
 			request.getRequestDispatcher("admin/updateDep.jsp").forward(request,
 					response);
@@ -277,8 +266,7 @@ public class DepartmentServlet extends HttpServlet{
 		
 		public void modify(HttpServletRequest request, HttpServletResponse response)
 				throws ServletException, IOException {
-			// 得到页面值
-			int oldDepId = Integer.valueOf(request.getParameter("oldDepId"));// 旧的id
+			int oldDepId = Integer.valueOf(request.getParameter("oldDepId"));// get the old department id
 			String newDepIdStr = request.getParameter("depId");
 			String depName = request.getParameter("depName");
 			Department department = departmentService.get(oldDepId);
@@ -296,15 +284,9 @@ public class DepartmentServlet extends HttpServlet{
 				return;
 			}
 			
-			
-			
-			if(depName.equals(department.getDepName()) && Integer.valueOf(newDepIdStr) == department.getDepId()) {
-				
-			}
-			
 			boolean isIdRepeated = isIdRepeated(Integer.valueOf(newDepIdStr), request, response);
 			boolean isNameRepeated = isNameRepeated(depName, request, response);
-			
+			//if the id or name of department is repeated, update will fail
 			if(isIdRepeated && isNameRepeated) {
 				request.setAttribute("error", "department name or id repeated");
 				request.setAttribute("department", department);
@@ -318,11 +300,12 @@ public class DepartmentServlet extends HttpServlet{
 			}
 		}
 		
+		//judge whether the name of department is repeated
 		public boolean isNameRepeated(String depName, HttpServletRequest request,
 				HttpServletResponse response) throws ServletException, IOException {
 			boolean isRepeated = false;
-			// 判断不能重名
-			List<Department> list = departmentService.getList(null, null); // 得到列表,查询所有的
+
+			List<Department> list = departmentService.getList(null, null); // get all departments
 			if (list != null) {
 				for (int i = 0; i < list.size(); i++) {
 					if (list.get(i).getDepName().equals(depName)) {
@@ -333,11 +316,13 @@ public class DepartmentServlet extends HttpServlet{
 			}
 			return isRepeated;
 		}		
+		
+		//judge whether the id of department is repeated
 		public boolean isIdRepeated(int depId, HttpServletRequest request,
 				HttpServletResponse response) throws ServletException, IOException {
 			boolean isRepeated = false;
-			// 判断不能重名
-			List<Department> list = departmentService.getList(null, null); // 得到列表,查询所有的
+
+			List<Department> list = departmentService.getList(null, null); // get all departments
 			if (list != null) {
 				for (int i = 0; i < list.size(); i++) {
 					if (list.get(i).getDepId() == depId) {

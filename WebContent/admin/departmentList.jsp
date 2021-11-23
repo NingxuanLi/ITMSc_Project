@@ -23,54 +23,11 @@ if(!"null".equals(message)&&!"".equals(message)&&message!=null){
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 
 
-<style type="text/css">
-body {
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-}
-
-.tabfont01 {
-	font-family: "宋体";
-	font-size: 9px;
-	color: #555555;
-	text-decoration: none;
-	text-align: center;
-}
-
-.font051 {
-	font-family: "宋体";
-	font-size: 12px;
-	color: #333333;
-	text-decoration: none;
-	line-height: 20px;
-}
-
-.font201 {
-	font-family: "宋体";
-	font-size: 12px;
-	color: #FF0000;
-	text-decoration: none;
-}
-
-.button {
-	font-family: "宋体";
-	font-size: 14px;
-	height: 37px;
-}
-
-html {
-	overflow-x: auto;
-	overflow-y: auto;
-	border: 0;
-}
-</style>
 
 <script type="text/javascript">
 
 
-//全选
+
 function selectAll(){
 	
 	var ch=document.getElementsByName("delid");
@@ -80,7 +37,7 @@ function selectAll(){
 	}
 	
 }
-//反选
+
 function unselectAll(){
 
 	var ch=document.getElementsByName("delid");
@@ -91,14 +48,14 @@ function unselectAll(){
 	}
 }
 
-//删除所选科室信息 
+
 function del(){
 	
 	var strId="";
-	var arr=document.getElementsByName("delid"); //复选框名字 
+	var arr=document.getElementsByName("delid"); 
 	for(var i=0;i<arr.length;i++){
 		if(arr[i].checked){
-			strId+=arr[i].value+","; //传过去 解析 	
+			strId+=arr[i].value+","; 
 		}	
 	}
 	
@@ -106,33 +63,33 @@ function del(){
 }
 
 
-//点击添加人员信息
+
 function link(){
  location="admin/addDep.jsp";
 
 }
 
-//根据科室 姓名查询 
+//search
 function checkDepartmentName(){
 	var  name = document.getElementById("checkName").value;
-	chName=name; //查找姓名时不让清空 
+	chName=name; 
 	location = "department?method=showList&checkName="+name;
 }
 
 		
-//改变文本框中的每页显示几行 的值 
+//paging function
 var pages;
 var chName;
 		
 function init(){
-	chName=document.getElementById("checkName").value;//记录姓名 
-	pages = document.getElementById("pageRows").value; //记录初始值 
+	chName=document.getElementById("checkName").value;
+	pages = document.getElementById("pageRows").value;  
 }
 
-//改变每页显示多少行  --并且把当前页面传过去  
+
 function changeRows(currentPage){
-	document.getElementById("checkName").value=chName;//不让姓名清空 
-	var pageRows=document.getElementById("pageRows").value;  //得到改变的值 
+	document.getElementById("checkName").value=chName;
+	var pageRows=document.getElementById("pageRows").value;  
 	if(pageRows>0){
 				
 		location = "department?method=showList&currentPage="+currentPage+"&pageRows="+pageRows+"&checkName="+chName;
@@ -162,14 +119,12 @@ function changeRows(currentPage){
 				<td height="30">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
-							<td height="62" background="images/nav04.gif">
+							<td height="62" >
 
 								<table width="98%" border="0" align="center" cellpadding="0"
 									cellspacing="0">
 									<tr>
-										<!-- <td width="24">
-											<img src="images/ico07.gif" width="20" height="18" />
-										</td> -->
+										
 										<td width="519">
 											<label>
 												Department name:
@@ -238,7 +193,7 @@ function changeRows(currentPage){
 													<c:forEach items="${depList}" var="dep">
 														<tr align="center">
 															<td bgcolor="#FFFFFF">
-																<!-- 复选框 delid-->
+																
 																<input type="checkbox" name="delid" value="${dep.depId}"/>
 															</td>
 															<td bgcolor="#FFFFFF">
@@ -261,8 +216,8 @@ function changeRows(currentPage){
 													</c:forEach>
 												<tr align="center">
 													<td colspan="4" bgcolor="#FFFFFF">
-														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.rowsCount}</font>departments in total&nbsp;&nbsp;&nbsp;&nbsp;
-														&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-size:small;color:red;">${page.rowsCount}</font>departments in total&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;<font style="font-size:small;color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${page.currentPage==1}">
 															first page&nbsp;&nbsp;&nbsp;&nbsp;
 															last page&nbsp;&nbsp;&nbsp;&nbsp;
@@ -279,7 +234,7 @@ function changeRows(currentPage){
 															<a href="javascript:changeRows(${page.currentPage+1})">next page</a>&nbsp;&nbsp;&nbsp;&nbsp;
 															<a href="javascript:changeRows(${page.pageCount})">end page</a>&nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
-														numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="font-family:隶书;font-size:x-small;color:red;"/>
+														numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="font-size:x-small;color:red;"/>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														
 														<select name="select" onchange="changeRows(this.value)">
@@ -296,18 +251,6 @@ function changeRows(currentPage){
 										</td>
 									</tr>
 								</table>
-							</td>
-						</tr>
-					</table>
-					<table width="95%" border="0" align="center" cellpadding="0"
-						cellspacing="0">
-						<tr>
-							<td height="6">
-								<img src="images/spacer.gif" width="1" height="1" />
-							</td>
-						</tr>
-						<tr>
-							<td height="33">
 							</td>
 						</tr>
 					</table>

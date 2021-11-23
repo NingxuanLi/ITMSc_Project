@@ -15,10 +15,10 @@
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 
 <SCRIPT language=JavaScript>
-function tupian(idt){
+function picture(idt){
     var nametu="xiaotu"+idt;
     var tp = document.getElementById(nametu);
-    tp.src="images/ico05.gif";//图片ico04为白色的正方形
+    tp.src="images/ico05.gif";
 	
 	for(var i=1;i<30;i++)
 	{
@@ -28,7 +28,7 @@ function tupian(idt){
 	  {
 	    var tp2=document.getElementById('xiaotu'+i);
 		if(tp2!=undefined)
-	    {tp2.src="images/ico06.gif";}//图片ico06为蓝色的正方形
+	    {tp2.src="images/ico06.gif";}
 	  }
 	}
 }
@@ -39,7 +39,7 @@ function list(idstr){
 	var objectobj=document.all(name1);
 	var imgobj=document.all(name2);
 
-	//alert(imgobj);
+
 	
 	if(objectobj.style.display=="none"){
 		for(i=1;i<10;i++){
@@ -49,7 +49,6 @@ function list(idstr){
 			if(o!=undefined){
 				o.style.display="none";
 				var image=document.all(name3);
-				//alert(image);
 				image.src="images/ico04.gif";
 			}
 		}
@@ -74,7 +73,7 @@ function list(idstr){
 			<td width="207" height="55" background="images/nav01.gif">
 				<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
 				  <tr>
-					<!-- <td width="25%" rowspan="2"><img src="images/ico02.gif" width="35" height="35" /></td> -->
+					
 					<td width="75%" height="22" class="left-font01">Hello, <span class="left-font02">${sessionScope.admin.adminName}</span></td>
 				  </tr>
 				  <tr>
@@ -87,7 +86,7 @@ function list(idstr){
 			</td>
 		  </tr>
 		</table>
-			  <!-- 管理系统开始 -->
+			  <!-- administrator management -->
       <table width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
           <tr>
             <td height="29"><table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -102,16 +101,15 @@ function list(idstr){
 	  <table id="subtree5" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" cellspacing="0" class="left-table02">
         <tr>
           <td width="9%" height="20"><img id="xiaotu13" src="images/ico06.gif" width="8" height="12" /></td>
-          <td width="91%"><a href="admin/addAdmin.jsp" target="mainFrame" class="left-font03" onClick="tupian('13');">add admin</a></td>
+          <td width="91%"><a href="admin/addAdmin.jsp" target="mainFrame" class="left-font03" onClick="picture('13');">add admin</a></td>
         </tr>
         <tr>
           <td height="20"><img id="xiaotu14" src="images/ico06.gif" width="8" height="12" /></td>
-          <td><a href="admin?method=showList" target="mainFrame" class="left-font03" onClick="tupian('14');">admin list</a></td>
+          <td><a href="admin?method=showList" target="mainFrame" class="left-font03" onClick="picture('14');">admin list</a></td>
         </tr>
       </table>
-	  <!-- 管理系统结束-->
 		
-		<!--  医生管理开始    -->
+		<!--  doctor management    -->
 		<TABLE width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
           <tr>
             <td height="29">
@@ -130,20 +128,17 @@ function list(idstr){
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu20" src="images/ico06.gif" width="8" height="12" /></td>
 
-				  <td width="91%"><a href="doctor?method=gotoAdd" target="mainFrame" class="left-font03" onClick="tupian('20');">add doctor</a></td>
+				  <td width="91%"><a href="doctor?method=gotoAdd" target="mainFrame" class="left-font03" onClick="picture('20');">add doctor</a></td>
 				</tr>
 				<tr>
 				  <td width="9%" height="21" ><img id="xiaotu21" src="images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%"><a href="doctor?method=showList" target="mainFrame" class="left-font03" onClick="tupian('21');">doctor list</a></td>
+				  <td width="91%"><a href="doctor?method=showList" target="mainFrame" class="left-font03" onClick="picture('21');">doctor list</a></td>
 				</tr>
 				
       </table>
-		<!--  医生管理结束    -->
-		
-	
-
-
-		<!--  病人管理开始    -->
+      
+      
+		<!--  patient management    -->
 		<TABLE width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
           <tr>
             <td height="29">
@@ -163,13 +158,12 @@ function list(idstr){
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu18" src="images/ico06.gif" width="8" height="12" /></td>
 				  <td width="91%">
-					<a href="patient?method=showList" target="mainFrame" class="left-font03" onClick="tupian('18');">patient list</a></td>
+					<a href="patient?method=showList" target="mainFrame" class="left-font03" onClick="picture('18');">patient list</a></td>
 				</tr>
 				
       </table>
-		<!-- 病人管理结束    -->
 		
-		<!-- 预约管理开始    -->
+		<!-- appointment management    -->
         <TABLE width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
           <tr>
             <td height="29">
@@ -187,19 +181,16 @@ function list(idstr){
 				cellspacing="0" class="left-table02">
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu1" src="images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%"><a href="appointment?method=showList" target="mainFrame" class="left-font03" onClick="tupian('1');">Pending appointments</a></td>
+				  <td width="91%"><a href="appointment?method=showList" target="mainFrame" class="left-font03" onClick="picture('1');">Pending appointments</a></td>
 				</tr>
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu1" src="images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%"><a href="appointment?method=showArchiveList" target="mainFrame" class="left-font03" onClick="tupian('1');">Archive appointments</a></td>
+				  <td width="91%"><a href="appointment?method=showArchiveList" target="mainFrame" class="left-font03" onClick="picture('1');">Archive appointments</a></td>
 				</tr>
       </table>
-      
-		<!--  预约管理结束    -->
+  
 
-	  
-
-	  <!--  科室管理开始    -->
+	  <!--  department management    -->
 	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
           <tr>
             <td height="29"><table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -214,7 +205,7 @@ function list(idstr){
 	  <table id="subtree3" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" cellspacing="0" class="left-table02">
         <tr>
           <td width="9%" height="20" ><img id="xiaotu8" src="images/ico06.gif" width="8" height="12" /></td>
-          <td width="91%"><a href="admin/addDep.jsp" target="mainFrame" class="left-font03" onClick="tupian('8');">Add dep</a></td>
+          <td width="91%"><a href="admin/addDep.jsp" target="mainFrame" class="left-font03" onClick="picture('8');">Add dep</a></td>
         </tr>
 		<tr>
           <td width="9%" height="20" ><img id="xiaotu9" src="images/ico06.gif" width="8" height="12" /></td>
@@ -222,8 +213,6 @@ function list(idstr){
         </tr>
 		
       </table>
-	
-	  <!--  科室管理结束    -->
 
 	  </TD>
   </tr>

@@ -20,7 +20,7 @@ if(!"null".equals(message)&&!"".equals(message)&&message!=null){
 <script type="text/javascript">
 
 
-//全选
+
 function selectAll(){
 	
 	var ch=document.getElementsByName("delid");
@@ -30,7 +30,7 @@ function selectAll(){
 	}
 	
 }
-//反选
+
 function unselectAll(){
 
 	var ch=document.getElementsByName("delid");
@@ -41,16 +41,16 @@ function unselectAll(){
 	}
 }
 		
-//改变文本框中的每页显示几行 的值 
+//paging function
 var pages;
 		
 function init(){ 
-	pages = document.getElementById("pageRows").value; //记录初始值 
+	pages = document.getElementById("pageRows").value;  //initial value
 }
 
-//改变每页显示多少行  --并且把当前页面传过去  
+  
 function changeRows(currentPage){
-	var pageRows=document.getElementById("pageRows").value;  //得到改变的值 
+	var pageRows=document.getElementById("pageRows").value;   //changed value
 	if(pageRows>0){	
 		location = "appointment?method=showList&currentPage="+currentPage+"&pageRows="+pageRows;
 		return true;
@@ -86,11 +86,11 @@ function disapprove(id){
 
 function approveAll(){	
 	var strId="";
-	var arr=document.getElementsByName("delid"); //复选框名字 
+	var arr=document.getElementsByName("delid");  
 	
 		for(var i=0;i<arr.length;i++){
 			if(arr[i].checked){	
-				strId+=arr[i].value+","; //传过去 解析 	
+				strId+=arr[i].value+",";  	
 			}
 		}
 	location="appointment?method=approve&strId="+strId;
@@ -99,10 +99,10 @@ function approveAll(){
 
 function disapproveAll(){
 	var strId="";
-	var arr=document.getElementsByName("delid"); //复选框名字 	
+	var arr=document.getElementsByName("delid");  	
 		for(var i=0;i<arr.length;i++){
 			if(arr[i].checked){	
-				strId+=arr[i].value+","; //传过去 解析 	
+				strId+=arr[i].value+",";  	
 			}
 		}
 	location="appointment?method=disapprove&strId="+strId;
@@ -172,7 +172,7 @@ function disapproveAll(){
 													<c:forEach items="${appList}" var="app">
 														<tr align="center">
 															<td bgcolor="#FFFFFF">
-																<!-- 复选框 delid-->
+																
 																<input type="checkbox" name="delid" value="${app.appId}"/>
 															</td>													
 															<td bgcolor="#FFFFFF">
@@ -198,8 +198,8 @@ function disapproveAll(){
 													</c:forEach>
 												<tr align="center">
 													<td colspan="7" bgcolor="#FFFFFF">
-														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.rowsCount}</font>appointments to be processed&nbsp;&nbsp;&nbsp;&nbsp;
-														&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-size:small;color:red;">${page.rowsCount}</font>appointments to be processed&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;<font style="font-size:small;color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${page.currentPage==1}">
 															first page&nbsp;&nbsp;&nbsp;&nbsp;
 															last page&nbsp;&nbsp;&nbsp;&nbsp;
@@ -216,7 +216,7 @@ function disapproveAll(){
 															<a href="javascript:changeRows(${page.currentPage+1})">next page</a>&nbsp;&nbsp;&nbsp;&nbsp;
 															<a href="javascript:changeRows(${page.pageCount})">end page</a>&nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
-														numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="font-family:隶书;font-size:x-small;color:red;"/>
+														numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="font-size:x-small;color:red;"/>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														
 														<select name="select" onchange="changeRows(this.value)">
@@ -233,18 +233,6 @@ function disapproveAll(){
 										</td>
 									</tr>
 								</table>
-							</td>
-						</tr>
-					</table>
-					<table width="95%" border="0" align="center" cellpadding="0"
-						cellspacing="0">
-						<tr>
-							<td height="6">
-								<img src="images/spacer.gif" width="1" height="1" />
-							</td>
-						</tr>
-						<tr>
-							<td height="33">
 							</td>
 						</tr>
 					</table>

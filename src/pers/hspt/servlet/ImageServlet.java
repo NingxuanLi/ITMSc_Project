@@ -35,33 +35,33 @@ public class ImageServlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//生成验证码
+		//generate captcha code
 		int width=70;
 		int height=35;
 		
 		BufferedImage img=new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		//TYPE_INT_RGB 表示一个图像，它具有合成整数像素的 8 位 RGB 颜色分量。
+		
         
-		//获取画笔 
+		//get graphics 
 		Graphics g=img.getGraphics();
-		//设置图片颜色边框
+		//set color
 		g.setColor(Color.white);
-		g.fillRect(0, 0, width, height);  //rect矩形
+		g.fillRect(0, 0, width, height);  //rectangle
 		//设置边框颜色
 		g.setColor(Color.black);
 		g.drawRect(0, 0, width-1, height-1);
 		
-		//生成文字，随机
+		//generate the number 1001-9999
 		Random random=new Random();
 		int num=random.nextInt(8999)+1000;
 		String str=String.valueOf(num);
-		//讲str设置到session中去
+		//set str into session
 		request.getSession().setAttribute("str", str);
 		g.setColor(Color.red);
 		g.setFont(new Font("黑体",Font.ITALIC,30));
-		g.drawString(str, 5, 25); //10,20是坐标位置，其实坐标0,0是左下角，这是画文字的区别
+		g.drawString(str, 5, 25); 
 		
-		//生成干扰线,产生两个坐标
+		//generate two lines to make the number hard to identify
 		for(int i=0;i<10;i++){
 			int x0=random.nextInt(width);
 			int y0=random.nextInt(height);
@@ -71,7 +71,6 @@ public class ImageServlet extends HttpServlet {
 		}
 		
 		
-		//？
 		ImageIO.write(img, "JPEG", response.getOutputStream());
 		
 		

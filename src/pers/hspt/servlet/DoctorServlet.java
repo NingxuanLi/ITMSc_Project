@@ -57,19 +57,17 @@ public class DoctorServlet extends HttpServlet{
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
-		// 得到值
+
 		String method = request.getParameter("method");
 		if (method.equals("frontShowList")) {
-			// 前台挂号时需要
 			frontShowList(request, response);
 		} else if (method.equals("docListInOneDep")) {
-			// 前台查询医生列表
+			// doctor module
 			docListInOneDep(request, response);
 		} else if (method.equals("showList")) {
-			// 显示诊室列表
 			showList(request, response);
 		} else if (method.equals("gotoAdd")) {
-			// 添加时先初始化下拉列表框
+			//initialize the select box of department data
 			gotoAdd(request, response);
 		} else if (method.equals("add")) {
 			add(request, response);
@@ -91,7 +89,7 @@ public class DoctorServlet extends HttpServlet{
 
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		request.getSession().invalidate();
+		request.getSession().invalidate(); //destroy session
 		request.getRequestDispatcher("/doctor_login.jsp").forward(request, response);
 		
 	}
@@ -125,7 +123,7 @@ public class DoctorServlet extends HttpServlet{
 			}else {
 				String str = (String) request.getSession().getAttribute("str");
 				if (imgTxt.equals(str)) {
-					request.getSession().setAttribute("doctor", doctor); //session
+					request.getSession().setAttribute("doctor", doctor); //session 
 					request.getRequestDispatcher("/doctor/index.jsp").forward(request, response);
 					return;
 				}else {
@@ -146,6 +144,7 @@ public class DoctorServlet extends HttpServlet{
 	private void appointmentMake(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String docId = request.getParameter("docId");
 		Doctor doc = doctorService.get(Integer.valueOf(docId));
+		//use DTO to encapsulate data
 		DoctorDto dto = new DoctorDto();
 		Department department = departmentService.get(doc.getDepId());
 		dto.setDocId(doc.getDocId());
@@ -160,28 +159,28 @@ public class DoctorServlet extends HttpServlet{
 		
 	}
 
-
+	//query, after select a department, show all the doctors in this department
 	private void docListInOneDep(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String depId = request.getParameter("depId");
-		// 分页
+		// paging
 		PageData pageData = new PageData();
-		// 得到当前页
+		// get current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get number of rows per page
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
 
-		// 得到总行数
+		// get total number of rows
 		int rowsCount = doctorService.getRowsCountForOneDep(Integer.valueOf(depId));
 
 		pageData.setRowsCount(rowsCount);
 
-		// 计算总页数
+		// calculate total number of pages
 		int pageCount = 0;
 
 		if (rowsCount % pageData.getPageRows() == 0) {
@@ -193,6 +192,7 @@ public class DoctorServlet extends HttpServlet{
 		
 		
 		List<Doctor> docList = doctorService.getByDepId(Integer.valueOf(depId));
+		//use DTO to encapsulate the data needed to be transmitted
 		List<DoctorDto> docDtoList = new ArrayList<>();
 		DoctorDto dto = null;
 		for(Doctor doc : docList) {
@@ -213,27 +213,28 @@ public class DoctorServlet extends HttpServlet{
 		
 	}
 
-
+	
+	//doctor list in the index page
 	private void frontShowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		// 分页
+		// paging
 		PageData pageData = new PageData();
-		// 得到当前页
+		// get current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get number of rows per page
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
 
-		// 得到总行数
+		// get total number of rows
 		int rowsCount = doctorService.getRowsCount(null);
 
 		pageData.setRowsCount(rowsCount);
 
-		// 计算总页数
+		// calculate total number of pages
 		int pageCount = 0;
 
 		if (rowsCount % pageData.getPageRows() == 0) {
@@ -244,6 +245,7 @@ public class DoctorServlet extends HttpServlet{
 		pageData.setPageCount(pageCount);
 		
 		List<Doctor> doctorList = doctorService.getList(null, pageData);
+		//use DTO to encapsulate the data needed to be transmitted
 		List<DoctorDto> docDtoList = new ArrayList<>();
 		DoctorDto dto = null;
 		for(Doctor doc : doctorList) {
@@ -282,7 +284,7 @@ public class DoctorServlet extends HttpServlet{
 			return;
 		}
 		int money = Integer.valueOf(moneyStr);
-		String docTime = request.getParameter("docTime"); //需要转化成sql里面的日期
+		String docTime = request.getParameter("docTime"); //transfer to sql format date
 		int depId = Integer.valueOf(request.getParameter("depId"));
 		Date timeDate = DateUtil.getBirthDate(docTime);
 		
@@ -334,6 +336,7 @@ public class DoctorServlet extends HttpServlet{
 	private void gotoModify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String docId = request.getParameter("docId");
 		boolean hasApp = isHasApp(Integer.valueOf(docId), request, response);
+		//if a doctor already has appointments, his info can't be modified
 		if(hasApp) {
 //			TODO
 //			request.setAttribute("message", "can't update a doctor already having an appointment");
@@ -345,7 +348,7 @@ public class DoctorServlet extends HttpServlet{
 		request.setAttribute("depList", depList);
 		Doctor doc = doctorService.get(Integer.valueOf(docId));
 		Department department = departmentService.get(doc.getDepId());
-		//dto封装
+		//use DTO to encapsulate the data
 		DoctorDto dto = new DoctorDto();
 		dto.setDocId(doc.getDocId());
 		dto.setDocName(doc.getDocName());
@@ -361,18 +364,18 @@ public class DoctorServlet extends HttpServlet{
 
 
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		//删除单个
+		//single delete
 		String  docId = request.getParameter("docId");
-		//删除多个
+		//mutiple delete
 		String strId = request.getParameter("strId");
 		
-		boolean b = false;
 		boolean isApp = false;
+		//if a doctor already has appointments, his info can't be deleted
 		if(strId != null && !strId.trim().equals("")) {
 			String arrId[] = strId.split(",");
 			for (int i = 0; i < arrId.length; i++) {
 				isApp = isHasApp(Integer.valueOf(arrId[i]), request, response);
-				//没有预约
+				//no appointment
 				if(!isApp) {
 					doctorService.delete(Integer.valueOf(arrId[i]));
 				}
@@ -406,24 +409,24 @@ public class DoctorServlet extends HttpServlet{
 
 
 	private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		// 模糊查询
-		String checkName = request.getParameter("checkName"); // 得到名字，根据姓名查找时用
-		// 分页
+		// get name of search function
+		String checkName = request.getParameter("checkName");
+		// paging
 		PageData pageData = new PageData();
-		// 得到当前页
+		// get current page
 		String currentPage = request.getParameter("currentPage");
 		if (currentPage != null) {
 			pageData.setCurrentPage(Integer.valueOf(currentPage));
 		}
-		// 得到每页行数
+		// get number of rows per page
 		String pageRows = request.getParameter("pageRows");
 		if (pageRows != null) {
 			pageData.setPageRows(Integer.valueOf(pageRows));
 		}
-		// 得到总行数
+		// get total number of rows
 		int rowsCount = doctorService.getRowsCount(checkName);
 		pageData.setRowsCount(rowsCount);
-		// 计算总页数
+		// calculate total number of pages
 		int pageCount = 0;
 		if (rowsCount % pageData.getPageRows() == 0) {
 			pageCount = rowsCount / pageData.getPageRows();
@@ -431,8 +434,8 @@ public class DoctorServlet extends HttpServlet{
 			pageCount = rowsCount / pageData.getPageRows() + 1;
 		}
 		pageData.setPageCount(pageCount);
-		// 先查询数据库,得到医生列表
-		List<Doctor> docList = doctorService.getList(checkName, pageData);// 查询所有记录
+		//database search
+		List<Doctor> docList = doctorService.getList(checkName, pageData);
 		List<DoctorDto> docDtoList = new ArrayList<>();
 		DoctorDto dto = null;
 		for (Doctor doc : docList) {
@@ -444,7 +447,7 @@ public class DoctorServlet extends HttpServlet{
 			dto.setDocStatus(doc.getDocStatus());
 			dto.setDocTime(doc.getDocTime());
 			dto.setMoney(doc.getMoney());
-			//查看是否有预约，如果有名字显示红色，没有预约显示黑色，删除时只能删除黑色
+			//if a doctor has a appointment, set his color to red(can't be modified or deleted)
 			boolean isApp = isHasApp(doc.getDocId(), request, response);
 			if(isApp) {
 				dto.setColor("red");
@@ -453,35 +456,37 @@ public class DoctorServlet extends HttpServlet{
 			}
 			docDtoList.add(dto);
 		}
-		//跳转到页面并将值传过去
+		//jump
 		request.setAttribute("docDtoList", docDtoList);
-		request.setAttribute("page", pageData); // 将page传过去
-		request.setAttribute("checkName", checkName);// 不让名字清空
-		String appDocId = request.getParameter("appDocId");
-		if (appDocId != null) {
-			// 得到单个医生信息
-			Doctor doc = doctorService.get(Integer.valueOf(appDocId));
-			// 得到科室名
-			Department department = departmentService.get(doc.getDepId());
-			request.setAttribute("doc", doc);
-			request.setAttribute("dep", department);
-			request.getRequestDispatcher("/admin/appShowDoctor.jsp").forward(
-					request, response);
-		} else {
+		request.setAttribute("page", pageData); 
+		request.setAttribute("checkName", checkName);
+//		String appDocId = request.getParameter("appDocId");
+//		if (appDocId != null) {
+//			
+//			Doctor doc = doctorService.get(Integer.valueOf(appDocId));
+//			
+//			Department department = departmentService.get(doc.getDepId());
+//			request.setAttribute("doc", doc);
+//			request.setAttribute("dep", department);
+//			request.getRequestDispatcher("/admin/appShowDoctor.jsp").forward(
+//					request, response);
+//		} else {
 			request.getRequestDispatcher("/admin/doctorList.jsp").forward(
 					request, response);
-		}
+//		}
 		
 	}
 	
+	
+	//judge whether a doctor has appointments
 	public boolean isHasApp(int docId, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		boolean b = false; // 默认没有预约
+		boolean b = false; 
 		Appointment appointment = appointmentService.getByDocId(docId);
 		if (appointment == null) {
-			b = false;// 没有预约
+			b = false;
 		} else {
-			b = true;// 有预约
+			b = true;
 		}
 		return b;
 
@@ -536,19 +541,21 @@ public class DoctorServlet extends HttpServlet{
 
 
 	private void gotoAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		//查询所有科室
+		//get all the department, in the modification page, need dep name in the select box
 		List<Department> depList = departmentService.getList(null, null);
-		//保存depList，跳转到jsp
+		//jump
 		request.setAttribute("depList", depList);
 		request.getRequestDispatcher("/admin/addDoctor.jsp").forward(request, response);
 			
 	}
 	
+	
+	//jugde whether there is already a doctor in the database with the same name
 	public boolean isNameRepeated(String docName, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		boolean isRepeated = false;
 		// 判断不能重名
-		List<Doctor> list = doctorService.getList(null, null); // 得到列表,查询所有的
+		List<Doctor> list = doctorService.getList(null, null); // get all doctors
 		if (list != null) {
 			for (int i = 0; i < list.size(); i++) {
 				if (list.get(i).getDocName().equals(docName)) {

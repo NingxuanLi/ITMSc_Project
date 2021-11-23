@@ -25,7 +25,7 @@
 <script type="text/javascript">
 
 
-//全选
+//select all
 function selectAll(){
 	
 	var ch=document.getElementsByName("delid");
@@ -35,7 +35,7 @@ function selectAll(){
 	}
 	
 }
-//反选
+//invert select
 function unselectAll(){
 
 	var ch=document.getElementsByName("delid");
@@ -46,22 +46,22 @@ function unselectAll(){
 	}
 }
 
-//删除所选人员信息
+//delete
 function del(){
 	
 	var adminIdStr="";
-	var arr=document.getElementsByName("delid"); //复选框名字 
+	var arr=document.getElementsByName("delid"); //checkbox 
 	for(var i=0;i<arr.length;i++){
 		if(arr[i].checked){
-			adminIdStr+=arr[i].value+","; //传过去 解析 	
+			adminIdStr+=arr[i].value+","; 
 		}	
 	}
-	//alert(userIdStr);
+
 	location="admin?method=delete&adminIdArr="+adminIdStr;
 }
 
 
-//点击添加人员信息
+//add
 function link(){
  location="admin/addAdmin.jsp";
 
@@ -69,44 +69,44 @@ function link(){
 
 
 
-		//根据管理员姓名查询 
-		function checkAdmin(){
-			var  name = document.getElementById("checkName").value;
-			chName=name; //查找姓名时不让清空 
-			location = "admin?method=showList&checkName="+name;
-		}
+//search function
+function checkAdmin(){
+	var  name = document.getElementById("checkName").value;
+	chName=name; 
+	location = "admin?method=showList&checkName="+name;
+}
 
 		
-		//改变文本框中的每页显示几行 的值 
-		var pages;
-		var chName;
+//paging function 
+var pages;
+var chName;
 		
-		function init(){
-			chName=document.getElementById("checkName").value;//记录姓名 
-			pages = document.getElementById("pageRows").value; //记录初始值 
-		}
+function init(){
+	chName=document.getElementById("checkName").value;
+	pages = document.getElementById("pageRows").value; 
+}
 
-        //改变每页显示多少行  --并且把当前页面传过去  
-		function changeRows(currentPage){
-			document.getElementById("checkName").value=chName;//不让姓名清空 
-			var pageRows=document.getElementById("pageRows").value;  //得到改变的值 
-			if(pageRows>0){
+         
+function changeRows(currentPage){
+	document.getElementById("checkName").value=chName; 
+	var pageRows=document.getElementById("pageRows").value;   
+	if(pageRows>0){
 				
-				location = "admin?method=showList&currentPage="+currentPage+"&pageRows="+pageRows+"&checkName="+chName;
-				return true;
-			}else if(pageRows==""){
+		location = "admin?method=showList&currentPage="+currentPage+"&pageRows="+pageRows+"&checkName="+chName;
+		return true;
+	}else if(pageRows==""){
 				
-				alert("您选的值不能为空 ");
-				document.getElementById("pageRows").value=pages;
-				return false;
-				
-			}else{
-				alert("您选的值必须大于0");
-				document.getElementById("pageRows").value=pages;
-				return false;
+		alert("can't be null ");
+		document.getElementById("pageRows").value=pages;
+		return false;
+		
+	}else{
+		alert("must > 0");
+		document.getElementById("pageRows").value=pages;
+		return false;
 
-			}
-		}
+	}
+}
 			
 		
  </script>
@@ -118,14 +118,12 @@ function link(){
 				<td height="30">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
-							<td height="62" background="images/nav04.gif">
+							<td height="62" >
 
 								<table width="98%" border="0" align="center" cellpadding="0"
 									cellspacing="0">
 									<tr>
-										<!-- <td width="24">
-											<img src="images/ico07.gif" width="20" height="18" />
-										</td> -->
+										
 										<td width="519">
 											<label>
 												Admin name:
@@ -212,8 +210,8 @@ function link(){
 													</c:forEach>
 												<tr align="center">
 													<td colspan="4" bgcolor="#FFFFFF">
-														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.rowsCount}</font>admins in total&nbsp;&nbsp;&nbsp;&nbsp;
-														&nbsp;&nbsp;&nbsp;<font style="font-family:隶书;font-size:small;color:red;">${page.pageCount}</font>pages&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-size:small;color:red;">${page.rowsCount}</font>admins in total&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;<font style="font-size:small;color:red;">${page.pageCount}</font>pages&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${page.currentPage==1}">
 															first page&nbsp;&nbsp;&nbsp;&nbsp;
 															last page&nbsp;&nbsp;&nbsp;&nbsp;
@@ -230,7 +228,7 @@ function link(){
 															<a href="javascript:changeRows(${page.currentPage+1})">next page</a>&nbsp;&nbsp;&nbsp;&nbsp;
 															<a href="javascript:changeRows(${page.pageCount})">end page</a>&nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
-														numbers shown per page<input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="font-family:隶书;font-size:x-small;color:red;"/>
+														numbers shown per page<input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="font-size:x-small;color:red;"/>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														
 														<select name="select" onchange="changeRows(this.value)">
@@ -250,18 +248,7 @@ function link(){
 							</td>
 						</tr>
 					</table>
-					<table width="95%" border="0" align="center" cellpadding="0"
-						cellspacing="0">
-						<tr>
-							<td height="6">
-								<img src="images/spacer.gif" width="1" height="1" />
-							</td>
-						</tr>
-						<tr>
-							<td height="33">
-							</td>
-						</tr>
-					</table>
+					
 				</td>
 			</tr>
 		</table>

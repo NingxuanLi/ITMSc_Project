@@ -138,7 +138,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<td>
 								<input name="button" type="submit" class="right-button01" value="submit" />
 								<input name="reset" type="reset" class="right-button02" value="reset" />
-								<font color="red" size="5">${msg}</font>
 							</td>
 						</tr>
 					</table>

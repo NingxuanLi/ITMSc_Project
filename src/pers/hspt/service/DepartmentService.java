@@ -10,11 +10,9 @@ public interface DepartmentService {
 	
 	public void add(Department department);
 	
-	//分页，得到总行数
 	public int getRowsCount(String name);
 	
-	//查询所有和模糊
-	public List<Department> getList(String depName,PageData pageData); //可以传空的
+	public List<Department> getList(String depName,PageData pageData); 
 	
 	public void delete(int depId);
 	

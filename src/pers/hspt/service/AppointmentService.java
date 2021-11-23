@@ -9,9 +9,11 @@ public interface AppointmentService {
 	
 	public Appointment getByDocId(int docId);
 	
+	public Appointment getByPatientId(int id); 
+	
 	public boolean add(Appointment appointment);
 	
-	public Appointment getByPatientId(int id); 
+	public void delete(int appId);
 	
 	public int getRowsCount();
 	
@@ -25,13 +27,13 @@ public interface AppointmentService {
 	
 	public List<Appointment> getArchiveList(PageData pageData);
 	
-	public void approve(int appId);
-	
-	public void disapprove(int appId);
-	
 	public List<Appointment> getPatientList(int id);
 	
 	public List<Appointment> getDoctorList(int id, PageData pageData);
 	
-	public void delete(int appId);
+	public void approve(int appId);
+	
+	public void disapprove(int appId);
+	
+	
 }
