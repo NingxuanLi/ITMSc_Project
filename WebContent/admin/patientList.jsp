@@ -251,6 +251,7 @@ function changeRows(currentPage){
 										</td>
 									</tr>
 								</table>
+								<div align="right" style = "color: red; font-size: small">You can't delete a patient(in color red) who has already made an appointment</div>
 							</td>
 						</tr>
 					</table>

@@ -205,11 +205,11 @@ function list(idstr){
 	  <table id="subtree3" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" cellspacing="0" class="left-table02">
         <tr>
           <td width="9%" height="20" ><img id="xiaotu8" src="images/ico06.gif" width="8" height="12" /></td>
-          <td width="91%"><a href="admin/addDep.jsp" target="mainFrame" class="left-font03" onClick="picture('8');">Add dep</a></td>
+          <td width="91%"><a href="admin/addDep.jsp" target="mainFrame" class="left-font03" onClick="picture('8');">add department</a></td>
         </tr>
 		<tr>
           <td width="9%" height="20" ><img id="xiaotu9" src="images/ico06.gif" width="8" height="12" /></td>
-          <td width="91%"><a href="department?method=showList" target="mainFrame" class="left-font03" >dep list</a></td>
+          <td width="91%"><a href="department?method=showList" target="mainFrame" class="left-font03" >department list</a></td>
         </tr>
 		
       </table>

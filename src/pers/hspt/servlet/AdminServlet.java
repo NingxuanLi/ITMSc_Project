@@ -76,6 +76,7 @@ public class AdminServlet extends HttpServlet{
 		admin.setAdminId(Integer.valueOf(adminId));
 		if(oldAdmin.getAdminName().equals(adminName)) {
 			adminService.modify(admin);
+			request.setAttribute("message", "modify succeeds");
 			showList(request, response);
 			return;
 		}else {
@@ -86,6 +87,7 @@ public class AdminServlet extends HttpServlet{
 				return;
 			}else {
 				adminService.modify(admin);
+				request.setAttribute("message", "modify succeeds");
 				showList(request, response);
 				return;
 			}

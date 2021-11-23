@@ -251,6 +251,7 @@ function changeRows(currentPage){
 										</td>
 									</tr>
 								</table>
+								<div align="right" style = "color: red; font-size: small">You can't modify or delete a department(in color red) which already has a doctor</div>
 							</td>
 						</tr>
 					</table>

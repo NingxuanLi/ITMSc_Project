@@ -257,6 +257,7 @@
 										</td>
 									</tr>
 								</table>
+								<div align="right" style = "color: red; font-size: small">You can't modify or delete a doctor(in color red) which already has an appointment</div>
 							</td>
 						</tr>
 					</table>

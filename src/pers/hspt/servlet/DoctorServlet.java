@@ -393,7 +393,7 @@ public class DoctorServlet extends HttpServlet{
 					return;
 				}else {
 //					TODO
-//					request.setAttribute("message", "can't delete a doctor already having a appointment"); 
+//					request.setAttribute("message", "can't delete a doctor alreadying having a appointment");
 					JOptionPane.showMessageDialog(null, "can't delete a doctor already having a appointment");
 					showList(request, response);
 					return;
