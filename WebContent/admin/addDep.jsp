@@ -22,7 +22,7 @@ function change(){
 
 </script>
 </head>
-<body class="ContentBody">
+<body >
 <form action="department?method=add" method="post"  name="form">
 			<div class="MainDiv">
 				<table width="85%" border="0" cellpadding="0" cellspacing="0"

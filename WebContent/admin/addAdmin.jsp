@@ -18,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 
 </head>
-<body>
+<body >
 <form action="admin?method=add" method="post"  name="form">
 			<div class="MainDiv">
 				<table width="85%" border="0" cellpadding="0" cellspacing="0"

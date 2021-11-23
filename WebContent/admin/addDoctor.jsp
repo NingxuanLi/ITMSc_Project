@@ -31,7 +31,7 @@
 </script>
 
 </head>
-<body>
+<body >
 <form action="doctor?method=add" method="post"  name="form">
 			<div class="MainDiv">
 				<table width="85%" border="0" cellpadding="0" cellspacing="0"

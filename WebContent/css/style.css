@@ -17,7 +17,6 @@
 .STYLE43 {font-weight: bold; color: #FF0000;}
 
 .login-text02 {
-	font-family: "锟斤拷锟斤拷";
 	font-size: 18px;
 	color: #7F9DB9;
 	text-decoration: none;
@@ -26,7 +25,6 @@
 }
 
 .right-button01 {
-	font-family: "锟斤拷锟斤拷";
 	font-size: 12px;
 	color: #174B73;
 	height: 20px;
@@ -38,7 +36,6 @@
 	border-left-width: 0px;
 }
 .right-button02 {
-	font-family: "锟斤拷锟斤拷";
 	font-size: 12px;
 	color: #174B73;
 	height: 20px;
@@ -50,21 +47,18 @@
 	border-left-width: 0px;
 }
 .left-font01 {
-	font-family: "锟斤拷锟斤拷";
 	font-size: 12px;
 	color: #448CCB;
 	text-decoration: none;
 	filter: DropShadow(Color=#FFFFFF, OffX=1, OffY=1);
 }
 a.left-font01:hover {
-	font-family: "锟斤拷锟斤拷";
 	font-size: 12px;
 	color: #FF0000;
 	text-decoration: underline;
 	filter: DropShadow(Color=#FFFFFF, OffX=1, OffY=11,);
 }
 .left-font02 {
-	font-family: Tahoma;
 	font-size: 11px;
 	font-weight: bold;
 	color: #448CCB;
@@ -72,13 +66,11 @@ a.left-font01:hover {
 	filter: DropShadow(Color=#FFFFFF, OffX=1, OffY=1);
 }
 .left-font03 {
-	font-family: "锟斤拷锟斤拷";
 	font-size: 12px;
 	color: #555555;
 	text-decoration: none;
 }
 a.left-font03:hover {
-	font-family: "锟斤拷锟斤拷";
 	font-size: 12px;
 	color: #FF0000;
 	text-decoration: underline;
@@ -92,14 +84,12 @@ a.left-font03:hover {
 .left-table02 {
 	margin-top: 8px;
 	margin-bottom: 8px;
-	font-family: "锟斤拷锟斤拷";
 	font-size: 12px;
 	color: #555555;
 	text-decoration: none;
 }
 .left-table03 {
 	margin-top: 6px;
-	font-family: "锟斤拷锟斤拷";
 	font-size: 12px;
 	color: #555555;
 	text-decoration: none;
@@ -109,9 +99,7 @@ a.left-table03:hover {
 	background-image: url(../images/nav03.gif);
 }
 .ContentBody{
- background:#F6F6F6 url(../images/mainbg.gif); 
- /*url(../images/mainback.jpg) repeat-x fixed; */
- margin:15px;
+ background:#F6F6F6; 
 
 }
 .CContent{
@@ -123,7 +111,6 @@ a.left-table03:hover {
 
 }
 .tablestyle_title{
-	/*height: 20px; font-style: normal; font-variant: normal; font-weight: bold; font-size: 16px;letter-spacing: 2px; text-align: middle; border-top: 2px solid #ff7300; padding-left: 10px; background-color: #f0f0f0;text-align:center;*/
 	background:#6795B4;
 	padding:5px;
 	text-align:left;
@@ -138,7 +125,6 @@ a.left-table03:hover {
  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 .TablePanel{
-/* border:1px solid #999;*/
  background-color:  #DBE0E6;
 }
 legend{

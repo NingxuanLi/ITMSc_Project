@@ -115,8 +115,8 @@ function changeRows(currentPage){
 													</c:forEach>
 												<tr align="center">
 													<td colspan="7" bgcolor="#FFFFFF">
-														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-size:small;color:red;">${page.rowsCount}</font>appointments to be processed&nbsp;&nbsp;&nbsp;&nbsp;
-														&nbsp;&nbsp;&nbsp;<font style="font-size:small;color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.rowsCount}</font> appointments&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${page.currentPage==1}">
 															first page&nbsp;&nbsp;&nbsp;&nbsp;
 															last page&nbsp;&nbsp;&nbsp;&nbsp;
@@ -133,7 +133,7 @@ function changeRows(currentPage){
 															<a href="javascript:changeRows(${page.currentPage+1})">next page</a>&nbsp;&nbsp;&nbsp;&nbsp;
 															<a href="javascript:changeRows(${page.pageCount})">end page</a>&nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
-														numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="font-size:x-small;color:red;"/>
+														numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="color:red;"/>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														
 														<select name="select" onchange="changeRows(this.value)">
