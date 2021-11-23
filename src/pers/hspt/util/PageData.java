@@ -2,10 +2,10 @@ package pers.hspt.util;
 
 public class PageData {
 	
-	private int currentPage=1; //当前页面
-	private int pageRows=5; //每页行数
-	private int pageCount; //总页数
-	private int rowsCount;  //总行数
+	private int currentPage=1; //current page
+	private int pageRows=5; //number of rows per page
+	private int pageCount; //total number of pages
+	private int rowsCount;  //total number of counts
 	
 	public int getCurrentPage() {
 		return currentPage;

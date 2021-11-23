@@ -25,21 +25,21 @@ public class DateUtil {
 	private static final java.text.SimpleDateFormat TIME_FORMATTER = new java.text.SimpleDateFormat(
 			DEFAULT_TIME_SAMPLE_FORMAT);
 
-	//转换日期到字符串  带十 分 秒
+	//transfer date to String 
 	public static String getTimeSampleString(java.util.Date date) {
 		if (date == null)
 			return null;
 		return TIME_FORMATTER.format(date);
 	}
 
-	//转换日期到字符串  不带十 分 秒
+	//transfer date to String
 	public static String getDateSampleString(java.util.Date date) {
 		if (date == null)
 			return null;
 		return DATE_FORMATTER.format(date);
 	}
 
-	//按照指定格式化日期  返回日期字符串
+	//format the date as specified  return date String
 	public static String getDateSampleString(java.util.Date date, String format) {
 		if (date == null)
 			return null;
@@ -50,49 +50,49 @@ public class DateUtil {
 		return dateFormater.format(date);
 	}
 
-	//得到当前年份
+	//get current year
 	public static int getCurYear() {
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		return year;
 	}
 
-	//得到当前月份
+	//get current month
 	public static int getCurMonth() {
 		Calendar cal = Calendar.getInstance();
 		int month = cal.get(Calendar.MONTH) + 1;
 		return month;
 	}
 
-	//得到当前是几号
+	//get current date
 	public static int getCurDay() {
 		Calendar cal = Calendar.getInstance();
 		int day = cal.get(Calendar.DATE);
 		return day;
 	}
 	
-	//得到当前小时
+	//get current hour
 	public static int getCurHour() {
 		Calendar cal = Calendar.getInstance();
 		int hour = cal.get(Calendar.HOUR);
 		return hour;
 	}
 	
-	//得到当前分
+	//get current minute
 	public static int getCurMinute() {
 		Calendar cal = Calendar.getInstance();
 		int minute = cal.get(Calendar.MINUTE);
 		return minute;
 	}
 
-	//得到当前秒
+	//get current second
 	public static int getCurSecond() {
 		Calendar cal = Calendar.getInstance();
 		int second = cal.get(Calendar.SECOND);
 		return second;
 	}
 	
-	//转换日期字符串到Timestamp类型
+	//transfer date String to Timestamp
 	public static Timestamp getTimestamp(String dateTimeFormat) {
 		String year = null, month = null, date = null, hour = null, minute = null, second = null;
 		if (dateTimeFormat == null)
@@ -150,7 +150,7 @@ public class DateUtil {
 			return null;
 	}
 
-	//转换日期字符串为Date类型 带 时分秒
+	//transfer time string to date 
 	public static Date getDate(String time) {
 		SimpleDateFormat bartDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
@@ -163,7 +163,7 @@ public class DateUtil {
 		return date;
 	}
 
-	//转换日期字符串为Date类型 不带 时分秒
+	//transfer time string to date
 	public static Date getBirthDate(String time) {
 		SimpleDateFormat bartDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date date = null;
@@ -175,7 +175,7 @@ public class DateUtil {
 		return date;
 	}
 
-	// 获取当前系统时间
+	// get current time of system
 	public static Date getCurrentTime() {
 		Date dateTime = new Date();
 		SimpleDateFormat bartDateFormat = new SimpleDateFormat(
@@ -220,7 +220,7 @@ public class DateUtil {
 
 		System.out.println(DateUtil.getTimeSampleString(new Date()));
 
-		Date date1 = DateUtil.getDate("2011-11-8 12:26:21");
+		Date date1 = DateUtil.getDate("2021-11-8 12:26:21");
 		System.out.println(DateUtil.getTimeSampleString(date1));
 
 	}
