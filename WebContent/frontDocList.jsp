@@ -22,6 +22,7 @@ var pages;
 function init(){
 	
 	pages = document.getElementById("pageRows").value; 
+}
 
  
 function changeRows(currentPage){
@@ -47,11 +48,11 @@ function changeRows(currentPage){
 		
  </script>
 </head>
-<body>
+<body >
 <table width="100%" height="734" border="0">
 			<tr>
 			<td colspan="2">
-				<img src="img/top_01.jpg" width="1079" height="235" />
+				<img src="img/top_01.jpg" width="1079" height="200" />
 			</td>
 		</tr>
 		<tr>
@@ -105,21 +106,21 @@ function changeRows(currentPage){
 						</th>
 					</tr>
 					<tr>
-						<td width="7%" height="20" align="center"
+						<td width="10%" height="20" align="center"
 							bgcolor="#EEEEEE">
 							Name
 						</td>
-						<td width="7%" align="center" bgcolor="#EEEEEE">
+						<td width="10%" align="center" bgcolor="#EEEEEE">
 							Department 
 						</td>
-						<td width="15%" height="20" align="center"
+						<td width="12%" height="20" align="center"
 							bgcolor="#EEEEEE">
 							Available Appointment time
 						</td>
-						<td width="11%" align="center" bgcolor="#EEEEEE">
+						<td width="10%" align="center" bgcolor="#EEEEEE">
 							Appointment fee
 						</td>
-						<td width="11%" align="center" bgcolor="#EEEEEE">
+						<td width="10%" align="center" bgcolor="#EEEEEE">
 							operation
 						</td>
 					</tr>
@@ -138,7 +139,7 @@ function changeRows(currentPage){
 									${doc.money}
 								</td>
 								<td bgcolor="#FFFFFF">
-									<a href="doctor?method=appointmentMake&docId=${doc.docId}">select</a>
+									<a href="doctor?method=appointmentMake&docId=${doc.docId}" style = "text-decoration:none">select</a>
 								</td>
 							</tr>
 						</c:forEach>

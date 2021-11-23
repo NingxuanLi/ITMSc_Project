@@ -65,7 +65,7 @@ function list(idstr){
 
 </head>
 <body>
-<table width="198" border="0" cellpadding="0" cellspacing="0" class="left-table01">
+<table width="220" border="0" cellpadding="0" cellspacing="0" class="left-table01">
   <tr>
     <TD>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -91,8 +91,8 @@ function list(idstr){
           <tr>
             <td height="29"><table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td width="8%"><img name="img5" id="img5" src="images/ico04.gif" width="8" height="11" /></td>
-                  <td width="92%"><a href="javascript:" target="mainFrame" class="left-font03" onClick="list('5');">Admin management</a></td>
+                  <td width="1%"><img name="img5" id="img5" src="images/ico04.gif" width="8" height="11" /></td>
+                  <td width="99%"><a href="javascript:" target="mainFrame" class="left-font03" onClick="list('5');">Admin management</a></td>
                 </tr>
             </table></td>
           </tr>
@@ -115,8 +115,8 @@ function list(idstr){
             <td height="29">
 				<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
 					<tr>
-						<td width="8%"><img name="img8" id="img8" src="images/ico04.gif" width="8" height="11" /></td>
-						<td width="92%">
+						<td width="1%"><img name="img8" id="img8" src="images/ico04.gif" width="8" height="11" /></td>
+						<td width="99%">
 								<a href="javascript:" target="mainFrame" class="left-font03" onClick="list('8');" >Doctor management</a></td>
 					</tr>
 				</table>
@@ -144,8 +144,8 @@ function list(idstr){
             <td height="29">
 				<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
 					<tr>
-						<td width="8%"><img name="img7" id="img7" src="images/ico04.gif" width="8" height="11" /></td>
-						<td width="92%">
+						<td width="1%"><img name="img7" id="img7" src="images/ico04.gif" width="8" height="11" /></td>
+						<td width="99%">
 								<a href="javascript:" target="mainFrame" class="left-font03" onClick="list('7');" >Patient management</a></td>
 					</tr>
 				</table>
@@ -169,9 +169,9 @@ function list(idstr){
             <td height="29">
 				<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
 					<tr>
-						<td width="8%"><img name="img1" id="img1" src="images/ico04.gif" width="8" height="11" /></td>
-						<td width="92%">
-								<a href="javascript:" target="mainFrame" class="left-font03" onClick="list('1');" >App management</a></td>
+						<td width="1%"><img name="img1" id="img1" src="images/ico04.gif" width="8" height="11" /></td>
+						<td width="99%">
+								<a href="javascript:" target="mainFrame" class="left-font03" onClick="list('1');" >Appointment management</a></td>
 					</tr>
 				</table>
 			</td>
@@ -181,11 +181,11 @@ function list(idstr){
 				cellspacing="0" class="left-table02">
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu1" src="images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%"><a href="appointment?method=showList" target="mainFrame" class="left-font03" onClick="picture('1');">Pending appointments</a></td>
+				  <td width="91%"><a href="appointment?method=showList" target="mainFrame" class="left-font03" onClick="picture('1');">pending appointments</a></td>
 				</tr>
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu1" src="images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%"><a href="appointment?method=showArchiveList" target="mainFrame" class="left-font03" onClick="picture('1');">Archive appointments</a></td>
+				  <td width="91%"><a href="appointment?method=showArchiveList" target="mainFrame" class="left-font03" onClick="picture('1');">archive appointments</a></td>
 				</tr>
       </table>
   
@@ -195,8 +195,8 @@ function list(idstr){
           <tr>
             <td height="29"><table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td width="8%" height="12"><img name="img3" id="img3" src="images/ico04.gif" width="8" height="11" /></td>
-                  <td width="92%"><a href="javascript:" target="mainFrame" class="left-font03" onClick="list('3');" >Dep management</a></td>
+                  <td width="1%" height="12"><img name="img3" id="img3" src="images/ico04.gif" width="8" height="11" /></td>
+                  <td width="99%"><a href="javascript:" target="mainFrame" class="left-font03" onClick="list('3');" >Department management</a></td>
                 </tr>
             </table></td>
           </tr>

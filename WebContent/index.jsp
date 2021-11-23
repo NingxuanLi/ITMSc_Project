@@ -21,7 +21,7 @@ if(!"null".equals(message)&&!"".equals(message)&&message!=null){
 
 <table width="100%" height="734" border="0">
   <tr>
-    <td colspan="2"><img src="img/top_01.jpg" width="1150" height="200" /></td>
+    <td colspan="2"><img src="img/top_01.jpg" width="1079" height="200" /></td>
   </tr>
   <tr>
     <td width="20%" height="366" align="left" valign="top">

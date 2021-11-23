@@ -188,10 +188,10 @@ function disapproveAll(){
 																${app.appTime}
 															</td>
 															<td bgcolor="#FFFFFF">
-																<a href="javascript:;" onclick="approve(${app.appId})">approve</a>
+																<a href="javascript:;" onclick="approve(${app.appId})" style = "text-decoration:none">approve</a>
 															</td>
 															<td bgcolor="#FFFFFF">
-																<a href="javascript:;" onclick="disapprove(${app.appId})">disapprove</a>
+																<a href="javascript:;" onclick="disapprove(${app.appId})" style = "text-decoration:none">disapprove</a>
 															</td>
 															
 														</tr>

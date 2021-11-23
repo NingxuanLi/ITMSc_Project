@@ -209,8 +209,8 @@ function changeRows(currentPage){
 															</td>
 										
 															<td bgcolor="#FFFFFF">
-																<a href="department?method=gotoModify&depId=${dep.depId}">edit</a>&nbsp;|&nbsp;
-																<a href="department?method=delete&depId=${dep.depId}">delete</a>
+																<a href="department?method=gotoModify&depId=${dep.depId}" style = "text-decoration:none">modify</a>&nbsp;|&nbsp;
+																<a href="department?method=delete&depId=${dep.depId}" style = "text-decoration:none">delete</a>
 															</td>
 														</tr>
 													</c:forEach>

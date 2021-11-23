@@ -160,7 +160,7 @@ function del(){
 																${app.appTime}
 															</td>
 															<td bgcolor="#FFFFFF">
-																<a href="appointment?method=delete&appId=${app.appId}">delete</a>																
+																<a href="appointment?method=delete&appId=${app.appId}" style = "text-decoration:none">delete</a>																
 															</td>
 															
 															

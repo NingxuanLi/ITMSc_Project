@@ -52,7 +52,7 @@ function changeRows(currentPage){
 		<table width="100%" height="734" border="0">
 			<tr>
 			<td colspan="2">
-				<img src="img/top_01.jpg" width="1079" height="235" />
+				<img src="img/top_01.jpg" width="1079" height="200" />
 			</td>
 		</tr>
 		<tr>
@@ -106,14 +106,14 @@ function changeRows(currentPage){
 						</th>
 					</tr>
 					<tr>
-						<td width="12%" height="20" align="center"
+						<td width="10%" height="20" align="center"
 							bgcolor="#EEEEEE">
 							Department id
 						</td>
-						<td width="7%" align="center" bgcolor="#EEEEEE">
+						<td width="10%" align="center" bgcolor="#EEEEEE">
 							Department name
 						</td>
-						<td width="11%" align="center" bgcolor="#EEEEEE">
+						<td width="10%" align="center" bgcolor="#EEEEEE">
 							operation
 						</td>
 					</tr>
@@ -132,7 +132,7 @@ function changeRows(currentPage){
 								</td>
 										
 								<td bgcolor="#FFFFFF">
-									<a href="doctor?method=docListInOneDep&depId=${dep.depId}">select</a>
+									<a href="doctor?method=docListInOneDep&depId=${dep.depId}" style = "text-decoration:none">select</a>
 								</td>
 							</tr>
 						</c:forEach>

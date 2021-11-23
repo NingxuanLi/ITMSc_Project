@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <table width="100%" height="734" border="0">
 		<tr>
 			<td colspan="2">
-				<img src="img/top_01.jpg" width="1079" height="235" />
+				<img src="img/top_01.jpg" width="1079" height="200" />
 			</td>
 		</tr>
 		<tr>

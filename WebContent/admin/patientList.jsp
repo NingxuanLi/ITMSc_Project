@@ -210,7 +210,7 @@ function changeRows(currentPage){
 															</td>
 										
 															<td bgcolor="#FFFFFF">
-																<a href="patient?method=delete&pId=${p.id}">delete</a>
+																<a href="patient?method=delete&pId=${p.id}" style = "text-decoration:none">delete</a>
 															</td>
 														</tr>
 													</c:forEach>

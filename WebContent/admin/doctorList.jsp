@@ -215,8 +215,8 @@
 														</td>
 														
 														<td bgcolor="#FFFFFF">
-															<a href="doctor?method=gotoModify&docId=${doc.docId}">edit</a>&nbsp;|&nbsp;
-															<a href="doctor?method=delete&docId=${doc.docId}">delete</a>
+															<a href="doctor?method=gotoModify&docId=${doc.docId}" style = "text-decoration:none">modify</a>&nbsp;|&nbsp;
+															<a href="doctor?method=delete&docId=${doc.docId}" style = "text-decoration:none">delete</a>
 														</td>
 													</tr>
 													</c:forEach>

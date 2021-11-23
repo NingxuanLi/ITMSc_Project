@@ -157,7 +157,7 @@ function changeRows(currentPage){
 												href="javascript:unselectAll();" class="right-font08" >invert select</a>
 											</span>
 											<input name="Submit" type="button" class="right-button08"
-												value="delete admin" onclick="del()"/>
+												value="delete admin" onclick="del()"/ >
 											<input name="Submit" type="button" class="right-button08"
 												value="add a new admin" onclick="link();" />
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -203,8 +203,8 @@ function changeRows(currentPage){
 															</td>
 										
 															<td bgcolor="#FFFFFF">
-																<a href="admin?method=gotoModify&adminId=${adminList.adminId}">edit</a>&nbsp;|&nbsp;
-																<a href="admin?method=delete&adminId=${adminList.adminId}">delete</a>
+																<a href="admin?method=gotoModify&adminId=${adminList.adminId}" style = "text-decoration:none">modify</a>&nbsp;|&nbsp;
+																<a href="admin?method=delete&adminId=${adminList.adminId}" style = "text-decoration:none">delete</a>
 															</td>
 														</tr>
 													</c:forEach>

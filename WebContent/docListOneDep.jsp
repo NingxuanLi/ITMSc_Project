@@ -140,7 +140,7 @@ function changeRows(currentPage){
 									${doc.money}
 								</td>
 								<td bgcolor="#FFFFFF">
-									<a href="doctor?method=appointmentMake&docId=${doc.docId}">select</a>
+									<a href="doctor?method=appointmentMake&docId=${doc.docId}" style = "text-decoration:none">select</a>
 								</td>
 							</tr>
 						</c:forEach>
