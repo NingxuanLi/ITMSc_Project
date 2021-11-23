@@ -14,7 +14,7 @@ import pers.hspt.util.DBConnection;
 
 public class DoctorDaoImp extends BaseDao implements DoctorDao{
 	
-	//根据科室查询医生
+
 		public List<Doctor> getByDepId(int depId){
 			List<Doctor> list=new ArrayList<Doctor>();
 			
@@ -30,21 +30,15 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 					doc.setDocId(rs.getInt(1));
 					doc.setDocName(rs.getString(2));
 					doc.setDocPassword(rs.getString(3));
-//					doc.setDocImg(rs.getString(4));
 					doc.setMoney(rs.getInt(4));
 					doc.setDocTime(rs.getDate(5));
-//					doc.setSumCount(rs.getInt(7));
-//					doc.setRemainCount(rs.getInt(8));
 					doc.setDocStatus(rs.getString(6));
 					doc.setDepId(rs.getInt(7));
 				
 					list.add(doc);
 				}
-
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				
+			} catch (SQLException e) {		
+				e.printStackTrace();			
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
@@ -77,7 +71,7 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 
 		}
 		
-		//分页是需要查询总行数
+
 		public int getRowsCount(String name){
 			int rowsCount=0;
 			try {
@@ -89,11 +83,9 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 				}else{
 					sql="select count(*) from doctor where doc_name like '%"+name+"%' ";
 				}
-				
 				rs=stmt.executeQuery(sql);
 				
-				if(rs.next()){
-					
+				if(rs.next()){	
 					rowsCount=rs.getInt(1);
 				}
 			} catch (SQLException e) {
@@ -107,9 +99,8 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			
 		}
 		
-		//查询
+
 		public List<Doctor> getList(String docName,PageData pageData){
-			// 显示列表时查询所有的，修改初始化时查询单条记录
 
 			List<Doctor> list=new ArrayList<Doctor>();
 			
@@ -118,14 +109,14 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 				stmt=conn.createStatement();
 				String sql="";
 				if(docName==null||docName.equals("")){				
-					//查询所有的
+
 					if(pageData==null){
 						sql="select * from doctor order by doc_id";
 					}else{
 						sql="select * from doctor limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
 					}
 				}else{
-					//模糊查询
+
 					sql="select * from doctor where doc_name like '%"+docName+"%' limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
 				}
 				
@@ -144,10 +135,8 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 					list.add(doc);
 				}
 
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				
+			} catch (SQLException e) {			
+				e.printStackTrace();		
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
@@ -155,9 +144,7 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			return list;
 		}
 		
-		//根据id得到单个医生信息。
 		public Doctor get(int docId){
-			
 			Doctor doc=null;
 			conn=DBConnection.getConnection();
 	        try {
@@ -176,17 +163,14 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 					doc.setDocTime(rs.getDate(5));
 					doc.setDocStatus(rs.getString(6));
 					doc.setDepId(rs.getInt(7));
-								
+							
 				}
 
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				
+			} catch (SQLException e) {	
+				e.printStackTrace();	
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
-			
 			return doc;
 		}
 		
@@ -213,14 +197,11 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 								
 				}
 
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				
+			} catch (SQLException e) {			
+				e.printStackTrace();			
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
-			}
-			
+			}	
 			return doc;
 		}
 		
@@ -232,12 +213,10 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 				pstmt.executeUpdate();
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
-			}
-			
+			}	
 		}
 		
 		
@@ -257,7 +236,6 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
-
 		}
 
 		@Override
@@ -277,12 +255,10 @@ public class DoctorDaoImp extends BaseDao implements DoctorDao{
 					rowsCount=rs.getInt(1);
 				}
 			} catch (SQLException e) {
-				
 				e.printStackTrace();
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
-			
 			return rowsCount;
 		}
 		

@@ -15,7 +15,6 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 
 	@Override
 	public Appointment getByDocId(int docId){
-		// 显示列表时查询所有的，修改初始化时查询单条记录
 		Appointment app=null;
 		conn=DBConnection.getConnection();
         try {
@@ -33,14 +32,11 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 				app.setAppTime(rs.getDate(5));
 			}
 
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
+		} catch (SQLException e) {			
+			e.printStackTrace();		
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
-		}
-		
+		}		
 		return app;
 	}
 
@@ -103,12 +99,10 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 			sql="select count(*) from appointment where app_state = 0";
 			rs=stmt.executeQuery(sql);
 			
-			if(rs.next()){
-				
+			if(rs.next()){			
 				rowsCount=rs.getInt(1);
 			}
-		} catch (SQLException e) {
-			
+		} catch (SQLException e) {		
 			e.printStackTrace();
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
@@ -125,8 +119,7 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 			sql="select count(*) from appointment where p_id = " + id;
 			rs=stmt.executeQuery(sql);
 			
-			if(rs.next()){
-				
+			if(rs.next()){				
 				rowsCount=rs.getInt(1);
 			}
 		} catch (SQLException e) {
@@ -147,12 +140,10 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 			sql="select count(*) from appointment where doc_id = " + id;
 			rs=stmt.executeQuery(sql);
 			
-			if(rs.next()){
-				
+			if(rs.next()){			
 				rowsCount=rs.getInt(1);
 			}
-		} catch (SQLException e) {
-			
+		} catch (SQLException e) {		
 			e.printStackTrace();
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
@@ -169,12 +160,10 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 			sql="select count(*) from appointment where app_state in ('1', '2')";
 			rs=stmt.executeQuery(sql);
 			
-			if(rs.next()){
-				
+			if(rs.next()){			
 				rowsCount=rs.getInt(1);
 			}
-		} catch (SQLException e) {
-			
+		} catch (SQLException e) {		
 			e.printStackTrace();
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
@@ -201,15 +190,11 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 				app.setAppTime(rs.getDate(5));
 				list.add(app);
 			}
-
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
+		} catch (SQLException e) {		
+			e.printStackTrace();		
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
-		}
-		
+		}	
 		return list;
 	}
 	
@@ -231,15 +216,11 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 				app.setAppTime(rs.getDate(5));
 				list.add(app);
 			}
-
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
+		} catch (SQLException e) {		
+			e.printStackTrace();		
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
-		}
-		
+		}	
 		return list;
 	}
 
@@ -251,12 +232,10 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 			pstmt=conn.prepareStatement(sql);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
-		}
-		
+		}	
 	}
 
 	@Override
@@ -267,7 +246,6 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 			pstmt=conn.prepareStatement(sql);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
@@ -296,13 +274,10 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 			}
 
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
+			e.printStackTrace();	
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
-		}
-		
+		}	
 		return list;
 	}
 	
@@ -325,11 +300,8 @@ public class AppointmentDaoImp extends BaseDao implements AppointmentDao{
 				app.setAppState(rs.getString(6));
 				list.add(app);
 			}
-
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
+		} catch (SQLException e) {		
+			e.printStackTrace();		
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
 		}

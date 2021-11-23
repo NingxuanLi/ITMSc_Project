@@ -13,7 +13,6 @@ import pers.hspt.util.PageData;
 
 public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 
-	//添加
 	public void add(Department department) {
 		conn=DBConnection.getConnection();
 		try {
@@ -31,7 +30,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 		}
 	}
 
-	//查询科室
+
 		public List<Department> getList(String depName,PageData pageData) {
 			
 		
@@ -42,7 +41,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 				stmt=conn.createStatement();
 				String sql="";
 				if(depName==null||depName.equals("")){				
-					//查询所有的
+					
 					if(pageData==null){
 						
 						sql="select * from department";
@@ -50,7 +49,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 						sql="select * from department limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows()+" ";	
 					}				
 				}else{
-					//查询单条
+					
 					sql="select * from department where dep_name like '%"+depName+"%' limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows()+" ";
 				}
 				
@@ -62,8 +61,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 					department.setDepName(rs.getString(2));
 					list.add(department);
 				}
-			} catch (SQLException e) {
-				
+			} catch (SQLException e) {		
 				e.printStackTrace();
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
@@ -72,7 +70,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 			return list;
 		}
 
-		//分页时需要查询总行数
+
 		public int getRowsCount(String name){
 			int rowsCount=0;
 			try {
@@ -87,12 +85,10 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 				
 				rs=stmt.executeQuery(sql);
 				
-				if(rs.next()){
-					
+				if(rs.next()){			
 					rowsCount=rs.getInt(1);
 				}
-			} catch (SQLException e) {
-				
+			} catch (SQLException e) {			
 				e.printStackTrace();
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
@@ -102,26 +98,21 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 			
 		}
 		
-		//删除
+
 		public void delete(int depId) {
 			conn=DBConnection.getConnection();
 			try {
 				String sql="delete from department where dep_id="+depId;
 				pstmt=conn.prepareStatement(sql);
-				pstmt.executeUpdate();
-				
+				pstmt.executeUpdate();			
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
-			}
-			
+			}		
 		}
 		
-		public Department get(int depId) {
-			
+		public Department get(int depId) {		
 			Department department=null;
 			
 			conn=DBConnection.getConnection();
@@ -136,19 +127,15 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 					department.setDepId(rs.getInt(1));
 					department.setDepName(rs.getString(2));
 				}
-
-			} catch (SQLException e) {
-				
+			} catch (SQLException e) {		
 				e.printStackTrace();
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
 			}
-			
 			return department;
 		}
 		
         public Department get(String name) {
-			
 			Department department=null;
 			
 			conn=DBConnection.getConnection();
@@ -164,8 +151,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 					department.setDepName(rs.getString(2));
 				}
 
-			} catch (SQLException e) {
-				
+			} catch (SQLException e) {		
 				e.printStackTrace();
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);
@@ -174,7 +160,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 			return department;
 		}
 		
-		//修改
+
 		public void modify(Department department,int depId) {
 
 			conn=DBConnection.getConnection();
@@ -185,7 +171,6 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao{
 				pstmt.setString(2, department.getDepName());
 				pstmt.executeUpdate();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}finally{
 				DBConnection.close(rs, stmt, pstmt);

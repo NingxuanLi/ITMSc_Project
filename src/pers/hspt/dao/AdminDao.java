@@ -8,7 +8,6 @@ import pers.hspt.util.PageData;
 
 public interface AdminDao {
 	
-	//get admin by name string
 	public Admin getAdmin(String adminName);
 	
 	public List<Admin> getAdminList(String adminName, PageData pageData);

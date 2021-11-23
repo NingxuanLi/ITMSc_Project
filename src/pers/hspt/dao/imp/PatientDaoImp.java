@@ -13,8 +13,7 @@ import pers.hspt.dao.PatientDao;
 
 public class PatientDaoImp extends BaseDao implements PatientDao{
 	
-	public boolean add(Patient patient) {
-		
+	public boolean add(Patient patient) {		
 		boolean b=true;
 		conn=DBConnection.getConnection();
 		try {
@@ -31,7 +30,6 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
 			b=false;
 		}finally{		
@@ -43,7 +41,6 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 
 
 	public Patient get(String name) {
-
 		Patient p=null;
 		conn=DBConnection.getConnection();
 		try {
@@ -59,14 +56,11 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 				p.setGender(rs.getString(5));
 				p.setTel(rs.getString(6));
 				p.setBrp(rs.getString(7));
-			}
-			
+			}		
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return p;
 	}
 	
@@ -89,8 +83,7 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 				
 				rowsCount=rs.getInt(1);
 			}
-		} catch (SQLException e) {
-			
+		} catch (SQLException e) {	
 			e.printStackTrace();
 		}finally{
 			DBConnection.close(rs, stmt, pstmt);
@@ -102,18 +95,17 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 	}
 	
 	public List<Patient> getList(String name,PageData pageData) {
-		// 显示列表时查询所有的，修改初始化时查询单条记录
 		List<Patient> list=new ArrayList<Patient>();	
 		conn=DBConnection.getConnection();
         try {
 			stmt=conn.createStatement();
 			String sql="";
 			if(name==null||name.equals("")){				
-				//查询所有的
+				
 				sql="select * from  patient limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
 				
 			}else{
-				//查询单条			
+						
 				sql="select * from  patient where p_name like '%"+name+"%' limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
 			}		
 			rs=stmt.executeQuery(sql);
@@ -141,7 +133,6 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 
 		conn=DBConnection.getConnection();
 		try {
-			//删除时，还要注意该病人如果处于挂号状态，就不能删除,
 			String sql="delete from patient where p_id="+id;
 			pstmt=conn.prepareStatement(sql);
 			pstmt.executeUpdate();
@@ -175,10 +166,8 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return p;
 	}
 	

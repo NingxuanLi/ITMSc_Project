@@ -79,8 +79,8 @@ public class PatientServlet extends HttpServlet{
 			}
 			if(hasApp){
 				//TODO 
-//				JOptionPane.showMessageDialog(null, "can't delete a patient already making an appointment");
-				request.setAttribute("message", "can't delete a patient already making an appointment");
+				JOptionPane.showMessageDialog(null, "can't delete a patient already making an appointment");
+//				request.setAttribute("message", "can't delete a patient already making an appointment");
 				showList(request, response);
 				return;
 			}

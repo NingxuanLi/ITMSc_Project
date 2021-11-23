@@ -39,7 +39,7 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 		return admin;
 	}
 	
-	//得到管理员列表
+
 		public List<Admin> getAdminList(String adminName,PageData pageData) {
 			
 			List<Admin> list=new ArrayList<Admin>();
@@ -49,7 +49,7 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 				stmt=conn.createStatement();
 				String sql;
 				if(adminName==null||adminName.equals("")){				
-					//查询所有的
+					
 					if(pageData==null){
 						sql="select * from admin order by admin_id";
 					}else{
@@ -57,7 +57,7 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 					}
 					
 				}else{
-					//查询单条
+					
 					sql="select * from admin where admin_name like '%"+adminName+"%' limit "+(pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
 				}
 				
@@ -101,7 +101,7 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 			}
 		}
 		
-		//分页时需要查询总行数
+		
 		public int getRowsCount(String name){
 			int rowsCount=0;
 			try {
@@ -131,7 +131,7 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 			
 		}
 		
-		//删除
+		
 		public void delete(int adminId) {
 			try {
 				conn=DBConnection.getConnection();
@@ -159,7 +159,7 @@ public class AdminDaoImp extends BaseDao implements AdminDao{
 				
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 				
 			}finally{
