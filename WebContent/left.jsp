@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
   
 
     <table width="254" height="230" border="1" cellpadding="0" cellspacing="0">

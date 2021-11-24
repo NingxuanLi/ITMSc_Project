@@ -170,7 +170,6 @@ public class DepartmentServlet extends HttpServlet{
 		pageData.setPageCount(pageCount);
 		// database search
 		List<Department> depList = departmentService.getList(checkName, pageData); 
-		// 查看是否有医生,有医生显示红色，
 		for (Department dep : depList) {
 			boolean isDoc = isHasDoc(dep.getDepId(), request, response);
 			//if there is already a doctor in a department, set its color to red(can't be modified or deleted)
