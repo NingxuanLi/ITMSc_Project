@@ -13,6 +13,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<script src="layui/layui.js"></script>
 <script type="text/javascript">
 function change(){
 
@@ -20,12 +22,22 @@ function change(){
 	location=department?method=add&dep=dva;
 }
 
+layui.use('element', function(){
+	  var element = layui.element;
+	  
+	  //…
+});
 </script>
 </head>
 <body >
-<form action="department?method=add" method="post"  name="form">
+<div class="layui-layout layui-layout-admin">
+  <%@ include file="/admin/adminLeft.jsp"%>
+  
+  
+  <div class="layui-body">
+     <form action="department?method=add" method="post"  name="form">
 			<div class="MainDiv">
-				<table width="85%" border="0" cellpadding="0" cellspacing="0"
+				<table width="60%" border="0" cellpadding="0" cellspacing="0"
 					class="CContent">
 					<tr>
 						<th class="tablestyle_title">
@@ -104,6 +116,15 @@ function change(){
 
 			</div>
 		</form>
+    
+  </div>
+  
+  <div class="layui-footer">
+    <div align="right" style="color: red; font-size: small">&copy;Email:2528986L@student.gla.ac.uk</div>
+  </div>
+</div>
+
+ 
 
 </body>
 </html>

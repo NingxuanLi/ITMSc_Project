@@ -10,55 +10,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta charset="UTF-8">
 <title>Patient registration</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<script src="layui/layui.js"></script>
+
 </head>
 <body>
-<table width="100%" height="734" border="0">
-		<tr>
-			<td colspan="2">
-				<img src="img/top_01.jpg" width="1079" height="200" />
-			</td>
-		</tr>
-		<tr>
-			<td width="20%" height="366" align="left" valign="top">
-				<!-- static include left.jsp -->
-				<%@ include file="left.jsp"%>
-			</td>
-			<td width="80%" align="left" valign="top">
-				<table width="819" height="55" border="0">
-					<tr>
-						<td width="133" height="15">
-							&nbsp;
-						</td>
-						<td width="300" rowspan="2" align="center" valign="bottom">
-							<span class="STYLE14 STYLE13">
-								<span class="STYLE16">Patient Registration</span>
-							</span>
-						</td>
-						<td width="548">
-							&nbsp;
-						</td>
-					</tr>
-					<tr>
-						<td height="13" bgcolor="#87CEFA">
-							&nbsp;
-						</td>
-						<td height="13" bgcolor="#87CEFA">
-							&nbsp;
-						</td>
-					</tr>
-					<tr>
-						<td height="13" bgcolor="#FFFFFF">
-							&nbsp;
-						</td>
-						<td align="center" valign="bottom">
-							&nbsp;
-						</td>
-						<td height="13" bgcolor="#FFFFFF">
-							&nbsp;
-						</td>
-					</tr>
-				</table>
-				<form action="patient?method=add" method="post">
+<div class="layui-layout layui-layout-admin">
+  <%@ include file="left.jsp"%>
+  
+  
+  <div class="layui-body">
+    <form action="patient?method=add" method="post">
 
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
@@ -141,17 +103,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</td>
 						</tr>
 					</table>
-				</form>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				&nbsp;
-			</td>
-			<td>
-				&nbsp;
-			</td>
-		</tr>
-	</table>
+				</form>   
+  </div>
+  
+  <div class="layui-footer">
+    <div align="right" style="color: red; font-size: small">&copy;Email:2528986L@student.gla.ac.uk</div>
+  </div>
+</div>
 </body>
 </html>

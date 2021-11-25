@@ -19,8 +19,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<script src="layui/layui.js"></script>
 
 <script type="text/javascript">
+layui.use('element', function(){
+	  var element = layui.element;
+	  
+});
+
 		function selectAll(){
 
 			var ch=document.getElementsByName("delid");
@@ -106,7 +113,12 @@
 
 </head>
 <body onload="init()">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<div class="layui-layout layui-layout-admin">
+  <%@ include file="/admin/adminLeft.jsp"%>
+  
+  
+  <div class="layui-body">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td height="30">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -264,6 +276,14 @@
 				</td>
 			</tr>
 		</table>
+    
+  </div>
+  
+  <div class="layui-footer">
+    <div align="right" style="color: red; font-size: small">&copy;Email:2528986L@student.gla.ac.uk</div>
+  </div>
+</div>
+
 
 </body>
 </html>

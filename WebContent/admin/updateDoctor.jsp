@@ -14,9 +14,23 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<script src="layui/layui.js"></script>
+
+<script>
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
 </head>
-<body class = "ContentBody">
-		<form action="doctor?method=modify&docId=${doctorDto.docId}" method="post"   name="form">
+<body>
+<div class="layui-layout layui-layout-admin">
+  <%@ include file="/admin/adminLeft.jsp"%>
+  
+  
+  <div class="layui-body">
+    <form action="doctor?method=modify&docId=${doctorDto.docId}" method="post"   name="form">
 			<div class="MainDiv">
 				<table width="85%" border="0" cellpadding="0" cellspacing="0"
 					class="CContent">
@@ -136,6 +150,14 @@
 
 			</div>
 		</form>
+    
+  </div>
+  
+  <div class="layui-footer">
+    <div align="right" style="color: red; font-size: small">&copy;Email:2528986L@student.gla.ac.uk</div>
+  </div>
+</div>
+		
 
 
 </body>

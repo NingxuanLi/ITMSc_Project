@@ -3,6 +3,10 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String message = (String)request.getAttribute("message");
+if(!"null".equals(message)&&!"".equals(message)&&message!=null){
+	out.print("<script>alert('"+message+"');</script>");
+}
 %>
 
 <!DOCTYPE html>
@@ -12,16 +16,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
-</head>
-  <frameset rows="59,*" cols="*" frameborder="no" border="0" framespacing="0">
-   	<frame src="admin/top.jsp" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" title="topFrame" />
-  		<frameset cols="213,*" frameborder="no" border="0" framespacing="0">
-  			<frame src="admin/left.jsp" name="leftFrame" scrolling="No" noresize="noresize" id="leftFrame" title="leftFrame" />
-  			<frame src="admin/mainframe.jsp" name="mainFrame" id="mainFrame" title="mainFrame" />
-  		</frameset>
-  </frameset>
-<body>
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<script src="layui/layui.js"></script>
 
+<script>
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
+</head>
+
+<body>
+<div class="layui-layout layui-layout-admin">
+  <%@ include file="/admin/adminLeft.jsp"%>
+  
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    
+  </div>
+  
+  <div class="layui-footer">
+    <div align="right" style="color: red; font-size: small">&copy;Email:2528986L@student.gla.ac.uk</div>
+  </div>
+</div>
 
 
 </body>

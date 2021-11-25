@@ -16,8 +16,14 @@ if(!"null".equals(message)&&!"".equals(message)&&message!=null){
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
-<script type="text/javascript">
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<script src="layui/layui.js"></script>
 
+<script type="text/javascript">
+layui.use('element', function(){
+	  var element = layui.element;
+	  
+});
 
 
 function selectAll(){
@@ -85,7 +91,12 @@ function del(){
  </script>
 </head>
 <body >
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<div class="layui-layout layui-layout-admin">
+  <%@ include file="/admin/adminLeft.jsp"%>
+  
+  
+  <div class="layui-body">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td height="30">
 					
@@ -210,5 +221,13 @@ function del(){
 				</td>
 			</tr>
 		</table>
+    
+  </div>
+  
+  <div class="layui-footer">
+    <div align="right" style="color: red; font-size: small">&copy;Email:2528986L@student.gla.ac.uk</div>
+  </div>
+</div>
+
 </body>
 </html>

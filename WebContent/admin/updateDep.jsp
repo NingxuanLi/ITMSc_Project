@@ -14,16 +14,29 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<script src="layui/layui.js"></script>
+
 <script type="text/javascript">
 function jumpBack(){
 
 	location=department?method=showList;
 }
 
+layui.use('element', function(){
+	  var element = layui.element;
+	  
+});
+
 </script>
 </head>
 <body>
-<form action="department?method=modify&oldDepId=${department.depId}" method="post" name="form" >
+<div class="layui-layout layui-layout-admin">
+  <%@ include file="/admin/adminLeft.jsp"%>
+  
+  
+  <div class="layui-body">
+    <form action="department?method=modify&oldDepId=${department.depId}" method="post" name="form" >
 		<div class="MainDiv">
 				<table width="85%" border="0" cellpadding="0" cellspacing="0"
 					class="CContent">
@@ -89,10 +102,6 @@ function jumpBack(){
 							</TABLE>
 						</td>
 					</tr>
-
-
-
-
 					<TR>
 						<TD colspan="2" align="center" height="50px">
 							<input type="submit" name="Submit" value="submit" class="button"/>
@@ -105,6 +114,14 @@ function jumpBack(){
 
 			</div>
 		</form>
+    
+  </div>
+  
+  <div class="layui-footer">
+    <div align="right" style="color: red; font-size: small">&copy;Email:2528986L@student.gla.ac.uk</div>
+  </div>
+</div>
+
 
 </body>
 </html>

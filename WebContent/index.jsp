@@ -15,12 +15,48 @@ if(!"null".equals(message)&&!"".equals(message)&&message!=null){
 <title>Index</title>
 
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<script src="layui/layui.js"></script>
 
+<script>
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
 
 </head>
 <body>
+<div class="layui-layout layui-layout-admin">
+  <%@ include file="left.jsp"%>
+  
+  
+  <div class="layui-body" style="background-color: #F5F5F5">
+    <p class="STYLE32">★ <span class="STYLE41">Appointment process flow:</span></p>
+      <p><span class="STYLE40">1. Please do registration first.</span></p>
+      <p><span class="STYLE40">2. Please choose a department to do further operation.</span></p>
+      <p><span class="STYLE40">3. You can also check the doctor list to choose the doctor to make an appointment.</span></p>
+      <p><span class="STYLE40">4. please arrive hospital on time.</span></p>
+      <p class="STYLE32">★ <span class="STYLE41">How to make sure that you have successfully made an appointment?</span></p>
+      <p class="STYLE40"> You can use the "Appointment query" function to check your appointment status.</p>
+      <p class="STYLE40"><span class="STYLE42">★<span class="STYLE41"> How to cancel your appointment?</span></span></p>
+      <p class="STYLE38">Please call: 123456789, our administrator will cancel the appointment for you.</p>
+      <p class="STYLE38"><span class="STYLE42">★</span> <span class="STYLE43">Announcements </span></p>
+      <p class="STYLE39">1. patient management tel number: 123456789</p>
+      <p class="STYLE39">2. xxxxxxxx.</p>
+      <p class="STYLE39">3. xxxxxxxx.</p>
+      <p class="STYLE39">4. xxxxxxxx.</p>
+      <p class="STYLE39">&nbsp;</p>
+    <p class="STYLE30"></p>      <p>&nbsp;</p>
+    
+  </div>
+  
+  <div class="layui-footer">
+    <div align="right" style="color: red; font-size: small">&copy;Email:2528986L@student.gla.ac.uk</div>
+  </div>
+</div>
 
-<table width="100%" height="734" border="0">
+<%-- <table width="100%" height="734" border="0">
   <tr>
     <td colspan="2"><img src="img/top_01.jpg" width="1079" height="200" /></td>
   </tr>
@@ -64,7 +100,7 @@ if(!"null".equals(message)&&!"".equals(message)&&message!=null){
     <p class="STYLE30"></p>      <p>&nbsp;</p>
     </td>
   </tr>
-</table>
+</table> --%>
 
 </body>
 </html>

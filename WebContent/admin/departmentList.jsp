@@ -21,12 +21,16 @@ if(!"null".equals(message)&&!"".equals(message)&&message!=null){
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
-
-
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<script src="layui/layui.js"></script>
 
 <script type="text/javascript">
 
-
+layui.use('element', function(){
+	  var element = layui.element;
+	  
+	  //…
+});
 
 function selectAll(){
 	
@@ -113,8 +117,12 @@ function changeRows(currentPage){
 
 </head>
 <body onload="init()">
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<div class="layui-layout layui-layout-admin">
+  <%@ include file="/admin/adminLeft.jsp"%>
+  
+  
+  <div class="layui-body">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td height="30">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -130,8 +138,9 @@ function changeRows(currentPage){
 												Department name:
 												<input name="text" type="text" id="checkName" value="${checkName}" name="checkName" />
 											</label>
-											<input name="Submit" type="button" class="right-button02"
-												value="search" onclick="checkDepartmentName()"/>
+											      <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="checkDepartmentName()">search</button>
+											<!-- <input name="Submit" type="button" class="right-button02"
+												value="search" onclick="checkDepartmentName()"/> -->
 										</td>
 										<td width="679" align="left">
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -149,7 +158,7 @@ function changeRows(currentPage){
 						cellspacing="0" cellpadding="0">
 						<tr>
 							<td>
-								<table width="95%" border="0" align="center" cellpadding="0"
+								<table width="100%" border="0" align="left" cellpadding="0"
 									cellspacing="0">
 									<tr>
 										<td height="20">
@@ -165,8 +174,8 @@ function changeRows(currentPage){
 										</td>
 									</tr>
 									<tr>
-										<td height="40" class="font42">
-											<table width="100%" border="0" cellpadding="4"
+										<td height="40" class="font42" style="font-size: medium;">
+											<table width="100%" border="1" cellpadding="4"
 												cellspacing="1" bgcolor="#464646" class="newfont03">
 
 												<tr>
@@ -176,17 +185,17 @@ function changeRows(currentPage){
 													</th>
 												</tr>
 												<tr>
-													<td width="8%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" align="center" bgcolor="#EEEEEE">
 														select
 													</td>
-													<td width="12%" height="20" align="center"
+													<td width="10%" height="20" align="center"
 														bgcolor="#EEEEEE">
 														Department id
 													</td>
-													<td width="7%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" align="center" bgcolor="#EEEEEE">
 														Department name
 													</td>
-													<td width="11%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" align="center" bgcolor="#EEEEEE">
 														operation
 													</td>
 												</tr>
@@ -258,6 +267,15 @@ function changeRows(currentPage){
 				</td>
 			</tr>
 		</table>
+    
+  </div>
+  
+  <div class="layui-footer">
+    <div align="right" style="color: red; font-size: small">&copy;Email:2528986L@student.gla.ac.uk</div>
+  </div>
+</div>
+
+
 
 </body>
 </html>
