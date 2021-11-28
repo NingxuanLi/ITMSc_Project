@@ -55,9 +55,9 @@ function changeRows(currentPage){
   <%@ include file="/doctor/left.jsp"%>
   
   
-  <div class="layui-body">
-    	<table width="100%" border="0" cellpadding="4"
-		cellspacing="1" bgcolor="#464646" class="newfont03">
+  <div class="layui-body" style="background-color: #F5F5F5">
+    	<table width="100%" border="1" cellpadding="4"
+		cellspacing="1" bgcolor="#464646" class="newfont03" bordercolor="#DCDCDC">
 
 		<tr>
 			<th height="20" colspan="14" align="center"
@@ -66,29 +66,29 @@ function changeRows(currentPage){
 			</th>
 			</tr>
 			<tr>
-			<td width="8%" align="center" bgcolor="#EEEEEE">
+			<td width="10%" height = "40" align="center" bgcolor="#EEEEEE">
 				Patient name
 			</td>
-			<td width="7%" align="center" bgcolor="#EEEEEE">
+			<td width="10%" align="center" bgcolor="#EEEEEE">
 				Patient real name
 			</td>
-			<td width="8%" align="center" bgcolor="#EEEEEE">
+			<td width="10%" align="center" bgcolor="#EEEEEE">
 				Patient gender
 			</td>
-			<td width="8%" align="center" bgcolor="#EEEEEE">
+			<td width="10%" align="center" bgcolor="#EEEEEE">
 				patient BRP
 			</td>
-			<td width="8%" align="center" bgcolor="#EEEEEE">
+			<td width="10%" align="center" bgcolor="#EEEEEE">
 				patient BRP
 			</td>
-			<td width="12%" align="center" bgcolor="#EEEEEE">
+			<td width="10%" align="center" bgcolor="#EEEEEE">
 				Appointment time
 			</td>
 													
 			</tr>
 				<c:forEach items="${docAppList}" var="app">
 				<tr align="center">																											
-				<td bgcolor="#FFFFFF">
+				<td height = "40" bgcolor="#FFFFFF">
 					${app.pName}
 				</td>
 				<td bgcolor="#FFFFFF">
@@ -110,38 +110,38 @@ function changeRows(currentPage){
 				</tr>
 				</c:forEach>
 			<tr align="center">
-				<td colspan="7" bgcolor="#FFFFFF">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.rowsCount}</font> appointments&nbsp;&nbsp;&nbsp;&nbsp;
+				<td colspan="6" bgcolor="#FFFFFF" height="50">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.rowsCount}</font> appointments in total&nbsp;&nbsp;&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
 				<c:if test="${page.currentPage==1}">
-					first page&nbsp;&nbsp;&nbsp;&nbsp;
-					last page&nbsp;&nbsp;&nbsp;&nbsp;
+					<i class="layui-icon layui-icon-prev"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+					<i class="layui-icon layui-icon-left" style="font-size: 18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 				</c:if>
 				<c:if test="${page.currentPage!=1}">
-					<a href="javascript:changeRows(1)">first page</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="javascript:changeRows(${page.currentPage-1})">last page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:changeRows(1)" class="layui-icon layui-icon-prev" style="color: #0000FF"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:changeRows(${page.currentPage-1})" class="layui-icon layui-icon-left" style="color: #0000FF; font-size: 18px"></a> &nbsp;&nbsp;&nbsp;&nbsp;
 				</c:if>
 				<c:if test="${page.currentPage eq page.pageCount}">
-					next page&nbsp;&nbsp;&nbsp;&nbsp;
-					end page&nbsp;&nbsp;&nbsp;&nbsp;															
+					<i class="layui-icon layui-icon-right" style="font-size: 18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+					<i class="layui-icon layui-icon-next"></i>&nbsp;&nbsp;&nbsp;&nbsp;															
 				</c:if>
 				<c:if test="${page.currentPage ne page.pageCount}">
-					<a href="javascript:changeRows(${page.currentPage+1})">next page</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="javascript:changeRows(${page.pageCount})">end page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:changeRows(${page.currentPage+1})" class="layui-icon layui-icon-right" style="color: #0000FF; font-size: 18px"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:changeRows(${page.pageCount})" class="layui-icon layui-icon-next" style="color: #0000FF"></a> &nbsp;&nbsp;&nbsp;&nbsp;
 				</c:if>
-				numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="color:red;"/>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="color:red;"/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														
 				<select name="select" onchange="changeRows(this.value)">
 					<option value="${page.currentPage}">page${page.currentPage}</option>
-						<c:forEach begin="1" var="i" step="1" end="${page.pageCount}" >
-							<c:if test="${page.currentPage!=i}">
-								<option  value="${i}">page${i }</option>
-							</c:if>
-						</c:forEach>
+					<c:forEach begin="1" var="i" step="1" end="${page.pageCount}" >
+					<c:if test="${page.currentPage!=i}">
+						<option  value="${i}">page${i }</option>
+					</c:if>
+					</c:forEach>
 				</select>
-			  </td>
-		   </tr>
+				</td>
+			</tr>
 </table>
     
   </div>

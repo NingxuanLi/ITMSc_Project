@@ -31,16 +31,16 @@ layui.use('element', function(){
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
-  <%@ include file="/admin/adminLeft.jsp"%>
+  <%@ include file="left.jsp"%>
   
   
-  <div class="layui-body">
+  <div class="layui-body" style="background-color: #F5F5F5">
     <form action="appointment?method=add&docId=${dto.docId }" method="post">
 			
 				
 
-						<table width="80%" border="0" cellpadding="4" cellspacing="1"
-							bgcolor="#464646" class="newfont03">
+						<table width="100%" border="1" cellpadding="4" cellspacing="1"
+							bgcolor="#464646" class="newfont03" bordercolor="#DCDCDC">
 
 							<tr>
 								<th height="20" colspan="5" align="center" bgcolor="#EEEEEE"
@@ -50,7 +50,7 @@ layui.use('element', function(){
 							</tr>
 							<tr>
 
-								<td width="12%" height="20" align="center" bgcolor="#EEEEEE">
+								<td width="12%" height="40" align="center" bgcolor="#EEEEEE">
 									Name
 								</td>
 								<td width="12%" align="center" bgcolor="#EEEEEE">
@@ -68,7 +68,7 @@ layui.use('element', function(){
 
 							<tr align="center">
 
-								<td bgcolor="#FFFFFF" height="20">
+								<td bgcolor="#FFFFFF" height="40">
 									${dto.docName }
 								</td>
 								<td height="20" bgcolor="#FFFFFF">
@@ -84,45 +84,30 @@ layui.use('element', function(){
 							</tr>
 
 						</table>
-						<table width="448" height="204" border="0" align="left">
-							<tr>
-								<td width="162">
-									&nbsp;
-								</td>
-								<td colspan="2">
-									&nbsp;
-								</td>
-							</tr>
-							<tr>
-								<td class="login-text02">
-									Name:
-								</td>
-								<td colspan="2">
-									<input type="text" id="name" name="name" height="20" />
-								</td>
-							</tr>
-							<tr>
-								<td class="login-text02">
-									Password:
-								</td>
-								<td colspan="2">
-									<input type="text" id="password" name="password" height="20" />
-								</td>
-							</tr>
-							<tr>
-								<td colspan="3"><span style="align:center;color:red" align="center">${error }</span></td>
-							</tr>
-							<tr>
-								<td colspan="3" align="center">
-									<input type="submit" name="Submit" class="right-button01" value="appoint" />
-									&nbsp;&nbsp;
-									<input type="button" name="button2" class="right-button01" value="register" onclick="link()"/>
-								</td>
-
-							</tr>
-						</table>
-
-
+		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		
+		<div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px" >Name:</label>
+            <div class="layui-input-block">
+            	<input type="text" name="name"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px">Password:</label>
+            <div class="layui-input-block">
+            	<input type="password" name="password"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div align="left" style="color: red; font-size: 20; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${error }</div>       
+        <div class="layui-form-item">
+    		<div class="layui-input-block">
+      			<button type="submit" class="layui-btn" >appoint</button>
+      			<button type="reset" class="layui-btn layui-btn-primary">reset</button>
+    		</div>
+  		</div>						
 		</form>
     
   </div>

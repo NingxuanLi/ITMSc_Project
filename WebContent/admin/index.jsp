@@ -32,7 +32,7 @@ layui.use('element', function(){
   <%@ include file="/admin/adminLeft.jsp"%>
   
   
-  <div class="layui-body">
+  <div class="layui-body" style="background-color: #F5F5F5">
     <!-- 内容主体区域 -->
     
   </div>

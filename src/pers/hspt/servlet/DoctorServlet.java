@@ -162,6 +162,7 @@ public class DoctorServlet extends HttpServlet{
 	//query, after select a department, show all the doctors in this department
 	private void docListInOneDep(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String depId = request.getParameter("depId");
+		Department dep = departmentService.get(Integer.valueOf(depId));
 		// paging
 		PageData pageData = new PageData();
 		// get current page
@@ -191,7 +192,7 @@ public class DoctorServlet extends HttpServlet{
 		pageData.setPageCount(pageCount);
 		
 		
-		List<Doctor> docList = doctorService.getByDepId(Integer.valueOf(depId));
+		List<Doctor> docList = doctorService.getByDepId(dep.getDepId(), pageData);
 		//use DTO to encapsulate the data needed to be transmitted
 		List<DoctorDto> docDtoList = new ArrayList<>();
 		DoctorDto dto = null;
@@ -206,6 +207,9 @@ public class DoctorServlet extends HttpServlet{
 			dto.setDocTime(doc.getDocTime());
 			docDtoList.add(dto);
 		}
+		
+		
+		request.setAttribute("department", dep);
 		request.setAttribute("docDtoList", docDtoList);
 		request.setAttribute("page", pageData);
 		request.getRequestDispatcher("/docListOneDep.jsp").forward(request, response);
@@ -216,6 +220,7 @@ public class DoctorServlet extends HttpServlet{
 	
 	//doctor list in the index page
 	private void frontShowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String checkName = request.getParameter("checkName");  //search function
 		// paging
 		PageData pageData = new PageData();
 		// get current page
@@ -244,7 +249,7 @@ public class DoctorServlet extends HttpServlet{
 		}
 		pageData.setPageCount(pageCount);
 		
-		List<Doctor> doctorList = doctorService.getList(null, pageData);
+		List<Doctor> doctorList = doctorService.getList(checkName, pageData);
 		//use DTO to encapsulate the data needed to be transmitted
 		List<DoctorDto> docDtoList = new ArrayList<>();
 		DoctorDto dto = null;
@@ -259,6 +264,7 @@ public class DoctorServlet extends HttpServlet{
 			dto.setDocTime(doc.getDocTime());
 			docDtoList.add(dto);
 		}
+		request.setAttribute("checkName", checkName);
 		request.setAttribute("docDtoList", docDtoList);
 		request.setAttribute("page", pageData);
 		request.getRequestDispatcher("/frontDocList.jsp").forward(request, response);				

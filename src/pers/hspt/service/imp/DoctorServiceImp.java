@@ -14,9 +14,9 @@ public class DoctorServiceImp implements DoctorService{
 	private DoctorDao doctorDao=new DoctorDaoImp();
 
 	@Override
-	public List<Doctor> getByDepId(int depId) {
+	public List<Doctor> getByDepId(int depId, PageData pageData) {
 		// TODO Auto-generated method stub
-		return doctorDao.getByDepId(depId);
+		return doctorDao.getByDepId(depId, pageData);
 	}
 	
 	public void add(Doctor doctor) {

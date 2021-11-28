@@ -31,14 +31,14 @@ layui.use('element', function(){
   <%@ include file="left.jsp"%>
   
   
-  <div class="layui-body">
-    <table width="100%" border="0" cellpadding="4"
-					cellspacing="1" bgcolor="#464646" class="newfont03">
+  <div class="layui-body" style="background-color: #F5F5F5">
+    <table width="100%" border="1" cellpadding="4"
+					cellspacing="1" bgcolor="#464646" class="newfont03" bordercolor="#DCDCDC">
 
 					<tr>
 						<th height="20" colspan="14" align="center"
 							bgcolor="#EEEEEE" class="tablestyle_title">
-							Your appointments
+							${patient.name},  Your appointments
 						</th>
 					</tr>
 					<tr>
@@ -46,38 +46,38 @@ layui.use('element', function(){
 						<td width="10%" align="center" bgcolor="#EEEEEE">
 							Department name
 						</td>
-						<td width="7%" height="20" align="center"
+						<td width="10%" height="40" align="center"
 							bgcolor="#EEEEEE">
 							Doctor name
 						</td>
-						<td width="7%" align="center" bgcolor="#EEEEEE">
+						<td width="10%" align="center" bgcolor="#EEEEEE">
 							Appointment fee
 						</td>
 						
 						<td width="10%" align="center" bgcolor="#EEEEEE">
 							Date
 						</td>
-						<td width="8%" align="center" bgcolor="#EEEEEE">
+						<td width="10%" align="center" bgcolor="#EEEEEE">
 							Status
 						</td>
 					</tr>
 						<c:forEach items="${personalAppList}" var="pApp">
 							<tr align="center">
 								
-								<td height="20" bgcolor="#FFFFFF">
+								<td height="40" bgcolor="#FFFFFF">
 									${pApp.depName}
 								</td>
-								<td height="20" bgcolor="#FFFFFF">
+								<td  bgcolor="#FFFFFF">
 									${pApp.docName}
 								</td>
-								<td height="20" bgcolor="#FFFFFF">
+								<td  bgcolor="#FFFFFF">
 									${pApp.money}
 								</td>
 								
-								<td height="20" bgcolor="#FFFFFF">
+								<td  bgcolor="#FFFFFF">
 									${pApp.appTime}
 								</td>
-								<td height="20" bgcolor="#FFFFFF">
+								<td  bgcolor="#FFFFFF">
 									${pApp.appState}
 								</td>								
 							</tr>

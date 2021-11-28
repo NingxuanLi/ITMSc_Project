@@ -34,7 +34,7 @@ layui.use('element', function(){
   <%@ include file="/admin/adminLeft.jsp"%>
   
   
-  <div class="layui-body">
+  <div class="layui-body" style="background-color: #F5F5F5">
      <form action="department?method=add" method="post"  name="form">
 			<div class="MainDiv">
 				<table width="60%" border="0" cellpadding="0" cellspacing="0"

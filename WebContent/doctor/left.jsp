@@ -9,8 +9,8 @@
       <li class="layui-nav-item layui-hide layui-show-md-inline-block">        
           Hello, Doctor ${sessionScope.doctor.docName}
       </li>
-      <li class="layui-nav-item layui-hide-xs"><a href="doctor/index.jsp">back to index</a></li>
-      <li class="layui-nav-item layui-hide-xs"><a href="doctor?method=logout">log out</a></li>
+      <li class="layui-nav-item layui-hide-xs"><a href="doctor/index.jsp"><i class="layui-icon layui-icon-home" style="font-size: 15px"></i>&nbsp;back to index</a></li>
+      <li class="layui-nav-item layui-hide-xs"><a href="doctor?method=logout"><i class="layui-icon layui-icon-logout" style="font-size: 15px"></i>&nbsp;log out</a></li>
     </ul>
   </div>
   

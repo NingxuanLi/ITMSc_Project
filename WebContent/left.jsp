@@ -5,8 +5,8 @@
     <!-- 头部区域（可配合layui 已有的水平导航） -->
 
     <ul class="layui-nav layui-layout-right">
-      <li class="layui-nav-item layui-hide-xs"><a href="doctor_login.jsp">Doctor login</a></li>
-      <li class="layui-nav-item layui-hide-xs"><a href="admin_login.jsp">Admin login</a></li>
+      <li class="layui-nav-item layui-hide-xs"><a href="doctor_login.jsp"><i class="layui-icon layui-icon-friends" style="font-size: 15px"></i>&nbsp;Doctor login</a></li>
+      <li class="layui-nav-item layui-hide-xs"><a href="admin_login.jsp"><i class="layui-icon layui-icon-friends" style="font-size: 15px"></i>&nbsp;Admin login</a></li>
     </ul>
   </div>
   

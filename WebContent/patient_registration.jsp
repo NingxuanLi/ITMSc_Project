@@ -13,96 +13,72 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
 <script src="layui/layui.js"></script>
 
+<script>
+layui.use(['element', 'form'], function(){
+  var element = layui.element;
+  var form = layui.form;
+  
+});
+</script>
+
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
   <%@ include file="left.jsp"%>
   
   
-  <div class="layui-body">
+  <div class="layui-body" style="background-color: #F5F5F5">
     <form action="patient?method=add" method="post">
-
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="20%" height="35" class="login-text02">
-								Name:
-								<br />
-							</td>
-							<td width="80%">
-								<input name="name" type="text" size="30" />
-							</td>
-						</tr>
-						<tr>
-							<td height="35" class="login-text02">
-								Password:
-								<br />
-							</td>
-							<td>
-								<input name="password" type="password" size="30" />
-							</td>
-						</tr>
-						<tr>
-							<td height="35" class="login-text02">
-								Confirm password:
-								<br />
-							</td>
-							<td>
-								<input name="confirmPassword" type="password" size="30" />
-							</td>
-						</tr>
-						<tr>
-							<td width="20%" height="35" class="login-text02">
-								Real name:
-								<br />
-							</td>
-							<td width="80%">
-								<input name="realName" type="text" size="30" />
-							</td>
-						</tr>
-						<tr>
-							<td width="20%" height="35" class="login-text02">
-								Gender:
-								<br />
-							</td>
-							<td width="80%">
-								<input type="radio" name="gender" value="male" /><span class = "login-text02">male</span> &nbsp;
-								<input type="radio" name="gender" value="female" /><span class = "login-text02">female</span>
-							</td>
-						</tr>
-						<tr>
-							<td width="20%" height="35" class="login-text02">
-								Tel number:
-								<br />
-							</td>
-							<td width="80%">
-								<input name="telNumber" type="text" size="30" />
-							</td>
-						</tr>
-						<tr>
-							<td width="20%" height="35" class="login-text02">
-								BRP number:
-								<br />
-							</td>
-							<td width="80%">
-								<input name="brpNumber" type="text" size="30" />
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td style="color: red; font-size: 20;">${error }</td>
-
-						</tr>
-
-						<tr>
-							<td height="35">
-								&nbsp;
-							</td>
-							<td>
-								<input name="button" type="submit" class="right-button01" value="submit" />
-								<input name="reset" type="reset" class="right-button02" value="reset" />
-							</td>
-						</tr>
-					</table>
+    	<div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px" >Name:</label>
+            <div class="layui-input-block">
+            	<input type="text" name="name"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px">Password:</label>
+            <div class="layui-input-block">
+            	<input type="password" name="password"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px">Confirm password:</label>
+            <div class="layui-input-block">
+            	<input type="password" name="confirmPassword"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px">Real name:</label>
+            <div class="layui-input-block">
+            	<input type="text" name="realName"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div class="layui-form-item">
+    		<label class="layui-form-label"style="width: 120px">Gender:</label>
+    		<div class="layui-input-block">
+      			<input type="radio" name="gender" value="male" /><span class = "login-text02" style="font-size:large;"><i class="layui-icon layui-icon-male" style="font-size: 15px"></i>&nbsp;male</span> &nbsp;
+      			<input type="radio" name="gender" value="female" /><span class = "login-text02" style="font-size:large;"><i class="layui-icon layui-icon-female" style="font-size: 15px"></i>&nbsp;female</span>
+    		</div>
+  		</div>
+  		<div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px">Tel number:</label>
+            <div class="layui-input-block">
+            	<input type="text" name="telNumber"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px">BRP number:</label>
+            <div class="layui-input-block">
+            	<input type="text" name="brpNumber"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+    	<div align="left" style="color: red; font-size: 20; align-items: flex-end;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${error }</div>       
+        <div class="layui-form-item">
+    		<div class="layui-input-block">
+      			<button type="submit" class="layui-btn">submit</button>
+      			<button type="reset" class="layui-btn layui-btn-primary">reset</button>
+    		</div>
+  		</div> 		
 				</form>   
   </div>
   

@@ -73,6 +73,16 @@ function link(){
 
 }
 
+function singleDel(depId){
+	 location="department?method=delete&depId="+depId;
+
+}
+
+function modify(depId){
+	 location="department?method=gotoModify&depId="+depId;
+
+}
+
 //search
 function checkDepartmentName(){
 	var  name = document.getElementById("checkName").value;
@@ -121,7 +131,7 @@ function changeRows(currentPage){
   <%@ include file="/admin/adminLeft.jsp"%>
   
   
-  <div class="layui-body">
+  <div class="layui-body" style="background-color: #F5F5F5">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td height="30">
@@ -129,18 +139,16 @@ function changeRows(currentPage){
 						<tr>
 							<td height="62" >
 
-								<table width="98%" border="0" align="center" cellpadding="0"
+								<table width="100%" border="0" align="center" cellpadding="0"
 									cellspacing="0">
 									<tr>
 										
 										<td width="519">
 											<label>
-												Department name:
+												<span style="font-size: medium;">Department name:</span>
 												<input name="text" type="text" id="checkName" value="${checkName}" name="checkName" />
 											</label>
-											      <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="checkDepartmentName()">search</button>
-											<!-- <input name="Submit" type="button" class="right-button02"
-												value="search" onclick="checkDepartmentName()"/> -->
+											      <button type="button" class="layui-btn" onclick="checkDepartmentName()">search</button>
 										</td>
 										<td width="679" align="left">
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -162,21 +170,22 @@ function changeRows(currentPage){
 									cellspacing="0">
 									<tr>
 										<td height="20">
-											<span class="newfont07">select：<a href="javascript:selectAll();"
-												class="right-font08" >select all</a>-<a
-												href="javascript:unselectAll();" class="right-font08" >invert select</a>
-											</span>
-											<input name="Submit" type="button" class="right-button08"
-												value="delete department" onclick="del()"/>
-											<input name="Submit" type="button" class="right-button08"
-												value="add a new department" onclick="link();" />
+											<div class="layui-btn-group">
+												<button type="button" class="layui-btn" onclick="selectAll()">select all</button>
+												<button type="button" class="layui-btn" onclick="unselectAll()">invert select</button>
+											</div>
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<div class="layui-btn-group">
+												<button type="button" class="layui-btn layui-btn-normal" onclick="link()">add department</button>
+												<button type="button" class="layui-btn layui-btn-danger" onclick="del()">delete department</button>
+											</div>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										</td>
 									</tr>
 									<tr>
 										<td height="40" class="font42" style="font-size: medium;">
 											<table width="100%" border="1" cellpadding="4"
-												cellspacing="1" bgcolor="#464646" class="newfont03">
+												cellspacing="1" bgcolor="#464646" class="newfont03" bordercolor="#DCDCDC">
 
 												<tr>
 													<th height="20" colspan="14" align="center"
@@ -185,11 +194,10 @@ function changeRows(currentPage){
 													</th>
 												</tr>
 												<tr>
-													<td width="10%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" height="40" align="center" bgcolor="#EEEEEE">
 														select
-													</td>
-													<td width="10%" height="20" align="center"
-														bgcolor="#EEEEEE">
+													</td> 
+													<td width="10%"  align="center"bgcolor="#EEEEEE">
 														Department id
 													</td>
 													<td width="10%" align="center" bgcolor="#EEEEEE">
@@ -208,7 +216,7 @@ function changeRows(currentPage){
 															<td bgcolor="#FFFFFF">
 																${dep.depId}
 															</td>
-															<td height="20" bgcolor="#FFFFFF">
+															<td height="40" bgcolor="#FFFFFF">
 																<c:if test="${dep.color eq 'red'}">
 																<span style="color:red">${dep.depName }</span>
 															</c:if>
@@ -218,30 +226,30 @@ function changeRows(currentPage){
 															</td>
 										
 															<td bgcolor="#FFFFFF">
-																<a href="department?method=gotoModify&depId=${dep.depId}" style = "text-decoration:none">modify</a>&nbsp;|&nbsp;
-																<a href="department?method=delete&depId=${dep.depId}" style = "text-decoration:none">delete</a>
+																<button type="button" class="layui-btn" onclick="modify(${dep.depId})">modify</button>
+																<button type="button" class="layui-btn layui-btn-danger" onclick="singleDel(${dep.depId})">delete</button>
 															</td>
 														</tr>
 													</c:forEach>
 												<tr align="center">
-													<td colspan="4" bgcolor="#FFFFFF">
+													<td colspan="4" bgcolor="#FFFFFF" height="50">
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.rowsCount}</font> departments in total&nbsp;&nbsp;&nbsp;&nbsp;
 														&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${page.currentPage==1}">
-															first page&nbsp;&nbsp;&nbsp;&nbsp;
-															last page&nbsp;&nbsp;&nbsp;&nbsp;
+															<i class="layui-icon layui-icon-prev"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+															<i class="layui-icon layui-icon-left" style="font-size: 18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
 														<c:if test="${page.currentPage!=1}">
-															<a href="javascript:changeRows(1)">first page</a>&nbsp;&nbsp;&nbsp;&nbsp;
-															<a href="javascript:changeRows(${page.currentPage-1})">last page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(1)" class="layui-icon layui-icon-prev" style="color: #0000FF"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(${page.currentPage-1})" class="layui-icon layui-icon-left" style="color: #0000FF; font-size: 18px"></a> &nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
 														<c:if test="${page.currentPage eq page.pageCount}">
-															next page&nbsp;&nbsp;&nbsp;&nbsp;
-															end page&nbsp;&nbsp;&nbsp;&nbsp;															
+															<i class="layui-icon layui-icon-right" style="font-size: 18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+															<i class="layui-icon layui-icon-next"></i>&nbsp;&nbsp;&nbsp;&nbsp;															
 														</c:if>
 														<c:if test="${page.currentPage ne page.pageCount}">
-															<a href="javascript:changeRows(${page.currentPage+1})">next page</a>&nbsp;&nbsp;&nbsp;&nbsp;
-															<a href="javascript:changeRows(${page.pageCount})">end page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(${page.currentPage+1})" class="layui-icon layui-icon-right" style="color: #0000FF; font-size: 18px"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(${page.pageCount})" class="layui-icon layui-icon-next" style="color: #0000FF"></a> &nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
 														numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="color:red;"/>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -31,60 +31,41 @@ debugger;
   <%@ include file="left.jsp"%>
   
   
-  <div class="layui-body">
+  <div class="layui-body" style="background-color: #F5F5F5">
     <form action="doctor?method=login" method="post">
+    	<div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px" >Doctor name:</label>
+            <div class="layui-input-block">
+            	<input type="text" name="name"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px">Password:</label>
+            <div class="layui-input-block">
+            	<input type="password" name="password"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px">Captcha code:</label>
+            <div class="layui-input-block">
+            	<img src="image" alt="no picture" onclick="changeCode(this)" />
+    		</div>
+        </div>
+        <div class="layui-form-item">
+    		<label class="layui-form-label" style="width: 120px">Captcha:</label>
+            <div class="layui-input-block">
+            	<input type="text" name="code"  class="layui-input" style="width: 300px">
+    		</div>
+        </div>
+        <div align="left" style="color: red; font-size: 20; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${error }</div>       
+        <div class="layui-form-item">
+    		<div class="layui-input-block">
+      			<button type="submit" class="layui-btn" >login</button>
+      			<button type="reset" class="layui-btn layui-btn-primary">reset</button>
+    		</div>
+  		</div>
 
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="20%" height="35" class="login-text02">
-								Name：
-								<br />
-							</td>
-							<td width="80%">
-								<input name="name" type="text" size="30" />
-							</td>
-						</tr>
-						<tr>
-							<td height="35" class="login-text02">
-								Password：
-								<br />
-							</td>
-							<td>
-								<input name="password" type="password" size="33" />
-							</td>
-						</tr>
-						<tr>
-							<td height="35" class="login-text02">
-								Captcha picture：
-								<br />
-							</td>
-							<td>
-								<img src="image" alt="no picture" onclick="changeCode(this)" />
-							</td>
-						</tr>
-						<tr>
-							<td height="35" class="login-text02">Captcha：</td>
-							<td>
-								<input name="code" type="text" size="30" />
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td style="color: red; font-size: 20;">${error }</td>
-
-						</tr>
-
-						<tr>
-							<td height="35">
-								&nbsp;
-							</td>
-							<td>
-								<input name="button" type="submit" class="right-button01" value="login" />
-								<input name="reset" type="reset" class="right-button02" value="reset" />
-								<font color="red" size="5">${msg}</font>
-							</td>
-						</tr>
-					</table>
+					
 				</form>
     
   </div>

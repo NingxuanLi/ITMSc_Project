@@ -7,7 +7,7 @@ import pers.hspt.util.PageData;
 
 public interface DoctorService {
 	
-	public List<Doctor> getByDepId(int depid);
+	public List<Doctor> getByDepId(int depid, PageData pageData);
 	
 	public void add(Doctor doctor);
 	

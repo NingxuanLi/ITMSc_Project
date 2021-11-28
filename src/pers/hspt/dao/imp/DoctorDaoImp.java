@@ -15,13 +15,18 @@ import pers.hspt.util.DBConnection;
 public class DoctorDaoImp extends BaseDao implements DoctorDao{
 	
 
-		public List<Doctor> getByDepId(int depId){
+		public List<Doctor> getByDepId(int depId, PageData pageData){
 			List<Doctor> list=new ArrayList<Doctor>();
 			
 			conn=DBConnection.getConnection();
 	        try {
 				stmt=conn.createStatement();
-				String sql="select * from doctor where dep_id="+depId;
+				String sql = "";
+				if(pageData == null) {
+					sql="select * from doctor where dep_id="+depId;
+				}else {
+					sql="select * from doctor where dep_id= "+depId + " limit " + (pageData.getCurrentPage()-1)*pageData.getPageRows()+","+pageData.getPageRows();
+				}
 
 				rs=stmt.executeQuery(sql);
 				Doctor doc=null;

@@ -87,6 +87,11 @@ function del(){
 	
 	location="appointment?method=delete&strId="+strId;
 }
+
+function singleDel(appId){
+	 location="appointment?method=delete&appId="+appId;
+
+}
 	
  </script>
 </head>
@@ -95,36 +100,34 @@ function del(){
   <%@ include file="/admin/adminLeft.jsp"%>
   
   
-  <div class="layui-body">
+  <div class="layui-body" style="background-color: #F5F5F5">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
-			<tr>
-				<td height="30">
-					
-				</td>
-			</tr>
 			<tr>
 				<td>
 					<table id="subtree1" style="DISPLAY: " width="100%" border="0"
 						cellspacing="0" cellpadding="0">
 						<tr>
 							<td>
-								<table width="95%" border="0" align="center" cellpadding="0"
+								<table width="100%" border="0" align="center" cellpadding="0"
 									cellspacing="0">
 									<tr>
 										<td height="20">
-											<span class="newfont07">select：<a href="javascript:selectAll();"
-												class="right-font08" >select all</a>-
-												<a href="javascript:unselectAll();" class="right-font08" >invert select</a>
-											</span>
-											<input name="Submit" type="button" class="right-button08"
-												value="delete" onclick="del()"/>												
+											<div class="layui-btn-group">
+												<button type="button" class="layui-btn" onclick="selectAll()">select all</button>
+												<button type="button" class="layui-btn" onclick="unselectAll()">invert select</button>
+											</div>
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<div class="layui-btn-group">
+												<button type="button" class="layui-btn layui-btn-danger" onclick="del()">delete all</button>
+												
+											</div>												
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										</td>
 									</tr>
 									<tr>
 										<td height="40" class="font42">
-											<table width="100%" border="0" cellpadding="4"
-												cellspacing="1" bgcolor="#464646" class="newfont03">
+											<table width="100%" border="1" cellpadding="4"
+												cellspacing="1" bgcolor="#464646" class="newfont03" bordercolor="#DCDCDC">
 
 												<tr>
 													<th height="20" colspan="14" align="center"
@@ -133,28 +136,28 @@ function del(){
 													</th>
 												</tr>
 												<tr>
-													<td width="8%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" height = "40" align="center" bgcolor="#EEEEEE">
 														select
 													</td>
-													<td width="7%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" align="center" bgcolor="#EEEEEE">
 														Patient
 													</td>
-													<td width="8%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" align="center" bgcolor="#EEEEEE">
 														Doctor
 													</td>
-													<td width="8%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" align="center" bgcolor="#EEEEEE">
 														Department
 													</td>
-													<td width="8%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" align="center" bgcolor="#EEEEEE">
 														Date
 													</td>
-													<td width="11%" align="center" bgcolor="#EEEEEE">
+													<td width="10%" align="center" bgcolor="#EEEEEE">
 														operation
 													</td>
 												</tr>
 													<c:forEach items="${appList}" var="app">
 														<tr align="center">
-															<td bgcolor="#FFFFFF">
+															<td height = "40" bgcolor="#FFFFFF">
 																
 																<input type="checkbox" name="delid" value="${app.appId}"/>
 															</td>													
@@ -171,31 +174,31 @@ function del(){
 																${app.appTime}
 															</td>
 															<td bgcolor="#FFFFFF">
-																<a href="appointment?method=delete&appId=${app.appId}" style = "text-decoration:none">delete</a>																
+																<button type="button" class="layui-btn layui-btn-danger" onclick="singleDel(${app.appId})">delete</button>																
 															</td>
 															
 															
 														</tr>
 													</c:forEach>
 												<tr align="center">
-													<td colspan="7" bgcolor="#FFFFFF">
-														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.rowsCount}</font> archive appointments&nbsp;&nbsp;&nbsp;&nbsp;
+													<td colspan="6" bgcolor="#FFFFFF" height="50">
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.rowsCount}</font> appointments in total&nbsp;&nbsp;&nbsp;&nbsp;
 														&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${page.currentPage==1}">
-															first page&nbsp;&nbsp;&nbsp;&nbsp;
-															last page&nbsp;&nbsp;&nbsp;&nbsp;
+															<i class="layui-icon layui-icon-prev"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+															<i class="layui-icon layui-icon-left" style="font-size: 18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
 														<c:if test="${page.currentPage!=1}">
-															<a href="javascript:changeRows(1)">first page</a>&nbsp;&nbsp;&nbsp;&nbsp;
-															<a href="javascript:changeRows(${page.currentPage-1})">last page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(1)" class="layui-icon layui-icon-prev" style="color: #0000FF"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(${page.currentPage-1})" class="layui-icon layui-icon-left" style="color: #0000FF; font-size: 18px"></a> &nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
 														<c:if test="${page.currentPage eq page.pageCount}">
-															next page&nbsp;&nbsp;&nbsp;&nbsp;
-															end page&nbsp;&nbsp;&nbsp;&nbsp;															
+															<i class="layui-icon layui-icon-right" style="font-size: 18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+															<i class="layui-icon layui-icon-next"></i>&nbsp;&nbsp;&nbsp;&nbsp;															
 														</c:if>
 														<c:if test="${page.currentPage ne page.pageCount}">
-															<a href="javascript:changeRows(${page.currentPage+1})">next page</a>&nbsp;&nbsp;&nbsp;&nbsp;
-															<a href="javascript:changeRows(${page.pageCount})">end page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(${page.currentPage+1})" class="layui-icon layui-icon-right" style="color: #0000FF; font-size: 18px"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+															<a href="javascript:changeRows(${page.pageCount})" class="layui-icon layui-icon-next" style="color: #0000FF"></a> &nbsp;&nbsp;&nbsp;&nbsp;
 														</c:if>
 														numbers shown per page <input type="text" id="pageRows" value="${page.pageRows}" onchange="changeRows(1)" size="6" style="color:red;"/>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -62,6 +62,8 @@ public class DepartmentServlet extends HttpServlet{
 	}
 	
 	private void frontShowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String checkName = request.getParameter("checkName");  //search function
+		System.out.println(checkName);
 		// paging
 		PageData pageData = new PageData();
 		// get current page
@@ -90,7 +92,7 @@ public class DepartmentServlet extends HttpServlet{
 		}
 		pageData.setPageCount(pageCount);
 		
-		List<Department> depList = departmentService.getList(null, pageData);
+		List<Department> depList = departmentService.getList(checkName, pageData);
 		for (Department dep : depList) {
 			//if a department already has a doctor, set its color to red(can't be updated or deleted)
 			boolean isDoc = isHasDoc(dep.getDepId(), request, response);
@@ -100,6 +102,7 @@ public class DepartmentServlet extends HttpServlet{
 				dep.setColor("black");
 			}
 		}
+		request.setAttribute("checkName", checkName);
 		request.setAttribute("depList", depList);
 		request.setAttribute("page", pageData);	
 		request.getRequestDispatcher("/frontDepList.jsp").forward(request, response);	
@@ -190,7 +193,7 @@ public class DepartmentServlet extends HttpServlet{
 		public boolean isHasDoc(int depId, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			boolean b = false; // default no
 
-			List<Doctor> rList = doctorService.getByDepId(depId);
+			List<Doctor> rList = doctorService.getByDepId(depId, null);
 			if (rList.size() > 0) {
 				b = true;
 			} else {

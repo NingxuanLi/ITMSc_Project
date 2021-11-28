@@ -26,7 +26,7 @@ layui.use('element', function(){
   <%@ include file="/doctor/left.jsp"%>
   
   
-  <div class="layui-body">
+  <div class="layui-body" style="background-color: #F5F5F5">
     
   </div>
   

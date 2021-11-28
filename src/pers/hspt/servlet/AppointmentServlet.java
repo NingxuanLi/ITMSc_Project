@@ -209,7 +209,7 @@ public class AppointmentServlet extends HttpServlet{
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String imgTxt = request.getParameter("code");
-		//╥г©уеп╤о
+		//is null judgment
 		if(name == null || name.trim().equals("")) {
 			request.setAttribute("error", "name can't be null");
 			request.getRequestDispatcher("/appointment_query.jsp").forward(request, response);
@@ -259,6 +259,7 @@ public class AppointmentServlet extends HttpServlet{
 						}
 						personalAppList.add(dto);
 					}
+					request.setAttribute("patient", patient);
 					request.setAttribute("personalAppList", personalAppList);
 					request.getRequestDispatcher("/personalAppList.jsp").forward(request, response);
 					return;					

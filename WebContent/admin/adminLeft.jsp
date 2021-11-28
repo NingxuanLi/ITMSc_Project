@@ -11,8 +11,8 @@
           <!-- <img src="img/admin_right.jpg" class="layui-nav-img"> -->
           Hello, Administrator ${sessionScope.admin.adminName}
       </li>
-      <li class="layui-nav-item layui-hide-xs"><a href="admin/index.jsp">back to index</a></li>
-      <li class="layui-nav-item layui-hide-xs"><a href="admin?method=logout">log out</a></li>
+      <li class="layui-nav-item layui-hide-xs"><a href="admin/index.jsp"><i class="layui-icon layui-icon-home" style="font-size: 15px"></i>&nbsp;back to index</a></li>
+      <li class="layui-nav-item layui-hide-xs"><a href="admin?method=logout"><i class="layui-icon layui-icon-logout" style="font-size: 15px"></i>&nbsp;log out</a></li>
     </ul>
   </div>
   
