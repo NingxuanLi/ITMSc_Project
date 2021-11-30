@@ -73,12 +73,12 @@ function link(){
 }
 
 function singleDel(adminId){
-	 location="admin?method=delete&depId="+depId;
+	 location="admin?method=delete&adminId="+adminId;
 
 }
 
 function modify(adminId){
-	 location="admin?method=gotoModify&depId="+depId;
+	 location="admin?method=gotoModify&adminId="+adminId;
 
 }
 

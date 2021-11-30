@@ -32,13 +32,20 @@ layui.use('element', function(){
   
   
   <div class="layui-body" style="background-color: #F5F5F5">
-    <p class="STYLE32">★ <span class="STYLE41">Appointment process flow:</span></p>
+      <p class="STYLE32">★ <span class="STYLE41">A brief introduction to this web-app "Easy Appointment":</span></p>
+      <p><span class="STYLE40">"Easy Appointment" is an hospital online appointment system designed for patients specifically. <br/>
+      With this web-app patient can make an appointment with doctor conveniently.</span></p>
+      <p class="STYLE32">★ <span class="STYLE41">How to make an appointment with doctor:</span></p>
       <p><span class="STYLE40">1. Please do registration first.</span></p>
-      <p><span class="STYLE40">2. Please choose a department to do further operation.</span></p>
-      <p><span class="STYLE40">3. You can also check the doctor list to choose the doctor to make an appointment.</span></p>
-      <p><span class="STYLE40">4. please arrive hospital on time.</span></p>
-      <p class="STYLE32">★ <span class="STYLE41">How to make sure that you have successfully made an appointment?</span></p>
-      <p class="STYLE40"> You can use the "Appointment query" function to check your appointment status.</p>
+      <p><span class="STYLE40">2. There are two ways to make appointments. You can click the "make an appointment" button and select a department. <br/>
+      After that, doctors in this department will be listed in a form, and you just need to select one of them. <br/>
+      Enter you user name and password to completed the process.</span></p>
+      <p><span class="STYLE40">3. You can also click the "Doctor list" button to check all the doctors to directly select a doctor you want.</span></p>
+      <p><span class="STYLE40">4. You can use our search button to find what you want quickly.</span></p>
+      <p class="STYLE32">★ <span class="STYLE41">How to check your appointment status?</span></p>
+      <p class="STYLE40">1. There are three status of your appointment. a)haven't been processed yet, b)approved, c)disapproved</p>
+      <p class="STYLE40">2. You can click the "Appointment query" button check your appointment status.</p>
+      <p class="STYLE40">3. Only when your appointment status is "approved", you can come to hospital to see the doctor</p>
       <p class="STYLE40"><span class="STYLE42">★<span class="STYLE41"> How to cancel your appointment?</span></span></p>
       <p class="STYLE38">Please call: 123456789, our administrator will cancel the appointment for you.</p>
       <p class="STYLE38"><span class="STYLE42">★</span> <span class="STYLE43">Announcements </span></p>

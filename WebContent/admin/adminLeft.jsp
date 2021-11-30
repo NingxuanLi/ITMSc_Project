@@ -4,11 +4,11 @@
 
 <div class="layui-header">
     <div class="layui-logo layui-hide-xs layui-bg-black" >Admin</div>
-    <!-- 头部区域（可配合layui 已有的水平导航） -->
+    
 
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item layui-hide layui-show-md-inline-block">        
-          <!-- <img src="img/admin_right.jpg" class="layui-nav-img"> -->
+          
           Hello, Administrator ${sessionScope.admin.adminName}
       </li>
       <li class="layui-nav-item layui-hide-xs"><a href="admin/index.jsp"><i class="layui-icon layui-icon-home" style="font-size: 15px"></i>&nbsp;back to index</a></li>
@@ -18,7 +18,7 @@
   
   <div class="layui-side layui-bg-black" >
     <div class="layui-side-scroll">
-      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      
       <ul class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="test">
         <li class="layui-nav-item ">
           <a class="" href="javascript:;">Admin management</a>

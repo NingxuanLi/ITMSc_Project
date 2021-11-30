@@ -76,7 +76,7 @@ function changeRows(currentPage){
 				Patient gender
 			</td>
 			<td width="10%" align="center" bgcolor="#EEEEEE">
-				patient BRP
+				patient Tel
 			</td>
 			<td width="10%" align="center" bgcolor="#EEEEEE">
 				patient BRP
