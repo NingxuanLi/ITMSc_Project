@@ -44,7 +44,7 @@ function changeRows(currentPage){
 	var pageRows=document.getElementById("pageRows").value;  
 	if(pageRows>0){
 				
-		location = "department?method=frontShowList&currentPage="+currentPage+"&pageRows="+pageRows;
+		location = "department?method=frontShowList&currentPage="+currentPage+"&pageRows="+pageRows+"&checkName="+chName;
 		return true;
 	}else if(pageRows==""){
 				

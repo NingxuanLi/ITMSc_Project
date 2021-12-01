@@ -3,7 +3,7 @@ package pers.hspt.util;
 public class PageData {
 	
 	private int currentPage=1; //current page
-	private int pageRows=5; //number of rows per page
+	private int pageRows=10; //number of rows per page
 	private int pageCount; //total number of pages
 	private int rowsCount;  //total number of counts
 	

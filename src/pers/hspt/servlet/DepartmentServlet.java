@@ -63,7 +63,6 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void frontShowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String checkName = request.getParameter("checkName");  //search function
-		System.out.println(checkName);
 		// paging
 		PageData pageData = new PageData();
 		// get current page

@@ -45,7 +45,7 @@ layui.use('element', function(){
 		var pageRows=document.getElementById("pageRows").value;  
 		if(pageRows>0){
 					
-			location = "doctor?method=frontShowList&currentPage="+currentPage+"&pageRows="+pageRows;
+			location = "doctor?method=frontShowList&currentPage="+currentPage+"&pageRows="+pageRows+"&checkName="+chName;
 			return true;
 		}else if(pageRows==""){
 					

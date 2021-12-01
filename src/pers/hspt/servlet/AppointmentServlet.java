@@ -131,7 +131,7 @@ public class AppointmentServlet extends HttpServlet{
 		List<AppointmentDto> appList = new ArrayList<>();
 		AppointmentDto dto = null;
 		for(Appointment app : list) {
-			//get patient£¬doctor£¬department		
+			//get patientï¿½ï¿½doctorï¿½ï¿½department		
 			Patient patient = patientService.get(app.getpId());
 			Doctor doctor = doctorService.get(app.getDocId());
 			Department department = departmentService.get(doctor.getDepId());
@@ -185,7 +185,6 @@ public class AppointmentServlet extends HttpServlet{
 		pageData.setPageCount(pageCount);
 				
 		List<Appointment> list = appointmentService.getDoctorList(doctor.getDocId(), pageData);
-		System.out.println(list.size());
 		//use DTO to encapsulate the data needed to be transmitted
 		List<DoctorAppDto> docAppList = new ArrayList<>();
 		for(Appointment app : list) {
@@ -280,7 +279,6 @@ public class AppointmentServlet extends HttpServlet{
 	private void disapprove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String appId = request.getParameter("appId");
 		String strId = request.getParameter("strId");
-		System.out.println(appId);
 		if(strId != null && !strId.trim().equals("")) {
 			String[] arrId = strId.split(",");
 			for(String id : arrId) {
@@ -304,7 +302,6 @@ public class AppointmentServlet extends HttpServlet{
 	private void approve(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String appId = request.getParameter("appId");
 		String strId = request.getParameter("strId");
-		System.out.println(appId);
 		if(strId != null && !strId.trim().equals("")) {
 			String[] arrId = strId.split(",");
 			for(String id : arrId) {

@@ -18,12 +18,8 @@
     <div class="layui-side-scroll">
       
       <ul class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="test">
-        <li class="layui-nav-item ">
-          <a class="" href="javascript:;">Appointment</a>
-          <dl class="layui-nav-child">
-            <dd><a href="appointment?method=showDoctorList">Appointment list</a></dd>          
-          </dl>
-        </li>            
+        <li class="layui-nav-item"><a href="doctor?method=addTimeSlot">Add time slot</a></li>
+        <li class="layui-nav-item"><a href="appointment?method=showDoctorList">Appointment list</a></li>        
       </ul>
     </div>
   </div>

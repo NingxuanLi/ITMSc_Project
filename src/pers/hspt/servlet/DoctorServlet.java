@@ -560,7 +560,7 @@ public class DoctorServlet extends HttpServlet{
 	public boolean isNameRepeated(String docName, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		boolean isRepeated = false;
-		// ÅÐ¶Ï²»ÄÜÖØÃû
+		// ï¿½Ð¶Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		List<Doctor> list = doctorService.getList(null, null); // get all doctors
 		if (list != null) {
 			for (int i = 0; i < list.size(); i++) {

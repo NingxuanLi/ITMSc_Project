@@ -73,7 +73,6 @@ public class PatientDaoImp extends BaseDao implements PatientDao{
 			if(name==null||name.equals("")){
 				sql="select count(*) from patient ";
 			}else{
-				System.out.println(name);
 				sql="select count(*) from patient where p_name like '"+name+"%' ";
 			}
 			

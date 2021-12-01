@@ -244,7 +244,7 @@ layui.use('element', function(){
 													</c:forEach>
 												<tr align="center">
 													<td colspan="6" bgcolor="#FFFFFF" height="50">
-														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.rowsCount}</font> departments in total&nbsp;&nbsp;&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.rowsCount}</font> doctors in total&nbsp;&nbsp;&nbsp;&nbsp;
 														&nbsp;&nbsp;&nbsp;<font style="color:red;">${page.pageCount}</font> pages&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${page.currentPage==1}">
 															<i class="layui-icon layui-icon-prev"></i>&nbsp;&nbsp;&nbsp;&nbsp;
